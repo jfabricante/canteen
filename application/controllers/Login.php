@@ -19,7 +19,8 @@ class Login extends CI_Controller {
 
 	public function authenticate()
 	{
-		$user_data = $this->_user_exist();
+		redirect(base_url('index.php/item/items'));
+		/*$user_data = $this->_user_exist();
 
 		if ($this->_validate_input() && is_array($user_data))
 		{
@@ -39,7 +40,7 @@ class Login extends CI_Controller {
 
 		$data['message'] = '<span class="col-sm-12 alert alert-warning">You have no rights to access this system.</span>';
 
-		$this->load->view('login_view', $data);
+		$this->load->view('login_view', $data);*/
 
 	}
 
@@ -57,7 +58,7 @@ class Login extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 
-		redirect('index.php/login/index');
+		redirect('login/index');
 	}
 
 	protected function _validate_input()
