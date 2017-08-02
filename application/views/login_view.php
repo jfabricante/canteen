@@ -38,7 +38,7 @@
 
 				<p class="login-box-msg">Sign in to start your session</p>
 
-				<?php echo form_open('index.php/login/authenticate');?>
+				<?php echo form_open('login/authenticate');?>
 					
 					<div class="form-group has-feedback">
 						<input type="text" class="form-control" placeholder="Username" name="username" id="username" value="<?php echo set_value('username');?>"/>
@@ -51,7 +51,7 @@
 						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						<span class="help-block login-error-msg text-red"><?php echo form_error('password'); ?></span>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-xs-8"></div>
 						<div class="col-xs-4">
