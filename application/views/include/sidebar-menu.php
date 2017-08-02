@@ -34,8 +34,10 @@
 				$menu = end($menu);
 			?>
 
-			<li class="<?php echo $menu == 'items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/items') ?>"><i class="fa fa-table"></i><span>Items</span></a></li>
+			<li class="<?php echo $menu == 'categories' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/categories') ?>"><i class="fa fa-table"></i><span>Categories</span></a></li>
 
+			<li class="<?php echo $menu == 'items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/items') ?>"><i class="fa fa-table"></i><span>Items</span></a></li>
+			
 		</ul><!-- /.sidebar-menu -->
 
 	</section>
