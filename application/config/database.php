@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
+	'username' => 'root',
 	'password' => '',
-	'database' => '',
+	'database' => 'canteenv2',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -92,5 +92,28 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+// IPC Centra database
+$db['ipc_central'] = array(
+	'dsn'          => '',
+	'hostname'     => 'ecommerce5',
+	'username'     => 'root',
+	'password'     => 'latropcpi',
+	'database'     => 'ipc_central',
+	'dbdriver'     => 'mysqli',
+	'dbprefix'     => '',
+	'pconnect'     => FALSE,
+	'db_debug'     => (ENVIRONMENT !== 'production'),
+	'cache_on'     => FALSE,
+	'cachedir'     => '',
+	'char_set'     => 'utf8',
+	'dbcollat'     => 'utf8_general_ci',
+	'swap_pre'     => '',
+	'encrypt'      => FALSE,
+	'compress'     => FALSE,
+	'stricton'     => FALSE,
+	'failover'     => array(),
 	'save_queries' => TRUE
 );
