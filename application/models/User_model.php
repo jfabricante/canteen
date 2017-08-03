@@ -48,6 +48,31 @@ class User_model extends CI_Model {
 		return $this;
 	}
 
+	public function assign_batch_role(array $ids)
+	{
+		foreach ($ids as $id)
+		{
+			$config = array(
+					'user_id' => $id,
+					'role_id' => 3
+				);
+
+			$exist = $this->db->select('*')
+					->from('users_role_tbl')
+					->where($config)
+					->get();
+
+			if (!$exist->num_rows())
+			{
+				$this->db->insert('users_role_tbl', $config);
+			}	
+		}
+
+		return $this;
+	}
+
+	public function store()
+	{
 		if (count($params) > 0)
 		{
 			$this->db->insert('users_tbl', $params);
