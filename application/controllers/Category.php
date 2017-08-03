@@ -38,4 +38,22 @@ class Category extends CI_Controller {
 		$this->load->view('category/form_view', $data);
 	}
 
+	public function store()
+	{
+		$id = $this->input->post('id') ? $this->input->post('id') : 0;
+
+		$this->category->store();
+
+		if ($id > 0)
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been updated!</div>');
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been added!</div>');
+		}
+
+		redirect('/category/list_');
+	}
+
 }
