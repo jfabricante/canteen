@@ -5,6 +5,8 @@ class User_model extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->load->database();
 	}
 
 	// Return user credentials
@@ -18,12 +20,8 @@ class User_model extends CI_Model {
 		$fields = array(
 				'a.id',
 				'a.username',
-				'a.password',
 				'a.fullname',
-				'a.email',
-				'a.emp_id',
 				'a.emp_no',
-				'a.supervisor_email',
 				'b.role_id',
 				'c.user_type'
 			);
@@ -31,7 +29,7 @@ class User_model extends CI_Model {
 		$query = $this->db->select($fields)
 				->from('users_tbl AS a')
 				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
-				->join('role_tbl AS c', 'b.role_id = c.id', 'INNER')
+				->join('roles_tbl AS c', 'b.role_id = c.id', 'INNER')
 				->where($config)
 				->get();
 
