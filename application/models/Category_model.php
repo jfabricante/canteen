@@ -9,12 +9,16 @@ class Category_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function browse($params)
+	public function browse(array $params = array('type' => 'object'))
 	{
 		if ($params['type'] == 'object')
 		{
 			return $this->db->get('category_tbl')->result();	
 		}
+
+		return $this->db->get('category_tbl')->result_array();
+	}
+
 		else
 		{
 			return $this->db->get('category_tbl')->result_array();
