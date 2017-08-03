@@ -82,25 +82,30 @@ class User_model extends CI_Model {
 		return 0;
 	}
 
-	public function fetch()
+	public function fetch($type = 'object')
 	{
 		$fields = array(
+				'a.id',
 				'a.username',
 				'a.fullname',
-				'a.email',
-				'a.emp_id',
 				'a.emp_no',
-				'a.supervisor_email',
+				'a.datetime',
+				'b.id AS users_role_id',
 				'c.user_type'
 			);
 
 		$data = $this->db->select($fields)
 				->from('users_tbl AS a')
 				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
-				->join('role_tbl AS c', 'b.role_id = c.id', 'INNER')
+				->join('roles_tbl AS c', 'b.role_id = c.id', 'INNER')
 				->get();
 
-		return $data->result();
+		if ($type == 'object')
+		{
+			return $data->result();
+		}
+
+		return $data->result_array();
 	}
 
 	public function fetch_roles()
