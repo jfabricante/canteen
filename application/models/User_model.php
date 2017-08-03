@@ -41,8 +41,13 @@ class User_model extends CI_Model {
 		return false;
 	}
 
-	public function store(array $params = array())
+	public function store_batch(array $data)
 	{
+		$this->db->insert_batch('users_tbl', $data);
+
+		return $this;
+	}
+
 		if (count($params) > 0)
 		{
 			$this->db->insert('users_tbl', $params);
