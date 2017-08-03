@@ -29,15 +29,14 @@
 		<ul class="sidebar-menu">
 			<li class="header">MAIN NAVIGATION</li>
 			
-			<?php 
-				$menu = explode("/", $this->uri->uri_string());
-				$menu = end($menu);
-			?>
+			<?php echo $menu = $this->uri->uri_string(); ?>
 
-			<li class="<?php echo $menu == 'categories' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/categories') ?>"><i class="fa fa-table"></i><span>Categories</span></a></li>
+			<li class="<?php echo $menu == 'item/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/list_') ?>"><i class="fa fa-table"></i><span>Items</span></a></li>
 
-			<li class="<?php echo $menu == 'items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/items') ?>"><i class="fa fa-table"></i><span>Items</span></a></li>
-			
+			<li class="<?php echo $menu == 'category/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/list_') ?>"><i class="fa fa-table"></i><span>Categories</span></a></li>
+
+			<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-table"></i><span>Users</span></a></li>
+
 		</ul><!-- /.sidebar-menu -->
 
 	</section>
