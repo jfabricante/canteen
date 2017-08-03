@@ -19,6 +19,21 @@ class Category_model extends CI_Model {
 		return $this->db->get('category_tbl')->result_array();
 	}
 
+	public function read(array $params = array('type' => 'object'))
+	{
+		if ($params['id'] > 0)
+		{
+			$query = $this->db->get_where('category_tbl', array('id' => $params['id']));
+
+			if ($params['type'] == 'object')
+			{
+				return $query->row();
+			}
+			
+			return $query->row_array();
+		}
+	}
+
 		else
 		{
 			return $this->db->get('category_tbl')->result_array();
