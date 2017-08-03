@@ -57,4 +57,12 @@ class Category_model extends CI_Model {
 		return $this;
 	}
 
+	public function delete()
+	{
+		$id = $this->input->post('id');
+
+		$this->db->delete('category_tbl', array('id' => $id));
+
+		return $this;
+	}
 }
