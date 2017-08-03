@@ -127,4 +127,20 @@ class User_model extends CI_Model {
 
 		return 0;
 	}
+
+	public function users_count()
+	{
+		return $this->db->get('users_tbl')->num_rows();
+	}
+
+	public function users_role_count()
+	{
+		return $this->db->get('users_role_tbl')->num_rows();
+	}
+
+	public function truncate_tbl()
+	{
+		$this->db->truncate('users_tbl');
+		$this->db->truncate('users_role_tbl');
+	}
 }
