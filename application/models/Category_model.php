@@ -34,9 +34,27 @@ class Category_model extends CI_Model {
 		}
 	}
 
+	public function store()
+	{
+		$id       = $this->input->post('id') ? $this->input->post('id') : 0;
+		$name     = ucfirst(strtolower(trim($this->input->post('name'))));
+		$datetime = date('Y-m-d H:i:s');
+
+		$config = array(
+				'name'     => $name,
+				'datetime' => $datetime
+			);
+
+		if ($id > 0)
+		{
+			$this->db->update('category_tbl', $config, array('id' => $id));
+		}
 		else
 		{
-			return $this->db->get('category_tbl')->result_array();
+			$this->db->insert('category_tbl', $config);
 		}
+
+		return $this;
 	}
+
 }
