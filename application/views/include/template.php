@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="icon" href="../../favicon.ico">
-		<title>HR Training Room Reservation</title>
+		<title>Canteen System</title>
 		<!-- Bootstrap core CSS -->
 		<link href="<?php echo base_url('resources/templates/bootstrap-3.3.7/css/bootstrap.min.css');?>" rel="stylesheet" >
 		<!-- Admin LTE core CSS -->
