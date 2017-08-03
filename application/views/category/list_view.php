@@ -1,15 +1,17 @@
 <!-- Items block -->
-<section class="content categories">
+<section class="content category">
 	<!-- row -->
 	<div class="row">
 		<!-- col-md-6 -->
-		<div class="col-md-5">
+		<div class="col-md-4">
 			<!-- Box danger -->
+			<?php echo $this->session->flashdata('message');  ?>
+
 			<div class="box box-danger">
 				<!-- Content -->
 				<div class="box-header with-border">
-					<a href="<?php echo base_url('index.php/item/item_form') ?>">
-						<button class="btn btn-flat btn-success pull-right">Add Item <i class="fa fw fa-plus" aria-hidden="true"></i></button>
+					<a href="<?php echo base_url('index.php/category/form') ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
+						<button class="btn btn-flat btn-success pull-right">Add Category <i class="fa fw fa-plus" aria-hidden="true"></i></button>
 					</a>
 				</div>
 
@@ -34,12 +36,12 @@
 									<td><?php echo $category->name; ?></td>
 									<td><?php echo $category->datetime; ?></td>
 									<td>
-										<a href="#">
+										<a href="<?php echo base_url('index.php/category/form/' . $category->id); ?>"  data-toggle="modal" data-target=".bs-example-modal-sm">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</a>
 									</td>
 									<td>
-										<a href="#">
+										<a href="<?php echo base_url('index.php/category/notice/' . $category->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
 											<i class="fa fa-trash" aria-hidden="true"></i>
 										</a>
 									</td>
@@ -58,8 +60,20 @@
 	</div>
 	<!-- End of row -->
 </section>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.table').DataTable();
 	});
+
+	// Detroy modal
+	$('body').on('hidden.bs.modal', '.modal', function () {
+		$(this).removeData('bs.modal');
+	}); 
 </script>
