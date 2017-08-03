@@ -1,3 +1,4 @@
+<link href="<?php echo base_url('resources/plugins/select/css/bootstrap-select.min.css');?>" rel="stylesheet" >
 <?php echo form_open_multipart('item/store');?>
 <!-- <form action="<?php //echo base_url('index.php/item/store'); ?>" method="post" enctype="multipart/form-data"> -->
 	<div class="modal-header">
@@ -29,8 +30,8 @@
 		</div>
 
 		<div class="form-group">
-			<label for="category_id">category</label>
-			<select name="category_id" id="category_id" class="form-control select2" data-live-search="true" required>
+			<label for="category_id">Category</label>
+			<select name="category_id" id="category_id" class="form-control selectpicker" data-live-search="true" required>
 				<option></option>
 				<?php foreach($categories as $category): ?>
 					<option value="<?php echo $category->id; ?>" <?php echo isset($entity->category_id) ? $category->id == $entity->category_id ? 'selected' : '' : ''; ?> ><?php echo $category->name; ?></option>
@@ -48,9 +49,9 @@
 	
 </form><!-- End Form -->
 <!-- End of table -->
-				
+<script src="<?php echo base_url('resources/plugins/select/js/bootstrap-select.min.js');?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$('.table').DataTable();
+		$('.selectpicker').selectpicker({});
 	});
 </script>
