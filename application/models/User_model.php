@@ -108,9 +108,14 @@ class User_model extends CI_Model {
 		return $data->result_array();
 	}
 
-	public function fetch_roles()
+	public function fetch_roles($type = 'object')
 	{
-		return $this->db->get('role_tbl')->result();
+		if ($type == 'object')
+		{
+			return $this->db->get('roles_tbl')->result();
+		}
+		
+		return $this->db->get('roles_tbl')->result_array();
 	}
 
 	public function assign_role(array $params = array())
