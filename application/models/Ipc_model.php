@@ -9,6 +9,33 @@ class Ipc_model extends CI_Model {
 		$this->db = $this->load->database('ipc_central', true);
 	}
 
+	public function fetch_all(array $params = array('type' => 'object'))
+	{
+		$fields = array(
+				'a.id',
+				'a.employee_no AS username',
+				'a.employee_no AS password',
+				'a.employee_no AS emp_no',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'NOW() as datetime'
+			);
+
+
+		$query = $this->db->select($fields)
+					->from('employee_masterfile_tab AS a')
+					->join('personal_information_tab AS b', 'a.id = b.employee_id', 'LEFT')
+					->order_by('a.id')
+					->where('last_name IS NOT NULL')
+					->get();
+
+		if ($params['type'] == 'object')
+		{
+			return $query->result();
+		}
+
+		return $query->result_array();
+	}
+
 	public function fetch_personal_info($params)
 	{
 		$fields = array(
