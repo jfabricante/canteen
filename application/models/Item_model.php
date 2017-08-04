@@ -74,12 +74,25 @@ class Item_model extends CI_Model {
 		$category_id = $this->input->post('category_id');
 		$datetime    = date('Y-m-d H:i:s');
 
-		$config = array(
-				'name'      => $name,
-				'price'     => $price,
-				'thumbnail' => is_array($params) ? $params['file_name'] : '',
-				'datetime'  => $datetime
-			);
+		$config = array();
+
+		if (is_array($params))
+		{
+			$config = array(
+					'name'      => $name,
+					'price'     => $price,
+					'thumbnail' => $params['file_name'],
+					'datetime'  => $datetime
+				);
+		}
+		else
+		{
+			$config = array(
+					'name'      => $name,
+					'price'     => $price,
+					'datetime'  => $datetime
+				);
+		}
 
 		if ($id > 0)
 		{
