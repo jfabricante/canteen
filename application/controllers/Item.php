@@ -7,6 +7,8 @@ class Item extends CI_Controller {
 	{
 		parent::__construct();
 
+		date_default_timezone_set('Asia/Manila');
+
 		$this->load->helper('form');
 
 		$this->load->model('item_model', 'item');
