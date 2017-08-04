@@ -40,6 +40,22 @@ class Item extends CI_Controller {
 		$this->load->view('item/form_view', $data);
 	}
 
+	public function notice()
+	{
+		$data['id'] = $this->uri->segment(3);
+
+		$this->load->view('item/delete_view', $data);
+	}
+
+	public function delete()
+	{
+		$this->item->delete();
+
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been deleted!</div>');
+
+		redirect('item/list_');
+	}
+
 	public function store()
 	{
 		$id   = $this->input->post('id');
