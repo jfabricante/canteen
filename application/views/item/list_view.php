@@ -39,7 +39,9 @@
 									<td><?php echo $item->name; ?></td>
 									<td><?php echo $item->price; ?></td>
 									<td><?php echo $item->category; ?></td>
-									<td><?php echo $item->thumbnail; ?></td>
+									<td align="center">
+										<img class="img-responsive item-thumbnail" src="<?php echo $item->thumbnail ? base_url('/resources/thumbnail/' . $item->thumbnail) : base_url('/resources/thumbnail/no-image.png'); ?>" style="width: 100px">
+									</td>
 									<td><?php echo date('m/d/Y h:i A', strtotime($item->datetime)); ?></td>
 									<td>
 										<a href="<?php echo base_url('index.php/item/form/' . $item->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
