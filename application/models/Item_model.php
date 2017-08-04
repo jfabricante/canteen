@@ -110,7 +110,7 @@ class Item_model extends CI_Model {
 					'category_id' => $category_id
 				);
 
-			$this->_store_item_category($config);
+		$this->_store_item_category($config);
 
 		$config = array(
 				'item_id'  => $id,
@@ -146,7 +146,7 @@ class Item_model extends CI_Model {
 	{
 		$id = $this->input->post('id');
 
-		$this->db->delete('category_tbl', array('id' => $id));
+		$this->db->delete('items_tbl', array('id' => $id));
 
 		return $this;
 	}
