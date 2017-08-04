@@ -40,14 +40,21 @@ class Item extends CI_Controller {
 
 	public function store()
 	{
-		$id = $this->input->post('id');
-		var_dump($this->input->post());
-		/*$data = $this->_handle_upload();
+		$id   = $this->input->post('id');
+		$data = $this->_handle_upload();
 
-		if (is_array($data))
+		$this->item->store($data);
+
+		if ($id > 0)
 		{
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been updated!</div>');
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been added!</div>');
+		}
 
-		}*/
+		redirect('/item/list_');
 	}
 
 	protected function _handle_upload()
