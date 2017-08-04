@@ -45,6 +45,7 @@ class Item_model extends CI_Model {
 				'ROUND(a.price, 2) AS price',
 				'a.thumbnail',
 				'a.datetime',
+				'b.id AS item_category_id',
 				'b.category_id',
 				'c.name AS category'
 			);
@@ -65,27 +66,67 @@ class Item_model extends CI_Model {
 		}
 	}
 
-	/*public function store()
+	public function store($params)
 	{
-		$id       = $this->input->post('id') ? $this->input->post('id') : 0;
-		$name     = ucfirst(strtolower(trim($this->input->post('name'))));
-		$datetime = date('Y-m-d H:i:s');
+		$id          = $this->input->post('id');
+		$name        = ucfirst(strtolower(trim($this->input->post('name'))));
+		$price       = $this->input->post('price');
+		$category_id = $this->input->post('category_id');
+		$datetime    = date('Y-m-d H:i:s');
 
 		$config = array(
-				'name'     => $name,
-				'datetime' => $datetime
+				'name'      => $name,
+				'price'     => $price,
+				'thumbnail' => is_array($params) ? $params['file_name'] : '',
+				'datetime'  => $datetime
 			);
 
 		if ($id > 0)
 		{
-			$this->db->update('category_tbl', $config, array('id' => $id));
+			$this->db->update('items_tbl', $config, array('id' => $id));
 		}
 		else
 		{
-			$this->db->insert('category_tbl', $config);
+			$this->db->insert('items_tbl', $config);
+
+			$id = $this->db->insert_id();
 		}
 
-		return $this;
+		$config = array(
+					'item_id'     => $id, 
+					'category_id' => $category_id
+				);
+
+			$this->_store_item_category($config);
+
+		$config = array(
+				'item_id'  => $id,
+				'price'    => $price,
+				'datetime' => $datetime,
+				'admin_id' => $this->session->userdata('id')
+			);
+
+		$this->_store_item_price_modified($config);
+		
+	}
+
+	protected function _store_item_category($params)
+	{
+		$id = $this->input->post('item_category_id');
+
+		if ($id > 0)
+		{
+			$this->db->update('item_category_tbl', $params, array('id' => $id));
+		}
+		else 
+		{
+			$this->db->insert('item_category_tbl', $params);
+		}
+	}
+
+	protected function _store_item_price_modified($params)
+	{
+		$this->db->insert('item_price_modified_tbl', $params);
 	}
 
 	public function delete()
@@ -95,5 +136,5 @@ class Item_model extends CI_Model {
 		$this->db->delete('category_tbl', array('id' => $id));
 
 		return $this;
-	}*/
+	}
 }
