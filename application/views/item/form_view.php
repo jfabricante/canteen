@@ -11,6 +11,7 @@
 	<div class="modal-body">
 		<div class="form-group hidden">
 			<input type="text" class="form-control" id="id" name="id" value="<?php echo isset($entity->id) ? $entity->id : 0; ?>" />
+			<input type="text" class="form-control" id="item_category_id" name="item_category_id" value="<?php echo isset($entity->item_category_id) ? $entity->item_category_id : 0; ?>" />
 		</div>
 
 		<div class="form-group">
@@ -20,7 +21,7 @@
 
 		<div class="form-group">
 			<label for="price">Price</label>
-			<input type="number" class="form-control" id="price" name="price" value="<?php echo isset($entity->price) ? $entity->price : ''; ?>" required />
+			<input type="text" class="form-control" id="price" name="price" value="<?php echo isset($entity->price) ? $entity->price : ''; ?>" required />
 		</div>
 
 		<div class="form-group">
