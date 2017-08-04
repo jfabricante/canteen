@@ -1,4 +1,3 @@
-<?php var_dump($this->session->userdata()); ?>
 <!-- Items block -->
 <section class="content items">
 	<!-- row -->
@@ -6,6 +5,8 @@
 		<!-- col-md-6 -->
 		<div class="col-md-6">
 			<!-- Box danger -->
+			<?php echo $this->session->flashdata('message');  ?>
+			
 			<div class="box box-danger">
 				<!-- Content -->
 				<div class="box-header with-border">
