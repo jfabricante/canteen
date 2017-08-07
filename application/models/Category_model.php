@@ -19,6 +19,37 @@ class Category_model extends CI_Model {
 		return $this->db->get('category_tbl')->result_array();
 	}
 
+	public function fetch_category_items()
+	{
+		$categories = $this->browse();
+
+		$config = array();
+
+		$fields = array(
+				'a.category_id',
+				'b.id',
+				'b.name',
+				'b.price',
+				'b.thumbnail'
+			);
+
+		foreach($categories as $category)
+		{
+			$query = $this->db->select($fields)
+					->from('item_category_tbl AS a')
+					->join('items_tbl AS b', 'a.item_id = b.id', 'INNER')
+					->where('a.category_id', $category->id)
+					->get();
+
+			if ($query->num_rows())
+			{
+				array_push($config, $query->result_array());
+			}
+		}
+
+		return $config;
+	}
+
 	public function read(array $params = array('type' => 'object'))
 	{
 		if ($params['id'] > 0)
