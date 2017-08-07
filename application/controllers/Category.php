@@ -71,4 +71,14 @@ class Category extends CI_Controller {
 
 		redirect('category/list_');
 	}
+
+	public function ajax_category_list()
+	{
+		echo json_encode($this->category->browse());
+	}
+
+	public function ajax_category_items()
+	{
+		echo json_encode($this->category->fetch_category_items());
+	}
 }
