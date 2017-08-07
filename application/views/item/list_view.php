@@ -3,7 +3,7 @@
 	<!-- row -->
 	<div class="row">
 		<!-- col-md-6 -->
-		<div class="col-md-6">
+		<div class="col-md-7">
 			<!-- Box danger -->
 			<?php echo $this->session->flashdata('message');  ?>
 			
@@ -36,10 +36,10 @@
 							<?php foreach($items as $item): ?>
 								<tr>
 									<td><?php echo $count ?></td>
-									<td><?php echo $item->name; ?></td>
+									<td><?php echo strtoupper($item->name); ?></td>
 									<td><?php echo $item->price; ?></td>
 									<td><?php echo $item->category; ?></td>
-									<td align="center">
+									<td class="text-center">
 										<img class="img-responsive item-thumbnail" src="<?php echo $item->thumbnail ? base_url('/resources/thumbnail/' . $item->thumbnail) : base_url('/resources/thumbnail/no-image.png'); ?>" style="width: 100px">
 									</td>
 									<td><?php echo date('m/d/Y h:i A', strtotime($item->datetime)); ?></td>
@@ -83,5 +83,5 @@
 	// Detroy modal
 	$('body').on('hidden.bs.modal', '.modal', function () {
 		$(this).removeData('bs.modal');
-	}); 
+	});
 </script>
