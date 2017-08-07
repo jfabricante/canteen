@@ -3,7 +3,7 @@
 	<!-- row -->
 	<div class="row">
 		<!-- col-md-6 -->
-		<div class="col-md-8">
+		<div class="col-md-10">
 			<!-- Box danger -->
 			<div class="box box-danger">
 				<!-- Content -->
@@ -36,7 +36,7 @@
 									<td><?php echo $count ?></td>
 									<td><?php echo $user->username; ?></td>
 									<td><?php echo $user->emp_no; ?></td>
-									<td><?php echo $user->fullname; ?></td>
+									<td><?php echo ucwords(strtolower($user->fullname)); ?></td>
 									<td><?php echo ucfirst($user->user_type); ?></td>
 									<td><?php echo date('m/d/Y h:i A', strtotime($user->datetime)); ?></td>
 									<td>
