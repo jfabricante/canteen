@@ -23,7 +23,7 @@ class User extends CI_Controller {
 	public function list_()
 	{
 		$data = array(
-				'title'   => 'List of users',
+				'title'   => 'List of Users',
 				'content' => 'user/list_view',
 				'users'   => $this->user->fetch()
 			);
