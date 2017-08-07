@@ -37,6 +37,8 @@
 
 			<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-table"></i><span>Users</span></a></li>
 
+			<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-table"></i><span>POS</span></a></li>
+
 		</ul><!-- /.sidebar-menu -->
 
 	</section>
