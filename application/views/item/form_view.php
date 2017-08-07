@@ -16,12 +16,12 @@
 
 		<div class="form-group">
 			<label for="name">Item name</label>
-			<input type="text" class="form-control" id="name" name="name" value="<?php echo isset($entity->name) ? $entity->name : ''; ?>" required />
+			<input type="text" class="form-control" id="name" name="name" value="<?php echo isset($entity->name) ? $entity->name : ''; ?>" required autofocus />
 		</div>
 
 		<div class="form-group">
 			<label for="price">Price</label>
-			<input type="text" class="form-control" id="price" name="price" value="<?php echo isset($entity->price) ? $entity->price : ''; ?>" required />
+			<input type="number" step="0.01" class="form-control" id="price" name="price" value="<?php echo isset($entity->price) ? $entity->price : ''; ?>" required />
 		</div>
 
 		<div class="form-group">
