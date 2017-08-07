@@ -1,0 +1,224 @@
+<!-- Items block -->
+<section class="content transaction">
+	<!-- App -->
+	<div id="app">
+		<!-- row -->
+		<div class="row">
+			<!-- col-md-6 -->
+			<div class="col-md-5">
+				<!-- Box danger -->
+				<?php echo $this->session->flashdata('message');  ?>
+				
+				<div class="box box-danger">
+					<!-- Content -->
+					<div class="box-header with-border">
+						<h3 class="box-title">Items</h3>
+						<button class="btn btn-flat btn-danger pull-right" v-on:click="clearItems">Clear Items</button>
+					</div>
+
+					<div class="box-body">
+						<!-- Item table -->
+						<table class="table table-condensed table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Items</th>
+									<th>Price</th>
+									<th>Quantity</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="item in cart">
+									<td>{{ _.toUpper(item.name) }}</td>
+									<td>&#8369; {{ item.price }}</td>
+									<td>{{ item.quantity }}</td>
+									<td>&#8369;  {{ item.total }}</td>
+								</tr>
+								<tr>
+									<td colspan="2"></td>
+									<td><strong>Total</strong></td>
+									<td><strong>&#8369; {{ grandTotal }}</strong></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End of table -->
+					</div>
+					<!-- End of content -->
+				</div>
+				<!-- End of danger -->
+			</div>
+			<!-- End of col-md-4 -->
+			<!-- Items -->
+			<div class="col-md-7">
+				<!-- Danger box -->
+				<div class="box box-danger">
+					
+					<div class="box-header">
+						<div class="box-header with-border">
+							<h3 class="box-title">Categories</h3>
+						</div>
+					</div>
+
+					<!-- Box body -->
+					<div class="box-body">
+						<!-- Custom tabs -->
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li v-for="(category, index) in categories" class="" v-bind:class="{'active': index === 0}">
+									<a v-bind:href="'#' + index" data-toggle="tab" aria-expanded="false">{{ category.name }}</a>
+								</li>
+							</ul>
+
+							<div class="tab-content">
+								<!-- Tab pane -->
+								<div class="tab-pane" v-for="(category_items, index) in categoryItems" v-bind:id="index" v-bind:class="{'active': index === 0}">
+									<!-- Row -->
+									<div class="row">
+										<ul class="list-group">
+											<li  v-for="item in category_items" class="col-md-2 list-group-item" v-on:click="addItem(item)">
+												<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
+												<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
+												<p class="text-center">{{ _.toUpper(item.name) }}</p>
+												<p class="text-center">&#8369; {{ item.price }}</p>
+											</li>
+										</ul>
+									</div>
+									<!-- End of row -->
+								</div>
+								<!-- Tab pane -->
+							</div>
+							<!-- /.tab-content -->
+						</div>
+						<!-- End of custom tabs -->
+					</div>
+					<!-- End of box body -->
+				</div>
+				<!-- Danger box -->
+			</div>
+			<!-- End of column -->
+		</div>
+		<!-- End of row -->
+	</div>
+	<!-- End of App -->
+</section>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
+<script src="<?php echo base_url('resources/js/axios/axios.min.js') ?>"></script>
+<script src="<?php echo base_url('resources/js/vue/vue.min.js') ?>"></script>
+<script src="<?php echo base_url('resources/js/lodash/lodash.js') ?>"></script>
+<script src="<?php echo base_url('resources/js/vee-validate/vee-validate.min.js') ?>"></script>
+<script type="text/javascript">
+	var appUrl = '<?php echo base_url('index.php') ?>';
+	var imgUrl = '<?php echo base_url('resources/thumbnail/') ?>';
+
+	$('body').on('hidden.bs.modal', '.modal', function () {
+		$(this).removeData('bs.modal');
+	});
+
+	var app = new Vue({
+		el: '#app',
+		data: {
+			categories: [],
+			categoryItems: [],
+			cart: [],
+			newItems: [{
+				id: '',
+				name: '',
+				price: '',
+				quantity: '',
+				total: '',
+			}],
+			grandTotal: 0,
+		},
+		created() {
+			this.fetchCategories()
+			this.fetchCategoryItems()
+		},
+		methods: {
+			fetchCategories: function()
+			{
+				var vm = this
+
+				axios.get(appUrl + '/category/ajax_category_list').then((response) => {
+					vm.categories = response.data
+				})
+				.catch(function (err) {
+					console.log(err.message);
+				});
+			},
+			fetchCategoryItems: function()
+			{
+				var vm = this
+
+				axios.get(appUrl + '/category/ajax_category_items').then((response) => {
+					vm.categoryItems = response.data
+				})
+				.catch(function (err) {
+					console.log(err.message);
+				});
+			},
+			addItem: function(item) {
+				this.newItems = {
+					id: item.id,
+					name: item.name,
+					price: item.price,
+					quantity: 1,
+					total: item.price
+				}
+
+				let index = this.itemIndex(this.newItems)
+
+				if (index !== undefined)
+				{
+					this.newItems = {
+						id: this.cart[index].id,
+						name: this.cart[index].name,
+						price: this.cart[index].price,
+						quantity: ++this.cart[index].quantity,
+						total: this.cart[index].quantity * this.cart[index].price
+					}
+
+					this.cart.splice(index, 1, this.newItems)
+				}
+				else
+				{
+					this.cart.push(this.newItems)
+				}
+
+				this.grandTotal = _.sum(_.map(this.cart, (prop) => { return Number(prop.total) } ))
+
+				this.newItems = []
+				
+			},
+			itemIndex: function(item) {
+				let i = undefined
+
+				for(let [index, value] of this.cart.entries())
+				{
+					if (value.id === item.id)
+					{
+						i = index
+						break
+					}
+				}
+
+				return i
+			},
+			clearItems: function()
+			{
+				for(let [index, val] of this.cart.entries())
+				{
+					this.cart.splice(index, this.cart.length)
+				}
+
+				this.grandTotal = 0
+			}
+		},
+	});
+
+</script>
