@@ -251,10 +251,6 @@
 					this.itemIndex = this.cartIndex(this.newItems)
 				}
 
-				this.grandTotal = _.sum(_.map(this.cart, (prop) => { return Number(prop.total) } ))
-
-				this.newItems = []
-				
 			},
 			itemIndex: function(item) {
 				let i = undefined
