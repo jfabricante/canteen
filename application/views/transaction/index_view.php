@@ -286,6 +286,28 @@
 				this.itemIndex = index
 				console.log(this.itemIndex)
 			},
+			updateItem: function()
+			{
+				this.$validator.validateAll().then((result) => {
+					if (result)
+					{
+						this.newItems.total = Number(this.newItems.price) * this.newItems.quantity
+
+						this.cart.splice(this.itemIndex, 1, this.newItems)
+
+						this.updateGrandtotal()
+
+						this.newItems = {
+								id: '',
+								name: '',
+								price: '',
+								quantity: '',
+								total: ''
+							}
+					}
+
+				});
+			},
 			updateGrandtotal: function() {
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			}
