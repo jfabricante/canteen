@@ -174,6 +174,8 @@
 <script src="<?php echo base_url('resources/js/lodash/lodash.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/vee-validate/vee-validate.min.js') ?>"></script>
 <script type="text/javascript">
+	Vue.use(VeeValidate);
+
 	var appUrl = '<?php echo base_url('index.php') ?>';
 	var imgUrl = '<?php echo base_url('resources/thumbnail/') ?>';
 
