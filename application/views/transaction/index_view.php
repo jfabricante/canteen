@@ -25,14 +25,26 @@
 									<th>Price</th>
 									<th>Quantity</th>
 									<th>Total</th>
+									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="item in cart">
+								<tr v-for="(item, index) in cart">
 									<td>{{ _.toUpper(item.name) }}</td>
 									<td>&#8369; {{ item.price }}</td>
 									<td>{{ item.quantity }}</td>
 									<td>&#8369;  {{ item.total }}</td>
+									<td>
+										<a href="#" v-on:click="editItem(index)">
+											<i class="fa fa-pencil" aria-hidden="true"></i>	
+										</a>
+									</td>
+									<td>
+										<a href="#" v-on:click="deleteItem(index)">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</a>
+									</td>
 								</tr>
 								<tr>
 									<td colspan="2"></td>
