@@ -274,6 +274,8 @@
 				}
 
 				this.grandTotal = 0
+			updateGrandtotal: function() {
+				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			}
 		},
 	});
