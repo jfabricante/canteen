@@ -205,10 +205,8 @@
 		methods: {
 			fetchCategories: function()
 			{
-				var vm = this
-
 				axios.get(appUrl + '/category/ajax_category_list').then((response) => {
-					vm.categories = response.data
+					this.categories = response.data
 				})
 				.catch(function (err) {
 					console.log(err.message);
@@ -216,10 +214,8 @@
 			},
 			fetchCategoryItems: function()
 			{
-				var vm = this
-
 				axios.get(appUrl + '/category/ajax_category_items').then((response) => {
-					vm.categoryItems = response.data
+					this.categoryItems = response.data
 				})
 				.catch(function (err) {
 					console.log(err.message);
