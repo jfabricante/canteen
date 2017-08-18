@@ -248,6 +248,7 @@
 				else
 				{
 					this.cart.push(this.newItems)
+					this.itemIndex = this.cartIndex(this.newItems)
 				}
 
 				this.grandTotal = _.sum(_.map(this.cart, (prop) => { return Number(prop.total) } ))
