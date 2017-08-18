@@ -49,7 +49,7 @@
 								<tr>
 									<td colspan="2"></td>
 									<td><strong>Total</strong></td>
-									<td><strong>&#8369; {{ grandTotal }}</strong></td>
+									<td colspan="3"><strong>&#8369; {{ grandTotal }}</strong></td>
 								</tr>
 							</tbody>
 						</table>
