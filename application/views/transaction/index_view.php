@@ -251,11 +251,12 @@
 					this.itemIndex = this.cartIndex(this.newItems)
 				}
 
+				this.updateGrandtotal()
 			},
-			itemIndex: function(item) {
-				let i = undefined
+			cartIndex: function(item) {
+				var i = undefined
 
-				for(let [index, value] of this.cart.entries())
+				for(var [index, value] of this.cart.entries())
 				{
 					if (value.id === item.id)
 					{
