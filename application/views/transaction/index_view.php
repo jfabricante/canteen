@@ -197,6 +197,7 @@
 				total: '',
 			}],
 			grandTotal: 0,
+			itemIndex: undefined,
 		},
 		created() {
 			this.fetchCategories()
@@ -230,7 +231,7 @@
 					total: item.price
 				}
 
-				let index = this.itemIndex(this.newItems)
+				var index = this.cartIndex(this.newItems)
 
 				if (index !== undefined)
 				{
