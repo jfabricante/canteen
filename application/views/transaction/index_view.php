@@ -269,12 +269,10 @@
 			},
 			clearItems: function()
 			{
-				for(let [index, val] of this.cart.entries())
-				{
-					this.cart.splice(index, this.cart.length)
-				}
+				this.cart.splice(0, this.cart.length)
 
 				this.grandTotal = 0
+			},
 			updateGrandtotal: function() {
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			}
