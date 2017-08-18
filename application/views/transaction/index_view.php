@@ -273,6 +273,19 @@
 
 				this.grandTotal = 0
 			},
+			editItem: function(index)
+			{
+				this.newItems = {
+						id: this.cart[index].id,
+						name: this.cart[index].name,
+						price: this.cart[index].price,
+						quantity: this.cart[index].quantity,
+						total: this.cart[index].total
+					}
+
+				this.itemIndex = index
+				console.log(this.itemIndex)
+			},
 			updateGrandtotal: function() {
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			}
