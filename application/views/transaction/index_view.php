@@ -58,55 +58,60 @@
 					<!-- End of content -->
 				</div>
 				<!-- End of danger -->
-				<!-- col-md-6 -->
-				<div class="col-md-6">
-					<!-- box-danger -->
-					<div class="box box-danger">
-						<div class="box-header with-border">
-							<h3 class="box-title">Form</h3>
+				<!-- row -->
+				<div class="row">
+					<!-- col-md-6 -->
+					<div class="col-md-6">
+						<!-- box-danger -->
+						<div class="box box-danger">
+							<div class="box-header with-border">
+								<h3 class="box-title">Form</h3>
+							</div>
+
+							<div class="box-body">
+								<!-- Form -->
+								<form id="itemForm" v-on:submit.prevent="updateItem" method="post">
+									<div class="form-group hidden">
+										<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
+									</div>
+
+									<div class="form-group">
+										<label for="item">Item</label>
+										<input type="text" class="form-control" id="item" name="item" v-model="newItems.name" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
+										<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
+										<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
+									</div>
+
+									<div class="form-group hidden">
+										<label for="price">Price</label>
+										<input type="text" class="form-control" id="price" name="price" v-model="newItems.price">
+									</div>
+
+									<div class="form-group">
+										<label for="quantity">Quantity</label>
+										<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" autofocus="true"  v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
+										<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
+										<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
+									</div>
+
+									<div class="form-group hidden">
+										<label for="total">Total</label>
+										<input type="text" class="form-control" id="total" name="total" v-model="newItems.total" v-bind:value="Number(newItems.quantity) * newItems.price">
+									</div>
+								
+									<div class="form-group pull-right">
+										<input type="submit" value="Update" class="btn btn-flat btn-danger">
+									</div>
+								</form><!-- End Form -->
+							</div>
+							<!-- /box-body -->
 						</div>
-
-						<div class="box-body">
-							<!-- Form -->
-							<form id="itemForm" v-on:submit.prevent="updateItem" method="post">
-								<div class="form-group hidden">
-									<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
-								</div>
-
-								<div class="form-group">
-									<label for="item">Item</label>
-									<input type="text" class="form-control" id="item" name="item" v-model="newItems.name" readonly v-bind:class="{'input': true, 'is-danger': errors.has('item') }">
-									<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
-									<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
-								</div>
-
-								<div class="form-group hidden">
-									<label for="price">Price</label>
-									<input type="text" class="form-control" id="price" name="price" v-model="newItems.price">
-								</div>
-
-								<div class="form-group">
-									<label for="quantity">Quantity</label>
-									<input type="text" class="form-control" id="quantity" name="quantity" v-model="newItems.quantity" autofocus="true"  v-validate="'required'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
-									<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
-									<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
-								</div>
-
-								<div class="form-group hidden">
-									<label for="total">Total</label>
-									<input type="text" class="form-control" id="total" name="total" v-model="newItems.total" v-bind:value=" newItems.total = Number(newItems.quantity) * newItems.price">
-								</div>
-							
-								<div class="form-group pull-right">
-									<input type="submit" value="Update" class="btn btn-flat btn-danger">
-								</div>
-							</form><!-- End Form -->
-						</div>
-						<!-- /box-body -->
+						<!-- /box-danger -->
 					</div>
-					<!-- /box-danger -->
+					<!-- /col-md-6 -->
 				</div>
-				<!-- /col-md-6 -->
+				<!-- /row -->
+				
 			</div>
 			<!-- End of col-md-4 -->
 			<!-- Items -->
