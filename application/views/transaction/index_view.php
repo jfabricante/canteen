@@ -249,11 +249,14 @@
 					}
 
 					this.cart.splice(index, 1, this.newItems)
+					this.itemIndex = index
+					this.$refs.quantity.focus()
 				}
 				else
 				{
 					this.cart.push(this.newItems)
 					this.itemIndex = this.cartIndex(this.newItems)
+					this.$refs.quantity.focus()
 				}
 
 				this.updateGrandtotal()
@@ -280,6 +283,8 @@
 			},
 			editItem: function(index)
 			{
+				this.itemIndex = index ? index : this.itemIndex
+
 				this.newItems = {
 						id: this.cart[index].id,
 						name: this.cart[index].name,
@@ -288,7 +293,7 @@
 						total: this.cart[index].total
 					}
 
-				this.itemIndex = index
+				this.$refs.quantity.focus()
 				console.log(this.itemIndex)
 			},
 			updateItem: function()
