@@ -21,7 +21,7 @@
 						<table class="table table-condensed table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>Items</th>
+									<th>Item</th>
 									<th>Price</th>
 									<th>Quantity</th>
 									<th>Total</th>
