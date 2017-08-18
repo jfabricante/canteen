@@ -308,6 +308,12 @@
 
 				});
 			},
+			deleteItem: function(index)
+			{
+				this.cart.splice(index, 1)
+
+				this.updateGrandtotal()
+			},
 			updateGrandtotal: function() {
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			}
