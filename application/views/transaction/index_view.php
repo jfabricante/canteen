@@ -129,7 +129,55 @@
 								</form>
 								<!-- End Form -->		
 							</div>
-							<!-- /box-body -->
+							<!-- /col-md-12 -->
+
+							<!-- col-md-12 -->
+							<div class="col-md-12">
+								<!-- Calculator -->
+								<div class="calculator text-center">
+									<ul class="list-group">
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(7)">7</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(8)">8</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(9)">9</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(4)">4</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(5)">5</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(6)">6</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(2)">2</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(0)">0</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="btnClick('.')">.</button>
+										</li>
+										<li class="col-md-4 list-group-item">
+											<button class="btn btn-flat btn-block" v-on:click="removeChar"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+										</li>
+									</ul>
+								</div>
+								<!-- /Calculator -->
+							</div>
+							<!-- /col-md-12 -->
+
 						</div>
 						<!-- /box-danger -->
 					</div>
