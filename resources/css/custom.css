@@ -177,3 +177,12 @@ body.modal-open {
 div.dropdown-menu.open{
 	z-index: 1031 !important;
 }
+
+/**
+ * New Style
+ */
+.items .img-responsive.item-thumbnail {
+	width: 100px !important;
+	text-align: center;
+}
+
