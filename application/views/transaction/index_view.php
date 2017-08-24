@@ -85,10 +85,17 @@
 									</div>
 
 									<div class="form-group">
-										<label for="item">Item</label>
-										<input type="text" class="form-control" id="item" name="item" v-model="newItems.name" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
-										<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
-										<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
+										<div class="row">
+											<label for="item" class="col-sm-3 control-label">Item</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="item" name="item" v-model="_.toUpper(newItems.name)" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
+											</div>
+
+											<div class="col-sm-12">
+												<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
+												<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
+											</div>
+										</div>
 									</div>
 
 									<div class="form-group hidden">
@@ -97,10 +104,18 @@
 									</div>
 
 									<div class="form-group">
-										<label for="quantity">Quantity</label>
-										<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" autofocus="true"  v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
-										<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
-										<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
+										<div class="row">
+											<label for="quantity" class="col-sm-3 control-label">Quantity</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
+											</div>
+										</div>
+
+										<div class="col-sm-12">
+											<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
+											<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
+										</div>
+
 									</div>
 
 									<div class="form-group hidden">
