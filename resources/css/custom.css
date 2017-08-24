@@ -199,3 +199,11 @@ div.dropdown-menu.open{
 	margin-bottom: 5px;
 }
 
+/**
+ * Cart
+ */
+.cart-items .box-body {
+	height: 75vh;
+	overflow-y: scroll;
+}
+
