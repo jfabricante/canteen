@@ -70,7 +70,7 @@
 
 							<div class="box-body">
 								<!-- Form -->
-								<form id="itemForm" v-on:submit.prevent="updateItem" method="post">
+								<form id="itemForm" v-on:submit.prevent="updateItem" method="post" autocomplete="off">
 									<div class="form-group hidden">
 										<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
 									</div>
