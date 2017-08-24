@@ -323,9 +323,10 @@
 
 				this.updateGrandtotal()
 			},
-			updateGrandtotal: function() {
+			updateGrandtotal: function() 
+			{
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
-			}
+			},
 		},
 	});
 
