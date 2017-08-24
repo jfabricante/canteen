@@ -417,6 +417,16 @@
 			{
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
+			btnClick: function(value)
+			{
+				// Check if quantity is editable
+				if (this.quantityState === true)
+				{
+					var concat = _.toString(this.newItems.quantity) + _.toString(value)
+
+					this.newItems.quantity = concat
+				}
+			},
 		},
 	});
 
