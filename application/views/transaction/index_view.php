@@ -295,7 +295,8 @@
 		methods: {
 			fetchCategories: function()
 			{
-				axios.get(appUrl + '/category/ajax_category_list').then((response) => {
+				axios.get(appUrl + '/category/ajax_category_list')
+				.then((response) => {
 					this.categories = response.data
 				})
 				.catch(function (err) {
@@ -304,14 +305,16 @@
 			},
 			fetchCategoryItems: function()
 			{
-				axios.get(appUrl + '/category/ajax_category_items').then((response) => {
+				axios.get(appUrl + '/category/ajax_category_items')
+				.then((response) => {
 					this.categoryItems = response.data
 				})
 				.catch(function (err) {
 					console.log(err.message);
 				});
 			},
-			addItem: function(item) {
+			addItem: function(item) 
+			{
 				this.newItems = {
 					id: item.id,
 					name: item.name,
@@ -334,15 +337,15 @@
 
 					this.cart.splice(index, 1, this.newItems)
 					this.itemIndex = index
-					this.$refs.quantity.focus()
 				}
 				else
 				{
 					this.cart.push(this.newItems)
 					this.itemIndex = this.cartIndex(this.newItems)
-					this.$refs.quantity.focus()
 				}
 
+				this.quantityState = true
+				this.$refs.quantity.focus()
 				this.updateGrandtotal()
 			},
 			cartIndex: function(item) {
