@@ -217,3 +217,18 @@ div.dropdown-menu.open{
 	overflow-x: hidden;
 }
 
+.calculator .list-group {
+	margin-bottom: 0;
+}
+
+.calculator .list-group-item {
+	border-radius: 0;
+	border: 0;
+	height: auto;
+	padding: 2px;
+}
+
+.calculator .list-group-item .btn {
+	font-size: 30px;	
+}
+
