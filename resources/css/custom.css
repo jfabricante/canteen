@@ -195,3 +195,7 @@ div.dropdown-menu.open{
 	height: 200px;
 }
 
+.list-group-item p {
+	margin-bottom: 5px;
+}
+
