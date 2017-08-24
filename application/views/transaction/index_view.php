@@ -286,6 +286,7 @@
 			}],
 			grandTotal: 0,
 			itemIndex: undefined,
+			quantityState: false,
 		},
 		created() {
 			this.fetchCategories()
