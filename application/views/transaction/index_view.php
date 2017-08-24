@@ -69,9 +69,17 @@
 			</div>
 			<!-- End of col-md-4 -->
 
-							<div class="box-body">
+			<!-- col-md-6 -->
+			<div class="col-md-2">
+				<!-- box-danger -->
+				<div class="box box-danger cart-form">
+					<div class="box-body">
+						<!-- Row -->
+						<div class="row">
+							<!-- col-md-12 -->
+							<div class="col-md-12">
 								<!-- Form -->
-								<form id="itemForm" v-on:submit.prevent="updateItem" method="post" autocomplete="off">
+								<form id="itemForm" class="form-horizonal" v-on:submit.prevent="updateItem" method="post" autocomplete="off">
 									<div class="form-group hidden">
 										<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
 									</div>
