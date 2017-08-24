@@ -5,7 +5,7 @@
 		<!-- row -->
 		<div class="row">
 			<!-- col-md-6 -->
-			<div class="col-md-5">
+			<div class="col-md-4">
 				<!-- Box danger -->
 				<?php echo $this->session->flashdata('message');  ?>
 				
