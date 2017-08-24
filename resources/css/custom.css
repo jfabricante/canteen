@@ -232,3 +232,10 @@ div.dropdown-menu.open{
 	font-size: 30px;	
 }
 
+.checkout {
+	margin-top: 15px;
+}
+
+.total-label {
+	font-size: 18px;
+}
