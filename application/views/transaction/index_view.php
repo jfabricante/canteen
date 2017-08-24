@@ -444,6 +444,18 @@
 					this.$set(this.newItems,  'quantity', quantity)
 				}
 			},
+			showCheckoutPane: function()
+			{
+				var $checkout_pane = $('#checkout-pane')
+				var $nav_tabs = $('.nav-tabs')
+
+				// Remove the active states on its siblings
+				$checkout_pane.siblings().removeClass('active')
+				$checkout_pane.addClass('active')
+
+				// Remove nav-tab active states
+				$nav_tabs.children().removeClass('active')
+			},
 		},
 	});
 
