@@ -178,17 +178,27 @@
 							</div>
 							<!-- /col-md-12 -->
 
+							<!-- col-md-12 -->
+							<div class="col-md-12">
+								<div class="checkout text-center">
+									<button class="btn btn-flat btn-danger btn-block" v-on:click="testPush">
+										<i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
+									</button>
+								</div>
+							</div>
+							<!-- /col-md-12 -->
+
 						</div>
-						<!-- /box-danger -->
+						<!-- /Row -->
 					</div>
-					<!-- /col-md-6 -->
+					<!-- /box-body -->
 				</div>
-				<!-- /row -->
-				
+				<!-- /box-danger -->
 			</div>
-			<!-- End of col-md-4 -->
+			<!-- /col-md-3 -->
+
 			<!-- Items -->
-			<div class="col-md-7">
+			<div class="col-md-6">
 				<!-- Danger box -->
 				<div class="box box-danger">
 					
