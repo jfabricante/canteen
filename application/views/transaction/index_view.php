@@ -50,18 +50,24 @@
 						</table>
 						<!-- End of table -->
 					</div>
+
+					<div class="box-footer text-left">
+						<div class="row">
+							<div class="total-label">
+								<div class="col-md-2 col-md-offset-6">
+									<strong>Total: </strong>
+								</div>
+								<div class="col-md-3">
+									<strong>&#8369;  {{ grandTotal }}</strong>
+								</div>
+							</div>
+						</div>
+					</div>
 					<!-- End of content -->
 				</div>
 				<!-- End of danger -->
-				<!-- row -->
-				<div class="row">
-					<!-- col-md-6 -->
-					<div class="col-md-6">
-						<!-- box-danger -->
-						<div class="box box-danger">
-							<div class="box-header with-border">
-								<h3 class="box-title">Form</h3>
-							</div>
+			</div>
+			<!-- End of col-md-4 -->
 
 							<div class="box-body">
 								<!-- Form -->
