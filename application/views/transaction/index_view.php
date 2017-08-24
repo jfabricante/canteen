@@ -181,7 +181,7 @@
 							<!-- col-md-12 -->
 							<div class="col-md-12">
 								<div class="checkout text-center">
-									<button class="btn btn-flat btn-danger btn-block" v-on:click="testPush">
+									<button class="btn btn-flat btn-danger btn-block" v-on:click="checkout">
 										<i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
 									</button>
 								</div>
@@ -234,13 +234,13 @@
 									</div>
 									<!-- End of row -->
 								</div>
-
+								<!-- Tab pane -->
+								
 								<!-- Checkout pane -->
 								<div class="tab-pane" id="checkout-pane">
-									This is a test
+									{{ grandTotal }}
 								</div>
 								<!-- /Checkout pane -->
-								<!-- Tab pane -->
 							</div>
 							<!-- /.tab-content -->
 						</div>
@@ -422,6 +422,25 @@
 			updateGrandtotal: function() 
 			{
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
+			},
+			checkout: function()
+			{
+				axios({
+					url: appUrl + '/transaction/store',
+					method: 'post',
+					data: this.cart,
+				})
+				.then(function (response) {
+					// your action after success
+					console.log(response);
+
+				})
+				.catch(function (error) {
+					// your action on error success
+					console.log(error);
+				});
+
+				this.showCheckoutPane()
 			},
 			btnClick: function(value)
 			{
