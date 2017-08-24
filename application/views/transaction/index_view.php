@@ -234,6 +234,12 @@
 									</div>
 									<!-- End of row -->
 								</div>
+
+								<!-- Checkout pane -->
+								<div class="tab-pane" id="checkout-pane">
+									This is a test
+								</div>
+								<!-- /Checkout pane -->
 								<!-- Tab pane -->
 							</div>
 							<!-- /.tab-content -->
