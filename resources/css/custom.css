@@ -186,3 +186,12 @@ div.dropdown-menu.open{
 	text-align: center;
 }
 
+.items .table>tbody>tr>td {
+	vertical-align: middle !important;
+}
+
+.list-group-item {
+	cursor: pointer;
+	height: 200px;
+}
+
