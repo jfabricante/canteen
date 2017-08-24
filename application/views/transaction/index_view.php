@@ -126,7 +126,8 @@
 									<div class="form-group pull-right">
 										<input type="submit" value="Update" class="btn btn-flat btn-danger">
 									</div>
-								</form><!-- End Form -->
+								</form>
+								<!-- End Form -->		
 							</div>
 							<!-- /box-body -->
 						</div>
