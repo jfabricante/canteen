@@ -9,7 +9,7 @@
 				<!-- Box danger -->
 				<?php echo $this->session->flashdata('message');  ?>
 				
-				<div class="box box-danger">
+				<div class="box box-danger cart-items">
 					<!-- Content -->
 					<div class="box-header with-border">
 						<h3 class="box-title">Items</h3>
