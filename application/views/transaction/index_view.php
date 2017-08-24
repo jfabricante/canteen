@@ -427,6 +427,17 @@
 					this.newItems.quantity = concat
 				}
 			},
+			removeChar: function()
+			{
+				// Check if quantity is editable
+				if (this.quantityState === true)
+				{
+					var quantity = _.toString(this.newItems.quantity)
+					quantity = quantity.substring(0, this.newItems.quantity.length - 1)
+
+					this.$set(this.newItems,  'quantity', quantity)
+				}
+			},
 		},
 	});
 
