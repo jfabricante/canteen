@@ -283,7 +283,7 @@
 			},
 			editItem: function(index)
 			{
-				this.itemIndex = index ? index : this.itemIndex
+				this.itemIndex = index
 
 				this.newItems = {
 						id: this.cart[index].id,
@@ -294,7 +294,6 @@
 					}
 
 				this.$refs.quantity.focus()
-				console.log(this.itemIndex)
 			},
 			updateItem: function()
 			{
