@@ -380,11 +380,13 @@
 						total: this.cart[index].total
 					}
 
+				this.quantityState = true
 				this.$refs.quantity.focus()
 			},
 			updateItem: function()
 			{
-				this.$validator.validateAll().then((result) => {
+				this.$validator.validateAll()
+				.then((result) => {
 					if (result)
 					{
 						this.newItems.total = Number(this.newItems.price) * this.newItems.quantity
@@ -403,6 +405,7 @@
 					}
 
 				});
+				this.quantityState = false
 			},
 			deleteItem: function(index)
 			{
