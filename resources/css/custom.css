@@ -207,3 +207,6 @@ div.dropdown-menu.open{
 	overflow-y: scroll;
 }
 
+.cart-form .form-group {
+	margin-bottom: 10px;
+}
