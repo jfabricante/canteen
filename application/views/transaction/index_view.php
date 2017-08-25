@@ -238,6 +238,93 @@
 
 								<!-- Checkout pane -->
 								<div class="tab-pane" id="checkout-pane">
+									<form class="form-horizonal">
+										<fieldset>
+											<legend>Team Member Details</legend>
+											<!-- Row -->
+											<div class="row">
+												<!-- TM details -->
+												<div class="col-md-9">
+													<div class="form-group">
+														<label class="col-sm-4 control-label" for="employee_no">Employee No.</label>
+														<div class="col-sm-8">
+															<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:keyup="fetchDetails">
+															<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
+															<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
+														</div>
+													</div>
+													<div>
+														<label class="col-sm-4 control-label" for="employee_name" >Employee Name</label>
+														<div class="col-sm-8">
+															<input type="text" name="employee_name" id="employee_name" class="form-control" readonly>
+														</div>
+													</div>
+													<div>
+														<label class="col-sm-4 control-label" for="meal_allowance">Meal Allowance</label>
+														<div class="col-sm-8">
+															<input type="text" name="meal_allowanace" id="meal_allowance" class="form-control" readonly>
+														</div>
+													</div>
+												</div>
+												<!-- /TM details -->
+
+												<!-- TM thumbnail -->
+												<div class="col-md-3">
+													<img v-bind:src="imgUrl + 'no-image.png'" class="img-responsive">
+												</div>
+												<!-- /thumbnail -->
+											</div>
+											<!-- /Row -->
+										</fieldset>
+
+										<fieldset class="form-group">
+											<legend>Transaction Details</legend>
+											<!-- row -->
+											<div class="row">
+												<div class="col-md-10">
+													<div>
+														<label class="col-sm-4 control-label" for="total_amount">Total Amount</label>
+														<div class="col-sm-8">
+															<input type="text" name="total_amount" id="total_amount" class="form-control" v-bind:value="grandTotal" readonly>
+														</div>
+													</div>
+													<div>
+														<label class="col-sm-4 control-label" for="cash">Cash</label>
+														<div class="col-sm-8">
+															<input type="text" name="cash" id="cash" class="form-control">
+														</div>
+													</div>
+													<div>
+														<label class="col-sm-4 control-label" for="change">Change</label>
+														<div class="col-sm-8">
+															<input type="text" name="change" id="change" class="form-control">
+														</div>
+													</div>
+
+													<div>
+														<label class="col-sm-4 control-label" for="remaining_amount">Remaining Amount</label>
+														<div class="col-sm-8">
+															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="grandTotal" readonly>
+														</div>
+													</div>
+
+													<div>
+														<label class="col-sm-4 control-label" for="remaining_credit">Remaining Credit</label>
+														<div class="col-sm-8">
+															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="grandTotal" readonly>
+														</div>
+													</div>
+
+													<div>
+														<div class="col-sm-12">
+															<button class="btn btn-flat btn-danger pull-right">Enter</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- /row -->
+										</fieldset>
+									</form>
 								</div>
 								<!-- /Checkout pane -->
 							</div>
