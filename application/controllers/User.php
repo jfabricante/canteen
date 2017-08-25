@@ -44,4 +44,13 @@ class User extends CI_Controller {
 	{
 		$this->user->truncate_tbl();
 	}
+
+	public function entity()
+	{
+		$config =  array(
+				'emp_no' => $this->input->get('employee_no')
+			);
+
+		echo json_encode($this->user->read($config));
+	}
 }
