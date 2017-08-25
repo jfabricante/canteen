@@ -256,13 +256,13 @@
 													<div>
 														<label class="col-sm-4 control-label" for="employee_name" >Employee Name</label>
 														<div class="col-sm-8">
-															<input type="text" name="employee_name" id="employee_name" class="form-control" readonly>
+															<input type="text" name="employee_name" id="employee_name" class="form-control" readonly v-model="employee.fullname">
 														</div>
 													</div>
 													<div>
 														<label class="col-sm-4 control-label" for="meal_allowance">Meal Allowance</label>
 														<div class="col-sm-8">
-															<input type="text" name="meal_allowanace" id="meal_allowance" class="form-control" readonly>
+															<input type="text" name="meal_allowanace" id="meal_allowance" class="form-control" readonly v-model="employee.allowance">
 														</div>
 													</div>
 												</div>
