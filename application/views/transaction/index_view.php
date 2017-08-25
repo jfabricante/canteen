@@ -86,8 +86,8 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label for="item" class="col-sm-3 control-label">Item</label>
-											<div class="col-sm-9">
+											<label for="item" class="col-sm-4 control-label">Item</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="item" name="item" v-model="_.toUpper(newItems.name)" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
 											</div>
 
@@ -105,8 +105,8 @@
 
 									<div class="form-group">
 										<div class="row">
-											<label for="quantity" class="col-sm-3 control-label">Quantity</label>
-											<div class="col-sm-9">
+											<label for="quantity" class="col-sm-4 control-label">Quantity</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
 											</div>
 										</div>
@@ -119,7 +119,7 @@
 									</div>
 
 									<div class="form-group hidden">
-										<label for="total">Total</label>
+										<label for="total">Total Amount</label>
 										<input type="text" class="form-control" id="total" name="total" v-model="newItems.total" v-bind:value="Number(newItems.quantity) * newItems.price">
 									</div>
 								
@@ -235,10 +235,9 @@
 									<!-- End of row -->
 								</div>
 								<!-- Tab pane -->
-								
+
 								<!-- Checkout pane -->
 								<div class="tab-pane" id="checkout-pane">
-									{{ grandTotal }}
 								</div>
 								<!-- /Checkout pane -->
 							</div>
