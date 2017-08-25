@@ -203,7 +203,7 @@ div.dropdown-menu.open{
  * Cart
  */
 .cart-items .box-body {
-	height: 75vh;
+	max-height: 75vh;
 	overflow-y: scroll;
 }
 
@@ -212,7 +212,7 @@ div.dropdown-menu.open{
 }
 
 .tab-content {
-	height: 73vh;
+	max-height: 73vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
