@@ -108,6 +108,28 @@ class User_model extends CI_Model {
 		return $data->result_array();
 	}
 
+	public function read(array $params)
+	{
+		$fields = array(
+				'a.id',
+				'a.emp_no',
+				'a.fullname',
+				'b.meal_allowance'
+			);
+
+		$clause = array(
+				'a.emp_no' => $params['emp_no']
+			);
+
+		$query = $this->db->select($fields)
+				->from('users_tbl AS a')
+				->join('users_meal_allowance_tbl AS b', 'a.id = b.user_id', 'INNER')
+				->where($clause)
+				->get();
+
+		return $query->row();
+	}
+
 	public function fetch_roles($type = 'object')
 	{
 		if ($type == 'object')
