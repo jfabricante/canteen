@@ -631,6 +631,20 @@
 					this.remaining_amount = Math.abs(this.employee.allowance - this.grandTotal)
 				}
 			},
+			updateValues: function() {
+				if (this.cash.amount > this.grandTotal) {
+					var change = this.cash.amount - this.grandTotal
+
+					this.$set(this.cash, 'change', change)
+
+					this.remaining_amount = 0
+				}
+				else {
+					this.remaining_amount = this.grandTotal - this.cash.amount
+
+					this.$set(this.cash, 'change', 0)
+				}
+			}
 		},
 	});
 
