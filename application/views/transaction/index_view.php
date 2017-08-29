@@ -238,7 +238,7 @@
 
 								<!-- Checkout pane -->
 								<div class="tab-pane" id="checkout-pane">
-									<form class="form-horizonal">
+									<form class="form-horizonal" autocomplete="off">
 										<fieldset>
 											<legend>Team Member Details</legend>
 											<!-- Row -->
