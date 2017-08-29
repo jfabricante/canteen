@@ -578,6 +578,14 @@
 					$nav_tabs.children().removeClass('active')
 				}
 			},
+			deductTotalToAllowance: function() {
+				if (this.employee.allowance >= this.grandTotal) {
+					this.remaining_credit = this.employee.allowance - this.grandTotal
+				}
+				else if (this.grandTotal > this.employee.allowance) {
+					this.remaining_amount = Math.abs(this.employee.allowance - this.grandTotal)
+				}
+			},
 		},
 	});
 
