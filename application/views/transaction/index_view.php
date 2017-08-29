@@ -384,9 +384,15 @@
 				allowance: 0,
 				state: false
 			},
+			cash: {
+				amount: 0,
+				change: 0,
+				state: false
+			},
 			grandTotal: 0,
 			itemIndex: undefined,
-			quantityState: false,
+			remaining_amount: 0,
+			remaining_credit: 0,
 		},
 		created() {
 			this.fetchCategories()
