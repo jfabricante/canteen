@@ -369,13 +369,14 @@
 			categories: [],
 			categoryItems: [],
 			cart: [],
-			newItems: [{
+			newItems: {
 				id: '',
 				name: '',
 				price: '',
 				quantity: '',
 				total: '',
-			}],
+				state: false,
+			},
 			grandTotal: 0,
 			itemIndex: undefined,
 			quantityState: false,
