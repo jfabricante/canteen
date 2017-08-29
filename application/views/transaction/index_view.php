@@ -578,6 +578,37 @@
 					$nav_tabs.children().removeClass('active')
 				}
 			},
+			readDetails: function() {
+				if (this.employee.no.length == 6) {
+					axios.get(appUrl + '/user/entity', {
+						params: {
+							employee_no: this.employee.no
+						}
+					})
+					.then((response) => {
+						var user = response.data
+
+						console.log(user)
+
+						this.employee = {
+							id: user.id,
+							no: user.emp_no,
+							fullname: user.fullname,
+							allowance: user.meal_allowance
+						}
+
+						this.deductTotalToAllowance()
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+				}
+				else {
+					this.employee.id = ''
+					this.employee.fullname = ''
+					this.employee.allowance = ''
+				}
+			},
 			deductTotalToAllowance: function() {
 				if (this.employee.allowance >= this.grandTotal) {
 					this.remaining_credit = this.employee.allowance - this.grandTotal
