@@ -248,7 +248,7 @@
 													<div class="form-group">
 														<label class="col-sm-4 control-label" for="employee_no">Employee No.</label>
 														<div class="col-sm-8">
-															<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:keyup="fetchDetails">
+															<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
 															<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
 															<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
 														</div>
@@ -291,27 +291,27 @@
 													<div>
 														<label class="col-sm-4 control-label" for="cash">Cash</label>
 														<div class="col-sm-8">
-															<input type="text" name="cash" id="cash" class="form-control">
+															<input type="text" name="cash" id="cash" class="form-control" v-model="cash.amount" v-on:click="enableCashField">
 														</div>
 													</div>
 													<div>
 														<label class="col-sm-4 control-label" for="change">Change</label>
 														<div class="col-sm-8">
-															<input type="text" name="change" id="change" class="form-control">
+															<input type="text" name="change" id="change" class="form-control" v-model="cash.change" readonly>
 														</div>
 													</div>
 
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_amount">Remaining Amount</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="grandTotal" readonly>
+															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="grandTotal" readonly v-model="remaining_amount">
 														</div>
 													</div>
 
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_credit">Remaining Credit</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="grandTotal" readonly>
+															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="grandTotal" readonly v-model="remaining_credit">
 														</div>
 													</div>
 
