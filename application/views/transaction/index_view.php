@@ -398,6 +398,20 @@
 			this.fetchCategories()
 			this.fetchCategoryItems()
 		},
+		watch: {
+			'employee.no': function() {
+				this.readDetails()
+			},
+			'cash.amount': function() {
+				this.updateValues()
+			},
+			grandTotal: function () {
+				this.updateValues()
+			},
+			cart: function() {
+				this.updateGrandtotal()
+			},
+		},
 		methods: {
 			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
