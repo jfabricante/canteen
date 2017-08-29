@@ -616,6 +616,13 @@
 
 				this.manageState(this.cash)
 			},
+			manageState: function(state) {
+				this.newItems.state = false
+				this.employee.state = false
+				this.cash.state = false
+
+				this.$set(state, 'state', true)
+			},
 			deductTotalToAllowance: function() {
 				if (this.employee.allowance >= this.grandTotal) {
 					this.remaining_credit = this.employee.allowance - this.grandTotal
