@@ -377,6 +377,13 @@
 				total: '',
 				state: false,
 			},
+			employee: {
+				id: '',
+				no: '',
+				fullname: '',
+				allowance: 0,
+				state: false
+			},
 			grandTotal: 0,
 			itemIndex: undefined,
 			quantityState: false,
