@@ -399,8 +399,7 @@
 			this.fetchCategoryItems()
 		},
 		methods: {
-			fetchCategories: function()
-			{
+			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
 				.then((response) => {
 					this.categories = response.data
@@ -409,8 +408,7 @@
 					console.log(err.message);
 				});
 			},
-			fetchCategoryItems: function()
-			{
+			fetchCategoryItems: function() {
 				axios.get(appUrl + '/category/ajax_category_items')
 				.then((response) => {
 					this.categoryItems = response.data
@@ -419,8 +417,7 @@
 					console.log(err.message);
 				});
 			},
-			addItem: function(item) 
-			{
+			addItem: function(item) {
 				this.newItems = {
 					id: item.id,
 					name: item.name,
@@ -431,8 +428,7 @@
 
 				var index = this.cartIndex(this.newItems)
 
-				if (index !== undefined)
-				{
+				if (index !== undefined) {
 					this.newItems = {
 						id: this.cart[index].id,
 						name: this.cart[index].name,
@@ -444,15 +440,13 @@
 					this.cart.splice(index, 1, this.newItems)
 					this.itemIndex = index
 				}
-				else
-				{
+				else {
 					this.cart.push(this.newItems)
 					this.itemIndex = this.cartIndex(this.newItems)
 				}
 
-				this.quantityState = true
+				this.manageState(this.newItems)
 				this.$refs.quantity.focus()
-				this.updateGrandtotal()
 			},
 			cartIndex: function(item) {
 				var i = undefined
@@ -468,14 +462,10 @@
 
 				return i
 			},
-			clearItems: function()
-			{
+			clearItems: function() {
 				this.cart.splice(0, this.cart.length)
-
-				this.grandTotal = 0
 			},
-			editItem: function(index)
-			{
+			editItem: function(index) {
 				this.itemIndex = index
 
 				this.newItems = {
@@ -486,11 +476,10 @@
 						total: this.cart[index].total
 					}
 
-				this.quantityState = true
+				this.manageState(this.newItems)
 				this.$refs.quantity.focus()
 			},
-			updateItem: function()
-			{
+			updateItem: function() {
 				this.$validator.validateAll()
 				.then((result) => {
 					if (result)
@@ -498,8 +487,6 @@
 						this.newItems.total = Number(this.newItems.price) * this.newItems.quantity
 
 						this.cart.splice(this.itemIndex, 1, this.newItems)
-
-						this.updateGrandtotal()
 
 						this.newItems = {
 								id: '',
@@ -511,20 +498,14 @@
 					}
 
 				});
-				this.quantityState = false
 			},
-			deleteItem: function(index)
-			{
+			deleteItem: function(index) {
 				this.cart.splice(index, 1)
-
-				this.updateGrandtotal()
 			},
-			updateGrandtotal: function() 
-			{
+			updateGrandtotal: function() {
 				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
-			checkout: function()
-			{
+			checkout: function() {
 				axios({
 					url: appUrl + '/transaction/store',
 					method: 'post',
@@ -542,31 +523,47 @@
 
 				this.showCheckoutPane()
 			},
-			btnClick: function(value)
-			{
+			btnClick: function(value) {
 				// Check if quantity is editable
-				if (this.quantityState === true)
-				{
+				if (this.newItems.state === true) {
 					var concat = _.toString(this.newItems.quantity) + _.toString(value)
 
-					this.newItems.quantity = concat
+					this.$set(this.newItems, 'quantity', concat)
+				}
+				else if (this.employee.state === true) {
+					var concat = _.toString(this.employee.no) + _.toString(value)
+
+					this.$set(this.employee, 'no', concat)
+				}
+				else if (this.cash.state === true) {
+					var concat = _.toString(this.cash.amount) + _.toString(value)
+
+					this.$set(this.cash, 'amount', concat)
 				}
 			},
-			removeChar: function()
-			{
+			removeChar: function() {
 				// Check if quantity is editable
-				if (this.quantityState === true)
-				{
+				if (this.newItems.state === true) {
 					var quantity = _.toString(this.newItems.quantity)
 					quantity = quantity.substring(0, this.newItems.quantity.length - 1)
 
 					this.$set(this.newItems, 'quantity', quantity)
 				}
+				else if (this.employee.state === true) {
+					var employee_no = _.toString(this.employee.no)
+					employee_no = employee_no.substring(0, this.employee.no.length - 1)
+
+					this.$set(this.employee, 'no', employee_no)
+				}
+				else if (this.cash.state === true) {
+					var amount = _.toString(this.cash.amount)
+					amount = amount.substring(0, this.cash.amount.length - 1)
+
+					this.$set(this.cash, 'amount', amount)
+				}
 			},
-			showCheckoutPane: function()
-			{
-				if (this.grandTotal > 0)
-				{
+			showCheckoutPane: function() {
+				if (this.grandTotal > 0) {
 					var $checkout_pane = $('#checkout-pane')
 					var $nav_tabs = $('.nav-tabs')
 
