@@ -609,6 +609,13 @@
 					this.employee.allowance = ''
 				}
 			},
+			enableCashField: function() {
+				if (this.cash.amount == 0) {
+					this.$set(this.cash, 'amount', '')
+				}
+
+				this.manageState(this.cash)
+			},
 			deductTotalToAllowance: function() {
 				if (this.employee.allowance >= this.grandTotal) {
 					this.remaining_credit = this.employee.allowance - this.grandTotal
