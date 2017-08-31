@@ -656,19 +656,37 @@
 				}
 			},
 			updateValues: function() {
-				if (this.cash.amount > this.grandTotal) {
-					var change = this.cash.amount - this.grandTotal
+				this.remaining_amount = Number(this.grandTotal) - Number(this.employee.allowance) - Number(this.cash.amount)
 
-					this.$set(this.cash, 'change', change)
+				if (this.cash.amount > 0)
+				{
+					if (this.remaining_amount < 0)
+					{
+						var change = Math.abs(this.remaining_amount) > this.employee.allowance ? Math.abs(this.remaining_amount) - this.employee.allowance : Math.abs(this.remaining_amount)
 
-					this.remaining_amount = 0
+						this.$set(this.cash, 'change', change)
+						this.remaining_amount = 0
+					}
+					else
+					{
+						this.$set(this.cash, 'change', 0)
+					}
 				}
-				else {
-					this.remaining_amount = this.grandTotal - this.cash.amount
-
-					this.$set(this.cash, 'change', 0)
+				else
+				{
+					if (this.remaining_amount < 0)
+					{
+						this.remaining_credit = Math.abs(this.remaining_amount)
+						this.remaining_amount = 0
+						this.$set(this.cash, 'change', 0)
+					}
+					else
+					{
+						this.remaining_credit = 0
+						this.$set(this.cash, 'change', 0)
+					}
 				}
-			}
+			},
 		},
 	});
 
