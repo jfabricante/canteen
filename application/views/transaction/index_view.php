@@ -647,14 +647,6 @@
 
 				this.$set(state, 'state', true)
 			},
-			deductTotalToAllowance: function() {
-				if (this.employee.allowance >= this.grandTotal) {
-					this.remaining_credit = this.employee.allowance - this.grandTotal
-				}
-				else if (this.grandTotal > this.employee.allowance) {
-					this.remaining_amount = Math.abs(this.employee.allowance - this.grandTotal)
-				}
-			},
 			updateValues: function() {
 				this.remaining_amount = Number(this.grandTotal) - Number(this.employee.allowance) - Number(this.cash.amount)
 
