@@ -621,7 +621,7 @@
 							allowance: user.meal_allowance
 						}
 
-						this.deductTotalToAllowance()
+						this.updateValues()
 					})
 					.catch((error) => {
 						console.log(error)
@@ -630,7 +630,9 @@
 				else {
 					this.employee.id = ''
 					this.employee.fullname = ''
-					this.employee.allowance = ''
+					this.employee.allowance = 0
+
+					this.updateValues()
 				}
 			},
 			enableCashField: function() {
