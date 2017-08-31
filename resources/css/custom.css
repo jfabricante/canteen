@@ -239,3 +239,7 @@ div.dropdown-menu.open{
 .total-label {
 	font-size: 18px;
 }
+
+#transaction-form .form-group .form-control {
+	margin-bottom: 10px;
+}
