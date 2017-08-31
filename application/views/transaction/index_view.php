@@ -291,7 +291,7 @@
 													<div>
 														<label class="col-sm-4 control-label" for="cash">Cash</label>
 														<div class="col-sm-8">
-															<input type="text" name="cash" id="cash" class="form-control" v-model="cash.amount" v-on:click="enableCashField">
+															<input type="text" name="cash" id="cash" class="form-control" v-model="cash.amount" v-on:click="enableCashField" :readonly="toggleCashfield">
 														</div>
 													</div>
 													<div>
