@@ -412,6 +412,19 @@
 				this.updateGrandtotal()
 			},
 		},
+		computed: {
+			toggleCashfield: function() {
+				if (this.employee.allowance > 0)
+				{
+					if (this.remaining_amount > 0)
+						return false
+
+					return true
+				}
+
+				return false
+			}
+		},
 		methods: {
 			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
