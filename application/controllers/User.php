@@ -51,6 +51,6 @@ class User extends CI_Controller {
 				'emp_no' => $this->input->get('employee_no')
 			);
 
-		echo json_encode($this->user->read($config));
+		echo $this->user->read($config) ? json_encode($this->user->read($config)) : '';
 	}
 }
