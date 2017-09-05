@@ -7,6 +7,9 @@ class Transaction extends CI_Controller {
 	{
 		parent::__construct();
 
+		// Set the default timezone
+		date_default_timezone_set('Asia/Manila');
+
 		$this->load->model('transaction_model', 'transaction');
 		$this->load->model('category_model', 'category');
 		$this->load->model('item_model', 'item');
