@@ -42,12 +42,12 @@
 									<td>&#8369;  {{ item.total }}</td>
 									<td>
 										<a href="#" v-on:click="editItem(index)">
-											<i class="fa fa-pencil" aria-hidden="true"></i>	
+											<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>	
 										</a>
 									</td>
 									<td>
 										<a href="#" v-on:click="deleteItem(index)">
-											<i class="fa fa-trash" aria-hidden="true"></i>
+											<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</a>
 									</td>
 								</tr>
