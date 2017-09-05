@@ -23,7 +23,14 @@ class Transaction extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
-	
+	public function store()
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+
+		echo '<pre>';
+		print_r($data);
+		echo '</pre>';
+	}
 
 }
 
