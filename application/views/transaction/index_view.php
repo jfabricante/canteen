@@ -1,3 +1,8 @@
+<style type="text/css">
+	td > a > i {
+		padding: 10px;
+	}
+</style>
 <!-- Items block -->
 <section class="content transaction">
 	<!-- App -->
