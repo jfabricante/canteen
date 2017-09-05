@@ -59,8 +59,8 @@
 					<div class="box-footer text-left">
 						<div class="row">
 							<div class="total-label">
-								<div class="col-md-2 col-md-offset-6">
-									<strong>Total: </strong>
+								<div class="col-md-5 col-md-offset-3">
+									<strong>Total Purchase: </strong>
 								</div>
 								<div class="col-md-3">
 									<strong>&#8369;  {{ totalPurchase }}</strong>
