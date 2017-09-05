@@ -344,16 +344,75 @@
 			<!-- End of column -->
 		</div>
 		<!-- End of row -->
+
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modal">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Isuzu Philippines Receipt</h4>
+					</div>
+
+					<div class="modal-body">
+						<!-- Item table -->
+						<p class="separator">
+							<span>Isuzu Philippines Corporation <br /></span>
+							<span>Transaction #1220422 <br /></span>
+							<span><?php echo date('D, M d, Y h:i:A'); ?></span>
+						</p>
+						<p class="separator">
+							<span v-show="employee.fullname.length > 0">Customer: {{ _.startCase(_.toLower(employee.fullname)) }}<br /></span>
+							<span v-show="employee.allowance.length >= 1">Meal Allowance: {{ employee.allowance }}<br /></span>
+							<span>Cashier: <?php echo ucwords(strtolower($this->session->userdata('fullname'))) ?></span>
+						</p>
+						<table class="table table-condensed">
+							<tbody>
+								<!-- Items header -->
+								<tr>
+									<td>Purchase Items</td>
+								</tr>
+
+								<!-- List of items -->
+								<tr v-for="(item, index) in cart" v-bind:class="{'separator': index === (cart.length - 1)}">
+									<td>{{ _.toUpper(item.name) }}</td>
+									<td>{{ item.quantity + 'x' }}</td>
+									<td>&#8369; {{ item.total }}</td>
+								</tr>
+
+								<!-- Purchase total -->
+								<tr>
+									<td colspan="2">Total: </td>
+									<td>{{ "&#8369; " + totalPurchase }}</td>
+								</tr>
+
+								<!-- Remaining Credit -->
+								<tr>
+									<td colspan="2">Credit: </td>
+									<td> {{ "&#8369; " + remaining_credit }}</td>
+								</tr>
+
+								<!-- Cash tendered -->
+								<tr>
+									<td colspan="2">Cash: </td>
+									<td> {{ "&#8369; " + cash.amount }}</td>
+								</tr>
+
+								<!-- Customer's change -->
+								<tr>
+									<td colspan="2">Change: </td>
+									<td> {{ "&#8369; " + cash.change }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End of table -->
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<!-- End of App -->
 </section>
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      Test
-    </div>
-  </div>
-</div>
+
 <script src="<?php echo base_url('resources/js/axios/axios.min.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/vue/vue.min.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/lodash/lodash.js') ?>"></script>
