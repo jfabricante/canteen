@@ -181,7 +181,7 @@
 							<!-- col-md-12 -->
 							<div class="col-md-12">
 								<div class="checkout text-center">
-									<button class="btn btn-flat btn-danger btn-block" v-on:click="checkout">
+									<button class="btn btn-flat btn-danger btn-block" v-on:click="showCheckoutPane">
 										<i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
 									</button>
 								</div>
@@ -547,8 +547,6 @@
 					// your action on error success
 					console.log(error);
 				});
-
-				this.showCheckoutPane()
 			},
 			btnClick: function(value) {
 				// Check if quantity is editable
