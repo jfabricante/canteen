@@ -63,7 +63,7 @@
 									<strong>Total: </strong>
 								</div>
 								<div class="col-md-3">
-									<strong>&#8369;  {{ grandTotal }}</strong>
+									<strong>&#8369;  {{ totalPurchase }}</strong>
 								</div>
 							</div>
 						</div>
@@ -290,7 +290,7 @@
 													<div>
 														<label class="col-sm-4 control-label" for="total_amount">Total Amount</label>
 														<div class="col-sm-8">
-															<input type="text" name="total_amount" id="total_amount" class="form-control" v-bind:value="grandTotal" readonly>
+															<input type="text" name="total_amount" id="total_amount" class="form-control" v-bind:value="totalPurchase" readonly>
 														</div>
 													</div>
 													<div>
@@ -309,14 +309,14 @@
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_amount">Remaining Amount</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="grandTotal" readonly v-model="remaining_amount">
+															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="totalPurchase" readonly v-model="remaining_amount">
 														</div>
 													</div>
 
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_credit">Remaining Credit</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="grandTotal" readonly v-model="remaining_credit">
+															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="totalPurchase" readonly v-model="remaining_credit">
 														</div>
 													</div>
 
@@ -350,7 +350,7 @@
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
-      ...
+      Test
     </div>
   </div>
 </div>
@@ -394,7 +394,7 @@
 				change: 0,
 				state: false
 			},
-			grandTotal: 0,
+			totalPurchase: 0,
 			itemIndex: undefined,
 			remaining_amount: 0,
 			remaining_credit: 0,
@@ -411,11 +411,11 @@
 			'cash.amount': function() {
 				this.updateValues()
 			},
-			grandTotal: function () {
+			totalPurchase: function () {
 				this.updateValues()
 			},
 			cart: function() {
-				this.updateGrandtotal()
+				this.updateTotalPurchase()
 			},
 		},
 		computed: {
@@ -535,8 +535,8 @@
 			deleteItem: function(index) {
 				this.cart.splice(index, 1)
 			},
-			updateGrandtotal: function() {
-				this.grandTotal = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
+			updateTotalPurchase: function() {
+				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
 			performTransaction: function() {
 				axios({
@@ -545,7 +545,7 @@
 					data: {
 						cart: this.cart,
 						employee: this.employee.id ? this.employee : 0,
-						grandTotal: this.grandTotal || 0,
+						totalPurchase: this.totalPurchase || 0,
 						cash: this.cash.amount || 0,
 						change: this.cash.change || 0,
 						remaining_amount: this.remaining_amount || 0,
@@ -602,7 +602,7 @@
 				}
 			},
 			showCheckoutPane: function() {
-				if (this.grandTotal > 0) {
+				if (this.totalPurchase > 0) {
 					var $checkout_pane = $('#checkout-pane')
 					var $nav_tabs = $('.nav-tabs')
 
@@ -662,7 +662,7 @@
 				this.$set(state, 'state', true)
 			},
 			updateValues: function() {
-				this.remaining_amount = Number(this.grandTotal) - Number(this.employee.allowance) - Number(this.cash.amount)
+				this.remaining_amount = Number(this.totalPurchase) - Number(this.employee.allowance) - Number(this.cash.amount)
 
 				if (this.cash.amount > 0)
 				{
