@@ -393,6 +393,7 @@
 			itemIndex: undefined,
 			remaining_amount: 0,
 			remaining_credit: 0,
+			cash_tendered: 0
 		},
 		created() {
 			this.fetchCategories()
@@ -666,6 +667,12 @@
 
 						this.$set(this.cash, 'change', change)
 						this.remaining_amount = 0
+
+						if (this.cash.change > 0)
+						{
+							this.cash_tendered = this.cash.amount - this.cash.change
+							console.log(this.cash_tendered)
+						}
 					}
 					else
 					{
