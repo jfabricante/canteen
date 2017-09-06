@@ -501,6 +501,23 @@
 			},
 		},
 		methods: {
+			// Create callback function to receive barcode when the scanner is already done
+			onBarcodeScanned (barcode) {
+				this.addItem(this.searchItem(barcode))
+			},
+			searchItem: function(bc) {
+				var items = _.flattenDeep(this.categoryItems)
+
+				for(var item of items)
+				{
+					if (item.barcode == bc)
+					{
+						return item
+					}
+				}
+
+				return false				
+			},
 			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
 				.then((response) => {
