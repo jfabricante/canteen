@@ -29,7 +29,7 @@
 		<ul class="sidebar-menu">
 			<li class="header">MAIN NAVIGATION</li>
 			
-			<?php echo $menu = $this->uri->uri_string(); ?>
+			<?php $menu = $this->uri->uri_string(); ?>
 
 			<li class="<?php echo $menu == 'item/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/list_') ?>"><i class="fa fa-table"></i><span>Items</span></a></li>
 
