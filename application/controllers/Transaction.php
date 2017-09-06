@@ -19,7 +19,7 @@ class Transaction extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-				'title'   => 'Cateen System',
+				'title'   => 'Canteen System',
 				'content' => 'transaction/index_view',
 			);
 
