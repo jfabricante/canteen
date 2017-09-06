@@ -625,28 +625,31 @@
 				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
 			performTransaction: function() {
-				axios({
-					url: appUrl + '/transaction/store',
-					method: 'post',
-					data: {
-						cart: this.cart,
-						employee: this.employee.id ? this.employee : 0,
-						totalPurchase: this.totalPurchase || 0,
-						cash: this.cash.amount || 0,
-						change: this.cash.change || 0,
-						remaining_amount: this.remaining_amount || 0,
-						remaining_credit: this.remaining_credit || 0
-					}
-				})
-				.then(function (response) {
-					// your action after success
-					console.log(response);
-
-				})
-				.catch(function (error) {
-					// your action on error success
-					console.log(error);
-				});
+				if ((this.employee.fullname.length > 0 && this.remaining_amount <= 200) || this.remaining_amount <= 0)
+				{
+					axios({
+						url: appUrl + '/transaction/store',
+						method: 'post',
+						data: {
+							cart: this.cart,
+							employee: this.employee.id ? this.employee : 0,
+							totalPurchase: this.totalPurchase || 0,
+							cash: this.cash.amount || 0,
+							change: this.cash.change || 0,
+							remaining_amount: this.remaining_amount || 0,
+							remaining_credit: this.remaining_credit || 0
+						}
+					})
+					.then(function (response) {
+						// your action after success
+						console.log(response);
+						$('#modal').modal('show')
+					})
+					.catch(function (error) {
+						// your action on error success
+						console.log(error);
+					});	
+				}
 			},
 			btnClick: function(value) {
 				// Check if quantity is editable
