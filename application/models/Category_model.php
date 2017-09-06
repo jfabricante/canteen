@@ -30,7 +30,8 @@ class Category_model extends CI_Model {
 				'b.id',
 				'b.name',
 				'b.price',
-				'b.thumbnail'
+				'b.thumbnail',
+				'b.barcode'
 			);
 
 		foreach($categories as $category)

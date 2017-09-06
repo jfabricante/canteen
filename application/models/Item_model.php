@@ -17,6 +17,7 @@ class Item_model extends CI_Model {
 				'ROUND(a.price, 2) AS price',
 				'a.thumbnail',
 				'a.datetime',
+				'a.barcode',
 				'b.category_id',
 				'c.name AS category'
 			);
@@ -71,6 +72,7 @@ class Item_model extends CI_Model {
 		$id          = $this->input->post('id');
 		$name        = ucfirst(strtolower(trim($this->input->post('name'))));
 		$price       = $this->input->post('price');
+		$barcode     = $this->input->post('barcode');
 		$category_id = $this->input->post('category_id');
 		$datetime    = date('Y-m-d H:i:s');
 
@@ -82,7 +84,8 @@ class Item_model extends CI_Model {
 					'name'      => $name,
 					'price'     => $price,
 					'thumbnail' => $params['file_name'],
-					'datetime'  => $datetime
+					'datetime'  => $datetime,
+					'barcode'   => $barcode
 				);
 		}
 		else
@@ -90,7 +93,8 @@ class Item_model extends CI_Model {
 			$config = array(
 					'name'      => $name,
 					'price'     => $price,
-					'datetime'  => $datetime
+					'datetime'  => $datetime,
+					'barcode'   => $barcode
 				);
 		}
 
