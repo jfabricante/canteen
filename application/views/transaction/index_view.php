@@ -408,17 +408,18 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<!-- End of App -->
 </section>
 
 <script src="<?php echo base_url('resources/js/axios/axios.min.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/vue/vue.min.js') ?>"></script>
+<script src="<?php echo base_url('resources/js/vue-barcode-scanner/vue-barcode-scanner.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/lodash/lodash.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/vee-validate/vee-validate.min.js') ?>"></script>
 <script type="text/javascript">
 	Vue.use(VeeValidate);
+	Vue.use(VueBarcodeScanner);
 
 	var appUrl = '<?php echo base_url('index.php') ?>';
 	var imgUrl = '<?php echo base_url('resources/thumbnail/') ?>';
@@ -439,6 +440,7 @@
 				price: '',
 				quantity: '',
 				total: '',
+				barcode:'',
 				state: false,
 			},
 			employee: {
@@ -457,7 +459,8 @@
 			itemIndex: undefined,
 			remaining_amount: 0,
 			remaining_credit: 0,
-			cash_tendered: 0
+			cash_tendered: 0,
+			predicted_total: 0,
 		},
 		created() {
 			this.fetchCategories()
