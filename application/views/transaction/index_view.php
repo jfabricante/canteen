@@ -688,17 +688,15 @@
 				}
 			},
 			showCheckoutPane: function() {
-				if (this.totalPurchase > 0) {
-					var $checkout_pane = $('#checkout-pane')
-					var $nav_tabs = $('.nav-tabs')
+				var $checkout_pane = $('#checkout-pane')
+				var $nav_tabs = $('.nav-tabs')
 
-					// Remove the active states on its siblings
-					$checkout_pane.siblings().removeClass('active')
-					$checkout_pane.addClass('active')
+				// Remove the active states on its siblings
+				$checkout_pane.siblings().removeClass('active')
+				$checkout_pane.addClass('active')
 
-					// Remove nav-tab active states
-					$nav_tabs.children().removeClass('active')
-				}
+				// Remove nav-tab active states
+				$nav_tabs.children().removeClass('active')
 			},
 			readDetails: function() {
 				if (this.employee.no.length == 6) {
