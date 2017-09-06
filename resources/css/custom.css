@@ -243,3 +243,20 @@ div.dropdown-menu.open{
 #transaction-form .form-group .form-control {
 	margin-bottom: 10px;
 }
+
+.transaction td > a > i {
+	padding: 10px;
+}
+.transaction .modal .table > tbody > tr > td
+{
+	border-top: none;
+	padding: 1px 0 0;
+}
+
+.transaction .separator {
+	border-bottom-color: #333;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	padding: 10px 0;
+	margin: 0;
+}
