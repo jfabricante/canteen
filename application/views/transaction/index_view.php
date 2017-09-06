@@ -537,35 +537,68 @@
 				});
 			},
 			addItem: function(item) {
+				if (item == false)
+				{
+					return
+				}
+
 				this.newItems = {
 					id: item.id,
 					name: item.name,
 					price: item.price,
 					quantity: 1,
-					total: item.price
+					total: item.price,
+					barcode: item.barcode
 				}
+
+				console.log(this.newItems)
 
 				var index = this.cartIndex(this.newItems)
 
-				if (index !== undefined) {
-					this.newItems = {
-						id: this.cart[index].id,
-						name: this.cart[index].name,
-						price: this.cart[index].price,
-						quantity: ++this.cart[index].quantity,
-						total: this.cart[index].quantity * this.cart[index].price
-					}
+				this.predicted_total = Number(this.totalPurchase) + Number(this.newItems.total) - Number(this.employee.allowance) - Number(this.cash.amount)
 
-					this.cart.splice(index, 1, this.newItems)
-					this.itemIndex = index
+				// Meal allowance basis
+				if (this.employee.fullname.length > 0 && this.predicted_total <= 200)
+				{
+					if (index !== undefined) {
+						this.newItems = {
+							id: this.cart[index].id,
+							name: this.cart[index].name,
+							price: this.cart[index].price,
+							quantity: ++this.cart[index].quantity,
+							total: this.cart[index].quantity * this.cart[index].price
+						}
+
+						this.cart.splice(index, 1, this.newItems)
+						this.itemIndex = index
+					}
+					else {
+						this.cart.push(this.newItems)
+						this.itemIndex = this.cartIndex(this.newItems)
+					}
 				}
-				else {
-					this.cart.push(this.newItems)
-					this.itemIndex = this.cartIndex(this.newItems)
+				else if (this.employee.fullname.length == 0)
+				{
+					// Cash basis
+					if (index !== undefined) {
+						this.newItems = {
+							id: this.cart[index].id,
+							name: this.cart[index].name,
+							price: this.cart[index].price,
+							quantity: ++this.cart[index].quantity,
+							total: this.cart[index].quantity * this.cart[index].price
+						}
+
+						this.cart.splice(index, 1, this.newItems)
+						this.itemIndex = index
+					}
+					else {
+						this.cart.push(this.newItems)
+						this.itemIndex = this.cartIndex(this.newItems)
+					}
 				}
 
 				this.manageState(this.newItems)
-				this.$refs.quantity.focus()
 			},
 			cartIndex: function(item) {
 				var i = undefined
