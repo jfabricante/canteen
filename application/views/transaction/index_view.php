@@ -465,6 +465,13 @@
 		created() {
 			this.fetchCategories()
 			this.fetchCategoryItems()
+
+			// Add barcode scan listener and pass the callback function
+			this.$barcodeScanner.init(this.onBarcodeScanned)
+		},
+		destroyed() {
+			// Remove listener when component is destroyed
+			this.$barcodeScanner.destroy()
 		},
 		watch: {
 			'employee.no': function() {
@@ -491,7 +498,7 @@
 				}
 
 				return false
-			}
+			},
 		},
 		methods: {
 			fetchCategories: function() {
