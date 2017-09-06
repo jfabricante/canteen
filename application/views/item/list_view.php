@@ -25,6 +25,7 @@
 								<th>Price</th>
 								<th>Category</th>
 								<th>Thumbnail</th>
+								<th>Barcode</th>
 								<th>Date Time</th>
 								<th>Edit</th>
 								<th>Delete</th>
@@ -42,15 +43,16 @@
 									<td class="text-center">
 										<img class="img-responsive item-thumbnail" src="<?php echo $item->thumbnail ? base_url('/resources/thumbnail/' . $item->thumbnail) : base_url('/resources/thumbnail/no-image.png'); ?>" style="width: 100px">
 									</td>
+									<td><?php echo $item->barcode ? $item->barcode : ''; ?></td>
 									<td><?php echo date('m/d/Y h:i A', strtotime($item->datetime)); ?></td>
 									<td>
 										<a href="<?php echo base_url('index.php/item/form/' . $item->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
-											<i class="fa fa-pencil" aria-hidden="true"></i>
+											<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
 										</a>
 									</td>
 									<td>
 										<a href="<?php echo base_url('index.php/item/notice/' . $item->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
-											<i class="fa fa-trash" aria-hidden="true"></i>
+											<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</a>
 									</td>
 								</tr>
