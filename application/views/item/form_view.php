@@ -27,7 +27,11 @@
 		<div class="form-group">
 			<label for="thumbnail">Thumbnail</label>
 			<input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*" value="<?php echo isset($entity->thumbnail) ? $entity->thumbnail : ''; ?>" />
+		</div>
 
+		<div class="form-group">
+			<label for="barcode">Barcode</label>
+			<input type="text" class="form-control" id="barcode" name="barcode" value="<?php echo isset($entity->barcode) ? $entity->barcode : ''; ?>" />
 		</div>
 
 		<div class="form-group">
