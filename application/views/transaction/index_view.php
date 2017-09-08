@@ -365,33 +365,33 @@
 
 								<!-- List of items -->
 								<tr v-for="(item, index) in cart" v-bind:class="{'separator': index === (cart.length - 1)}">
-									<td>{{ _.toUpper(item.name) }}</td>
+									<td>{{ item.name }}</td>
 									<td>{{ item.quantity + 'x' }}</td>
-									<td>&#8369; {{ item.total }}</td>
+									<td>{{ item.total }}</td>
 								</tr>
 
 								<!-- Purchase total -->
 								<tr>
 									<td colspan="2">Total: </td>
-									<td>{{ "&#8369; " + totalPurchase }}</td>
+									<td>{{ totalPurchase }}</td>
 								</tr>
 
 								<!-- Remaining Credit -->
 								<tr>
 									<td colspan="2">Credit: </td>
-									<td> {{ "&#8369; " + remaining_credit }}</td>
+									<td>{{ remaining_credit }}</td>
 								</tr>
 
 								<!-- Cash tendered -->
 								<tr>
 									<td colspan="2">Cash: </td>
-									<td> {{ "&#8369; " + cash.amount }}</td>
+									<td>{{ cash.amount }}</td>
 								</tr>
 
 								<!-- Customer's change -->
 								<tr>
 									<td colspan="2">Change: </td>
-									<td> {{ "&#8369; " + cash.change }}</td>
+									<td>{{ cash.change }}</td>
 								</tr>
 							</tbody>
 						</table>
