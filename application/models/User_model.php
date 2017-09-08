@@ -165,4 +165,16 @@ class User_model extends CI_Model {
 		$this->db->truncate('users_tbl');
 		$this->db->truncate('users_role_tbl');
 	}
+
+	public function update_allowance($params)
+	{
+		if (is_array($params['employee']))
+		{
+			$config = array(
+					'meal_allowance' => $params['remaining_credit']
+				);
+
+			$this->db->update('users_meal_allowance_tbl', $config, array('user_id' => $params['employee']['id']));
+		}
+	}
 }
