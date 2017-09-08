@@ -848,6 +848,20 @@
 
 				this.showValues()
 			},
+			showValues: function()
+			{
+				console.log("Cart: " + this.cart)
+				console.log("items: " + this.newItems)
+				console.log("Employee: " + this.employee)
+				console.log("Cash: " + this.cash)
+				console.log("Total Purchase: " + this.totalPurchase)
+				console.log("Item Index: " + this.itemIndex)
+				console.log("Remaining Amount: " + this.remaining_amount)
+				console.log("Remaining Credit: " + this.remaining_credit)
+				console.log("Cash Tendered: " + this.cash_tendered)
+				console.log("Predicted Total: " + this.predicted_total)
+				console.log("Credit Used: " + this.credit_used)
+			},
 		},
 	});
 
