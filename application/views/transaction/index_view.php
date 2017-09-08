@@ -677,7 +677,7 @@
 					.catch(function (error) {
 						// your action on error success
 						console.log(error);
-					});	
+					});
 				}
 			},
 			btnClick: function(value) {
@@ -792,7 +792,7 @@
 						if (this.cash.change > 0)
 						{
 							this.cash_tendered = this.cash.amount - this.cash.change
-							console.log(this.cash_tendered)
+							console.log("Cash tendered: " + this.cash_tendered)
 						}
 					}
 					else
@@ -806,11 +806,13 @@
 					{
 						this.remaining_credit = Math.abs(this.remaining_amount)
 						this.remaining_amount = 0
+						this.credit_used = this.totalPurchase
 						this.$set(this.cash, 'change', 0)
 					}
 					else
 					{
 						this.remaining_credit = 0
+						this.credit_used = 0
 						this.$set(this.cash, 'change', 0)
 					}
 				}
