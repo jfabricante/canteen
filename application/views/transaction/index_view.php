@@ -285,7 +285,7 @@
 													<div>
 														<label class="col-sm-4 control-label" for="total_amount">Total Amount</label>
 														<div class="col-sm-8">
-															<input type="text" name="total_amount" id="total_amount" class="form-control" v-bind:value="totalPurchase" readonly>
+															<input type="text" name="total_amount" id="total_amount" class="form-control" v-model="totalPurchase" readonly>
 														</div>
 													</div>
 													<div>
@@ -304,14 +304,14 @@
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_amount">Remaining Amount</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" v-bind:value="totalPurchase" readonly v-model="remaining_amount">
+															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" readonly v-model="remaining_amount">
 														</div>
 													</div>
 
 													<div>
 														<label class="col-sm-4 control-label" for="remaining_credit">Remaining Credit</label>
 														<div class="col-sm-8">
-															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" v-bind:value="totalPurchase" readonly v-model="remaining_credit">
+															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" readonly v-model="remaining_credit">
 														</div>
 													</div>
 
