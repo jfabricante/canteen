@@ -340,7 +340,7 @@
 		</div>
 		<!-- End of row -->
 
-		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modal">
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modal" ref="modal">
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
 
