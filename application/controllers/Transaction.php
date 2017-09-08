@@ -18,6 +18,7 @@ class Transaction extends CI_Controller {
 		$this->load->model('transaction_model', 'transaction');
 		$this->load->model('category_model', 'category');
 		$this->load->model('item_model', 'item');
+		$this->load->model('user_model', 'user');
 
 	}
 
