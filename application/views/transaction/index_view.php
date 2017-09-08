@@ -349,7 +349,7 @@
 						<p class="separator">
 							<span>Isuzu Philippines Corporation <br /></span>
 							<span>Transaction #1220422 <br /></span>
-							<span><?php echo date('D, M d, Y h:i:A'); ?></span>
+							<span><?php echo date('D, M d, Y h:i A'); ?></span>
 						</p>
 						<p class="separator">
 							<span v-show="employee.fullname.length > 0">Customer: {{ _.startCase(_.toLower(employee.fullname)) }}<br /></span>
