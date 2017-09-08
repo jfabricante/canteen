@@ -466,6 +466,9 @@
 			// Remove listener when component is destroyed
 			this.$barcodeScanner.destroy()
 		},
+		mounted() {
+			$(this.$refs.modal).on("hidden.bs.modal", this.initialState)
+		},
 		watch: {
 			'employee.no': function() {
 				this.readDetails()
@@ -811,6 +814,39 @@
 						this.$set(this.cash, 'change', 0)
 					}
 				}
+			},
+			initialState: function(){
+				this.clearItems()
+				this.newItems = {
+					id: '',
+					name: '',
+					price: '',
+					quantity: '',
+					total: '',
+					barcode:'',
+					state: false,
+				}
+				this.employee = {
+					id: '',
+					no: '',
+					fullname: '',
+					allowance: 0,
+					state: false
+				}
+				this.cash = {
+					amount: 0,
+					change: 0,
+					state: false
+				}
+				this.totalPurchase = 0
+				this.itemIndex = undefined
+				this.remaining_amount = 0
+				this.remaining_credit = 0
+				this.cash_tendered = 0
+				this.predicted_total = 0
+				this.credit_used = 0
+
+				this.showValues()
 			},
 		},
 	});
