@@ -456,6 +456,7 @@
 			remaining_credit: 0,
 			cash_tendered: 0,
 			predicted_total: 0,
+			credit_used: 0,
 		},
 		created() {
 			this.fetchCategories()
@@ -624,7 +625,6 @@
 					}
 
 				this.manageState(this.newItems)
-				this.$refs.quantity.focus()
 			},
 			updateItem: function() {
 				this.$validator.validateAll()
@@ -665,7 +665,8 @@
 							cash: this.cash.amount || 0,
 							change: this.cash.change || 0,
 							remaining_amount: this.remaining_amount || 0,
-							remaining_credit: this.remaining_credit || 0
+							remaining_credit: this.remaining_credit || 0,
+							credit_used: this.credit_used || 0
 						}
 					})
 					.then(function (response) {
