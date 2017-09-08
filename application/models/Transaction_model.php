@@ -32,4 +32,22 @@ class Transaction_model extends CI_Model {
 		return 0;
 	}
 
+	public function store_items($params, $tid)
+	{
+		if ($tid > 0)
+		{
+			foreach ($params['cart'] as $item) 
+			{
+				$config = array(
+						'item_id'  => $item['id'],
+						'trans_id' => $tid,
+						'price'    => $item['price'],
+						'quantity' => $item['quantity'],
+						'total'    => $item['total']
+					);
+				
+				$this->db->insert('transaction_item_tbl', $config);
+			}
+		} 
+	}
 }
