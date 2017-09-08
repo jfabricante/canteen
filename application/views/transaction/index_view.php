@@ -360,7 +360,7 @@
 							<tbody>
 								<!-- Items header -->
 								<tr>
-									<td>Purchase Items</td>
+									<td>Purchased Items</td>
 								</tr>
 
 								<!-- List of items -->
