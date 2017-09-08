@@ -40,6 +40,17 @@ class Transaction extends CI_Controller {
 		print_r($data);
 		echo '</pre>';
 
+		$trans_id = $this->transaction->store($data);
+
+		$data['trans_id'] = $trans_id;
+
+		$this->transaction->store_items($data, $trans_id);
+
+		$this->user->update_allowance($data);
+
+		//$this->_generate_receipt($data);
+	}
+
 	protected function _generate_receipt($params)
 	{
 		try {
