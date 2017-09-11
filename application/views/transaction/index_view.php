@@ -887,6 +887,15 @@
 				console.log("Predicted Total: " + this.predicted_total)
 				console.log("Credit Used: " + this.credit_used)
 			},
+			imageExists: function(image_url)
+			{
+				var http = new XMLHttpRequest();
+
+				http.open('HEAD', image_url, false);
+				http.send();
+
+				return http.status === 200;
+			}
 		},
 	});
 
