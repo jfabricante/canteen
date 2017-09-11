@@ -557,7 +557,7 @@
 				this.predicted_total = Number(this.totalPurchase) + Number(this.newItems.total) - Number(this.employee.allowance) - Number(this.cash.amount)
 
 				// Meal allowance basis
-				if (this.employee.fullname.length > 0 && this.predicted_total <= 200)
+				if (this.hasUser() && this.predicted_total <= 200)
 				{
 					if (index !== undefined) {
 						this.newItems = {
@@ -576,7 +576,7 @@
 						this.itemIndex = this.cartIndex(this.newItems)
 					}
 				}
-				else if (this.employee.fullname.length == 0)
+				else if (!this.hasUser())
 				{
 					// Cash basis
 					if (index !== undefined) {
