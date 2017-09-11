@@ -816,6 +816,13 @@
 						this.credit_used = this.totalPurchase
 						this.$set(this.cash, 'change', 0)
 					}
+					else if (this.remaining_amount > 0 && this.hasUser())
+					{
+						this.remaining_credit = this.remaining_amount * -1
+						this.remaining_amount = Number(this.totalPurchase)
+						this.credit_used = this.totalPurchase
+						this.$set(this.cash, 'change', 0)
+					}
 					else
 					{
 						this.remaining_credit = 0
