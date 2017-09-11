@@ -270,7 +270,8 @@
 
 												<!-- TM thumbnail -->
 												<div class="col-md-3">
-													<img v-bind:src="imgUrl + 'no-image.png'" class="img-responsive">
+													<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
+													<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
 												</div>
 												<!-- /thumbnail -->
 											</div>
