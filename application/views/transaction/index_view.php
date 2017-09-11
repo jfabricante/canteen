@@ -817,7 +817,15 @@
 					}
 				}
 			},
-			initialState: function(){
+			hasUser: function() {
+				if (this.employee.fullname.length > 0 && this.employee.no.length > 0)
+				{
+					return true
+				}
+
+				return false
+			},
+			initialState: function() {
 				this.clearItems()
 				this.newItems = {
 					id: '',
