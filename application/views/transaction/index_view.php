@@ -441,7 +441,8 @@
 				no: '',
 				fullname: '',
 				allowance: 0,
-				state: false
+				state: false,
+				hasThumbnail: false
 			},
 			cash: {
 				amount: 0,
@@ -473,6 +474,8 @@
 		watch: {
 			'employee.no': function() {
 				this.readDetails()
+
+				this.$set(this.employee, 'hasThumbnail', this.imageExists(tmUrl + this.employee_no + '.JPG') ? true : false)
 			},
 			'cash.amount': function() {
 				this.updateValues()
@@ -485,7 +488,7 @@
 			},
 			remaining_amount: function() {
 				this.updateValues()
-			}
+			},
 		},
 		computed: {
 			toggleCashfield: function() {
@@ -754,7 +757,8 @@
 							id: user.id,
 							no: user.emp_no,
 							fullname: user.fullname,
-							allowance: user.meal_allowance
+							allowance: user.meal_allowance, 
+							hasThumbnail: this.imageExists(tmUrl + user.emp_no + '.JPG') ? true : false
 						}
 
 						this.updateValues()
