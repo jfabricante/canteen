@@ -35,6 +35,8 @@
 
 			<li class="<?php echo $menu == 'category/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/list_') ?>"><i class="fa fa-table"></i><span>Categories</span></a></li>
 
+			<li class="<?php echo $menu == 'category/set_menu' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/set_menu') ?>"><i class="fa fa-table"></i><span>Set Menu</span></a></li>
+
 			<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-table"></i><span>Users</span></a></li>
 
 			<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-table"></i><span>POS</span></a></li>
