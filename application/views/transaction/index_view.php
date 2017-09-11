@@ -660,7 +660,7 @@
 				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
 			performTransaction: function() {
-				if ((this.employee.fullname.length > 0 && this.remaining_amount <= 200) || this.remaining_amount <= 0)
+				if ((this.hasUser() && this.remaining_amount <= 200) || this.remaining_amount <= 0)
 				{
 					axios({
 						url: appUrl + '/transaction/store',
