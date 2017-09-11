@@ -26,6 +26,11 @@ class Item extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function ajax_item_list()
+	{
+		echo json_encode($this->item->browse());
+	}
+
 	public function form()
 	{
 		$id = $this->uri->segment(3) ? $this->uri->segment(3) : 0;
