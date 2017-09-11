@@ -847,6 +847,7 @@
 			},
 			initialState: function() {
 				this.clearItems()
+
 				this.newItems = {
 					id: '',
 					name: '',
@@ -856,25 +857,29 @@
 					barcode:'',
 					state: false,
 				}
+
 				this.employee = {
 					id: '',
 					no: '',
 					fullname: '',
 					allowance: 0,
-					state: false
+					state: false,
+					hasThumbnail: false
 				}
+
 				this.cash = {
 					amount: 0,
 					change: 0,
 					state: false
 				}
-				this.totalPurchase = 0
-				this.itemIndex = undefined
+
+				this.totalPurchase    = 0
+				this.itemIndex        = undefined
 				this.remaining_amount = 0
 				this.remaining_credit = 0
-				this.cash_tendered = 0
-				this.predicted_total = 0
-				this.credit_used = 0
+				this.cash_tendered    = 0
+				this.predicted_total  = 0
+				this.credit_used      = 0
 
 				this.showValues()
 			},
