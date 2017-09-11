@@ -415,6 +415,7 @@
 
 	var appUrl = '<?php echo base_url('index.php') ?>';
 	var imgUrl = '<?php echo base_url('resources/thumbnail/') ?>';
+	var tmUrl  = '<?php echo base_url('resources/images/') ?>';
 
 	$('body').on('hidden.bs.modal', '.modal', function () {
 		$(this).removeData('bs.modal');
