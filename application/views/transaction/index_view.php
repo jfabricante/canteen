@@ -596,6 +596,10 @@
 						this.itemIndex = this.cartIndex(this.newItems)
 					}
 				}
+				else
+				{
+					alert("TM have reached its maximum limit")
+				}
 
 				this.manageState(this.newItems)
 			},
