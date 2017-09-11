@@ -476,12 +476,15 @@
 			'cash.amount': function() {
 				this.updateValues()
 			},
-			totalPurchase: function () {
+			totalPurchase: function() {
 				this.updateValues()
 			},
 			cart: function() {
 				this.updateTotalPurchase()
 			},
+			remaining_amount: function() {
+				this.updateValues()
+			}
 		},
 		computed: {
 			toggleCashfield: function() {
