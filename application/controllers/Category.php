@@ -72,6 +72,16 @@ class Category extends CI_Controller {
 		redirect('category/list_');
 	}
 
+	public function set_menu()
+	{
+		$data = array(
+				'title'   => 'Set Menu',
+				'content' => 'category/set_menu_view',
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
 	public function ajax_category_list()
 	{
 		echo json_encode($this->category->browse());
