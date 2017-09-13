@@ -182,11 +182,10 @@
 					console.log(err.message);
 				});
 			},
-			fetchItems: function() {
-				axios.get(appUrl + '/item/ajax_item_list')
+			fetchFeaturedItems: function() {
+				axios.get(appUrl + '/item/ajax_browse_featured_items')
 				.then((response) => {
-					this.items = response.data
-					console.log(this.items)
+					this.featured_items = response.data
 				})
 				.catch(function (err) {
 					console.log(err.message);
