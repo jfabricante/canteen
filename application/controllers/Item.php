@@ -99,4 +99,25 @@ class Item extends CI_Controller {
 
 		return $this->upload->data();
 	}
+
+	public function ajax_store_featured()
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+
+		$data['datetime'] = date('Y-m-d H:i:s');
+
+		$this->item->store_featured($data);
+	}
+
+	public function ajax_delete_featured()
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+
+		$this->item->delete_featured($data);
+	}
+
+	public function ajax_browse_featured_items()
+	{
+		echo json_encode($this->item->browseFeaturedItems());
+	}
 }
