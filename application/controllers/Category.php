@@ -91,4 +91,9 @@ class Category extends CI_Controller {
 	{
 		echo json_encode($this->category->fetch_category_items());
 	}
+
+	public function ajax_featured_items()
+	{
+		echo json_encode($this->category->fetch_featured_items());
+	}
 }
