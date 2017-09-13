@@ -423,6 +423,7 @@
 		data: {
 			categories: [],
 			categoryItems: [],
+			featuredItems: [],
 			cart: [],
 			newItems: {
 				id: '',
