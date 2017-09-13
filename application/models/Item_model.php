@@ -176,4 +176,11 @@ class Item_model extends CI_Model {
 		return false;
 	}
 
+	public function delete_featured($params)
+	{
+		$this->db->delete('featured_items_tbl', array('item_id' => $params['item_id']));
+
+		return $this;
+	}
+
 }
