@@ -154,4 +154,13 @@ class Item_model extends CI_Model {
 
 		return $this;
 	}
+
+	public function store_featured($params)
+	{
+		if (!$this->_checkFeaturedExist($params))
+		{
+			$this->db->insert('featured_items_tbl', $params);
+		}
+	}
+
 }
