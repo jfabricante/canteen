@@ -260,3 +260,12 @@ div.dropdown-menu.open{
 	padding: 10px 0;
 	margin: 0;
 }
+
+/**
+ * Menu Page
+ */
+.menu .item-remove {
+	position: absolute;
+	right: 0;
+	margin: 0 10px 10px
+}
