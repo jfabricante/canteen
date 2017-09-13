@@ -505,6 +505,7 @@
 			// Create callback function to receive barcode when the scanner is already done
 			onBarcodeScanned (barcode) {
 				this.addItem(this.searchItem(barcode))
+				//console.log(barcode)
 			},
 			searchItem: function(bc) {
 				var items = _.flattenDeep(this.categoryItems)
@@ -532,6 +533,17 @@
 				axios.get(appUrl + '/category/ajax_category_items')
 				.then((response) => {
 					this.categoryItems = response.data
+					console.log(this.categoryItems)
+				})
+				.catch(function (err) {
+					console.log(err.message);
+				});
+			},
+			fetchFeaturedItems: function() {
+				axios.get(appUrl + '/category/ajax_featured_items')
+				.then((response) => {
+					this.featuredItems = response.data
+					console.log(this.featuredItems)
 				})
 				.catch(function (err) {
 					console.log(err.message);
