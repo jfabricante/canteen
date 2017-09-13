@@ -183,4 +183,23 @@ class Item_model extends CI_Model {
 		return $this;
 	}
 
+	public function browseFeaturedItems()
+	{
+		$fields = array(
+				'b.id',
+				'b.name',
+				'b.price',
+				'b.thumbnail',
+				'b.barcode',
+				'c.category_id'
+			);
+
+		$query = $this->db->select($fields)
+				->from('featured_items_tbl AS a')
+				->join('items_tbl AS b', 'a.item_id = b.id', 'INNER')
+				->join('item_category_tbl AS c', 'b.id = c.item_id', 'INNER')
+				->get();
+
+		return $query->result_array();
+	}
 }
