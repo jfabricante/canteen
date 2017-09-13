@@ -114,6 +114,7 @@
 		created() {
 			this.fetchCategories()
 			this.fetchCategoryItems()
+			this.fetchFeaturedItems()
 		},
 		methods: {
 			changeState: function(evt) {
