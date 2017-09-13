@@ -98,14 +98,9 @@
 <script src="<?php echo base_url('resources/js/sortable/sortable.js') ?>"></script>
 <script src="<?php echo base_url('resources/js/vuedraggable/vuedraggable.js') ?>"></script>
 <script type="text/javascript">
-
 	var appUrl = '<?php echo base_url('index.php') ?>';
 	var imgUrl = '<?php echo base_url('resources/thumbnail/') ?>';
 	var tmUrl  = '<?php echo base_url('resources/images/') ?>';
-
-	$('body').on('hidden.bs.modal', '.modal', function () {
-		$(this).removeData('bs.modal');
-	});
 
 	var app = new Vue({
 		el: '#app',
