@@ -191,15 +191,14 @@
 					console.log(err.message);
 				});
 			},
-			imageExists: function(image_url)
+			removeFeaturedItem(item, index)
 			{
-				var http = new XMLHttpRequest();
+				// Remove from featured items array
+				this.featured_items.splice(index, 1)
 
-				http.open('HEAD', image_url, false);
-				http.send();
-
-				return http.status === 200;
-			}
+				// Update featured items database
+				this.removeItem(item)
+			},
 		},
 	});
 
