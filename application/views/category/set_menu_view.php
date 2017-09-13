@@ -62,13 +62,13 @@
 									<!-- Row -->
 									<div class="row">
 										<ul class="list-group">
-											<draggable class="dragArea" :list="category_items" :options="{group:'product'}" style="min-height: 200px;" @change="log">
-											<li v-for="(item, index) in category_items" :key="index" class="col-md-2 list-group-item">
-												<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
-												<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
-												<p class="text-center">{{ _.toUpper(item.name) }}</p>
-												<p class="text-center">&#8369; {{ item.price }}</p>
-											</li>
+											<draggable class="dragArea" :list="category_items" :options="{group:{name:'product', pull:'clone', put:false}}" style="min-height: 200px;">
+												<li v-for="(item, index) in category_items" :key="index" class="col-md-2 list-group-item">
+													<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
+													<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
+													<p class="text-center">{{ _.toUpper(item.name) }}</p>
+													<p class="text-center">&#8369; {{ item.price }}</p>
+												</li>
 											</draggable>
 										</ul>
 									</div>
