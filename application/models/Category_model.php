@@ -51,6 +51,39 @@ class Category_model extends CI_Model {
 		return $config;
 	}
 
+	public function fetch_featured_items()
+	{
+		$categories = $this->browse();
+
+		$config = array();
+
+		$fields = array(
+				'b.id',
+				'b.name',
+				'b.price',
+				'b.thumbnail',
+				'b.barcode',
+				'c.category_id'
+			);
+
+		foreach ($categories as $category)
+		{
+			$query = $this->db->select($fields)
+				->from('featured_items_tbl AS a')
+				->join('items_tbl AS b', 'a.item_id = b.id', 'INNER')
+				->join('item_category_tbl AS c', 'b.id = c.item_id', 'INNER')
+				->where('c.category_id', $category->id)
+				->get();
+
+			if ($query->num_rows())
+			{
+				array_push($config, $query->result_array());
+			}
+		}
+
+		return $config;
+	}
+
 	public function read(array $params = array('type' => 'object'))
 	{
 		if ($params['id'] > 0)
