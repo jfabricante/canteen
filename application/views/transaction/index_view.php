@@ -220,7 +220,7 @@
 
 							<div class="tab-content">
 								<!-- Tab pane -->
-								<div class="tab-pane" v-for="(category_items, index) in categoryItems" v-bind:id="index" v-bind:class="{'active': index === 0}">
+								<div class="tab-pane" v-for="(category_items, index) in featuredItems" v-bind:id="index" v-bind:class="{'active': index === 0}">
 									<!-- Row -->
 									<div class="row">
 										<ul class="list-group">
@@ -458,6 +458,7 @@
 		created() {
 			this.fetchCategories()
 			this.fetchCategoryItems()
+			this.fetchFeaturedItems()
 
 			// Add barcode scan listener and pass the callback function
 			this.$barcodeScanner.init(this.onBarcodeScanned)
