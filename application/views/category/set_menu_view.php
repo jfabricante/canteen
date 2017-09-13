@@ -145,6 +145,25 @@
 
 				this.featured_items = _.uniqBy(this.featured_items, 'id')
 			},
+			removeItem: function(item) {
+				var item_id = item.id
+
+				axios({
+					url: appUrl + '/item/ajax_delete_featured',
+					method: 'post',
+					data: {
+						item_id: item_id
+					}
+				})
+				.then(function (response) {
+					// your action after success
+					//console.log(response);
+				})
+				.catch(function (error) {
+					// your action on error success
+					console.log(error);
+				});
+			},
 			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
 				.then((response) => {
