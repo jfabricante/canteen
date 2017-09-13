@@ -116,9 +116,34 @@
 			this.fetchCategoryItems()
 		},
 		methods: {
-			log: function(evt) {
-				console.log(evt)
-				console.log(evt.added.element.id)
+			changeState: function(evt) {
+				this.addItem(evt)
+			},
+			addItem: function(event) {
+				if (event.added == undefined)
+				{
+					return
+				}
+
+				var item_id = event.added.element.id
+
+				axios({
+					url: appUrl + '/item/ajax_store_featured',
+					method: 'post',
+					data: {
+						item_id: item_id
+					}
+				})
+				.then(function (response) {
+					// your action after success
+					//console.log(response);
+				})
+				.catch(function (error) {
+					// your action on error success
+					console.log(error);
+				});
+
+				this.featured_items = _.uniqBy(this.featured_items, 'id')
 			},
 			fetchCategories: function() {
 				axios.get(appUrl + '/category/ajax_category_list')
