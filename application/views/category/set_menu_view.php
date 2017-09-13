@@ -17,7 +17,7 @@
 
 					<div class="box-body">
 						<ul class="list-group">
-							<draggable class="dragArea" :list="featured_items" :options="{group:'product'}" @change="changeState" style="min-height: 200px;" :add="onAdd">
+							<draggable class="dragArea" :list="featured_items" :options="{group:'product'}" @change="changeState" style="min-height: 200px;">
 								<li v-for="(item, index) in featured_items" :key="index" class="col-md-2 list-group-item">
 									<i class="fa fa-times fa-lg item-remove" aria-hidden="true" v-on:click="removeFeaturedItem(item, index)"></i>
 									<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
