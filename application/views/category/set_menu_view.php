@@ -106,8 +106,7 @@
 		el: '#app',
 		data: {
 			categories: [],
-			menu: [],
-			items: [],
+			featured_items: [],
 			categoryItems: [],
 		
 			itemIndex: undefined,
@@ -115,8 +114,6 @@
 		created() {
 			this.fetchCategories()
 			this.fetchCategoryItems()
-			this.fetchItems()
-
 		},
 		methods: {
 			log: function(evt) {
