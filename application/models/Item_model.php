@@ -163,4 +163,17 @@ class Item_model extends CI_Model {
 		}
 	}
 
+	protected function _checkFeaturedExist($params)
+	{
+		$query = $this->db->where('item_id', $params['item_id'])
+				->get('featured_items_tbl');
+
+		if ($query->num_rows() > 0)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 }
