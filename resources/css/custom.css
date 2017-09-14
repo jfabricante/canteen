@@ -261,6 +261,11 @@ div.dropdown-menu.open{
 	margin: 0;
 }
 
+.transaction .page-thumbnail .img-responsive {
+	margin-top: -25px;
+	margin-bottom: 5px;
+}
+
 /**
  * Menu Page
  */
