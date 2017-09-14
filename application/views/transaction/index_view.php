@@ -2,6 +2,27 @@
 <section class="content transaction">
 	<!-- App -->
 	<div id="app">
+		<div class="row">
+			<div class="col-md-1 page-thumbnail">
+				<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
+				<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
+			</div>
+			<div class="col-md-2">
+				<h4>Employee No: {{ employee.no }}</h4>
+			</div>
+
+			<div class="col-md-3">
+				<h4>Fullname: {{ employee.fullname }}</h4>
+			</div>
+
+			<div class="col-md-2">
+				<h4>Meal Allowance: {{ employee.allowance }}</h4>
+			</div>
+
+			<div class="col-md-2">
+				<h4>Remaining Credit: {{ remaining_credit }}</h4>
+			</div>
+		</div>
 		<!-- row -->
 		<div class="row">
 			<!-- col-md-6 -->
