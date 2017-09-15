@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 require_once APPPATH . '/third_party/escpos-php/autoload.php';
+require_once APPPATH . '/third_party/dompdf/autoload.inc.php';
 
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
+use Dompdf\Dompdf;
 
 
 class Transaction extends CI_Controller {
