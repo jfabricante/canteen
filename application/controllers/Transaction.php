@@ -122,3 +122,42 @@ class Transaction extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function filter_billing_report()
+	{
+		// instantiate and use the dompdf class
+		$dompdf = new Dompdf();
+
+		// Change date format
+		$from = date('Y-m-d', strtotime($this->input->post('from')));
+		$to   = date('Y-m-d', strtotime($this->input->post('to')));
+
+		$config = array(
+				'from' => $from,
+				'to'   => $to
+			);
+
+		$entities = $this->transaction->billing_report($config);
+
+		// Calculate the total bill from date filtered data
+		$total_bill = is_array($entities) ? array_sum(array_column($entities, 'credit_used')) : 0; 
+
+		$data = array(
+				'title'      => 'Billing Reports from ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to'])),
+				'entities'   => $entities,
+				'total_bill' => $total_bill
+			);
+
+		// Enable html5 parsing
+		$dompdf->set_option('isHtml5ParserEnabled', true);
+
+		// Load the html to pdf
+		$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream();
+	}
+
+}
