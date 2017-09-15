@@ -41,6 +41,9 @@
 
 			<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-table"></i><span>POS</span></a></li>
 
+			<li class="<?php echo $menu == 'transaction/generate_billing_report' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/generate_billing_report') ?>"><i class="fa fa-table"></i><span>Billing Report</span></a></li>
+
+
 		</ul><!-- /.sidebar-menu -->
 
 	</section>
