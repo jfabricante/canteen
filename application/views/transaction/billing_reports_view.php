@@ -9,6 +9,24 @@
 	<!-- Admin LTE core CSS -->
 	<link href="<?php echo base_url('resources/templates/AdminLTE-2.3.5/dist/css/AdminLTE.min.css');?>" rel="stylesheet" >
 
+	<style type="text/css">
+		table.table.table-condensed.table-striped.table-bordered th,
+		table.table.table-condensed.table-striped.table-bordered td {
+			font-size: 11px;
+		}
+
+		.total {
+			margin: 20px 0 40px;
+		}
+
+		.signature-item {
+			height: 60px;
+			width: 250px;
+			border-bottom: .5px solid black;
+			margin-right: 100px;
+		}
+
+	</style>
 </head>
 <body>
 	<!-- box -->
