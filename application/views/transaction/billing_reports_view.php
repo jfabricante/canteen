@@ -11,9 +11,68 @@
 
 </head>
 <body>
-
-			</div>
+	<!-- box -->
+	<div class="box box-danger">
+		<!-- box-header -->
+		<div class="box-header with-border">
+			<h4 class="box-title"><?php echo isset($title) ? $title : '' ?></h4>
 		</div>
+		<!-- /box-header -->
+
+		<!-- box-body -->
+		<div class="box-body">
+			<!-- table -->
+			<table class="table table-condensed table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Trans ID</th>
+						<th>Employee</th>
+						<th>Credit Used</th>
+						<th>Cash Used</th>
+						<th>Date</th>
+						<th>Cashier</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($entities as $entity): ?>
+						<tr>
+							<td><?php echo $entity['id'] ?></td>
+							<td><?php echo $entity['employee']; ?></td>
+							<td><?php echo $entity['credit_used']; ?></td>
+							<td><?php echo $entity['cash']; ?></td>
+							<td><?php echo date('m/d/Y h:i A', strtotime($entity['datetime'])); ?></td>
+							<td><?php echo $entity['cashier']; ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<!-- /table -->
+
+			<div class="total">
+				<h4>Total Bill: <span class="total-bill"><?php echo $total_bill ?></span></h4>
+			</div>
+
+			<div class="signature">
+				<table>
+					<tr>
+						<td>
+							<div class="signature-item">
+								<p>Prepared by:</p>
+							</div>
+						</td>
+
+						<td>
+							<div class="signature-item">
+								<p>Checked by:</p>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+		<!-- /box-body -->
 	</div>
+	<!-- /box -->
 </body>
 </html>
