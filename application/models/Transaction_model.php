@@ -50,4 +50,25 @@ class Transaction_model extends CI_Model {
 			}
 		} 
 	}
+
+	public function billing_report($params)
+	{
+		$fields = array(
+				'a.id',
+				'a.credit_used',
+				'a.cash',
+				'a.datetime',
+				'b.fullname AS employee',
+				'c.fullname AS cashier'
+			);
+
+		$query = $this->db->select($fields)
+				->from('transaction_tbl  AS a')
+				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
+				->join('users_tbl AS c', 'a.cashier_id = c.id', 'INNER')
+				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+				->get();
+
+		return $query->result_array();
+	}
 }
