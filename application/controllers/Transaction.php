@@ -112,6 +112,13 @@ class Transaction extends CI_Controller {
 		}
 	}
 
-}
+	public function generate_billing_report()
+	{
+		$data = array(
+				'title'   => 'Filter Dates to Generate Billing Report',
+				'content' => 'transaction/generate_reports_view'
+			);
 
+		$this->load->view('include/template', $data);
+	}
 
