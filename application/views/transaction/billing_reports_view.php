@@ -8,9 +8,6 @@
 	<link href="<?php echo base_url('resources/templates/bootstrap-3.3.7/css/bootstrap.min.css');?>" rel="stylesheet" >
 	<!-- Admin LTE core CSS -->
 	<link href="<?php echo base_url('resources/templates/AdminLTE-2.3.5/dist/css/AdminLTE.min.css');?>" rel="stylesheet" >
-	<link href="<?php echo base_url('resources/templates/AdminLTE-2.3.5/dist/css/skins/_all-skins.min.css');?>" rel="stylesheet" >
-	<!-- Custom styles for this template -->
-	<link href="<?php echo base_url('resources/css/custom.css');?>" rel="stylesheet" >
 
 </head>
 <body>
