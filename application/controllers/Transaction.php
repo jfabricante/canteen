@@ -130,6 +130,14 @@ class Transaction extends CI_Controller {
 		$from = date('Y-m-d', strtotime($this->input->post('from')));
 		$to   = date('Y-m-d', strtotime($this->input->post('to')));
 
+		// Header options
+		$font       = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+		$size       = 8;
+		$color      = array(0, 0, 0);
+		$word_space = 0.0;  //  default
+		$char_space = 0.0;  //  default
+		$angle      = 0.0;   //  default
+
 		$config = array(
 				'from' => $from,
 				'to'   => $to
@@ -151,6 +159,24 @@ class Transaction extends CI_Controller {
 
 		// Load the html to pdf
 		$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
+
+        $text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
+        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        $text = date('d/m/Y h:i A');
+        $dompdf->getCanvas()->page_text(400, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        $text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+        $dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+        $dompdf->getCanvas()->page_text(520, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        $text = "Billing Report";
+        $size = 14;
+        $headerFont = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+
+        $dompdf->getCanvas()->page_text(40, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
 		// Render the HTML as PDF
 		$dompdf->render();
