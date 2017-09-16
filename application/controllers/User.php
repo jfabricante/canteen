@@ -53,4 +53,15 @@ class User extends CI_Controller {
 
 		echo $this->user->read($config) ? json_encode($this->user->read($config)) : '';
 	}
+
+	public function balances()
+	{
+		$data = array(
+				'title'    => 'Balances',
+				'content'  => 'user/balances_view',
+				'entities' => $this->user->fetch_balances()
+			);
+
+		$this->load->view('include/template', $data);
+	}
 }
