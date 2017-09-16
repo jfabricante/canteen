@@ -43,6 +43,8 @@
 
 			<li class="<?php echo $menu == 'transaction/generate_billing_report' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/generate_billing_report') ?>"><i class="fa fa-table"></i><span>Billing Report</span></a></li>
 
+			<li class="<?php echo $menu == 'user/balances' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/balances') ?>"><i class="fa fa-table"></i><span>Balances</span></a></li>
+
 
 		</ul><!-- /.sidebar-menu -->
 
