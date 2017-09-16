@@ -90,10 +90,9 @@ class Transaction extends CI_Controller {
 				$printer->feed(1);
 
 				$printer->text(str_pad("Total:", 38) . str_pad($params['totalPurchase'], 10) . "\n");
-				//$printer->text(str_pad("Credit:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
-				$printer->text(str_pad("Credit:", 38) . str_pad($params['credit_used'], 10) . "\n");
-				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'], 10) . "\n");
-				$printer->text(str_pad("Change:", 38) . str_pad($params['change'], 10) . "\n");
+				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n")
+				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'] ? $params['cash'] : '', 10) . "\n");
+				$printer->text(str_pad("Change:", 38) . str_pad($params['change'] ? $params['change'] : '', 10) . "\n");
 				$printer->feed(2);
 				$printer->text(str_pad('', 48, '_') . "\n");
 				$printer->setJustification(Printer::JUSTIFY_CENTER);
