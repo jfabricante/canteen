@@ -10,18 +10,27 @@
 	<link href="<?php echo base_url('resources/templates/AdminLTE-2.3.5/dist/css/AdminLTE.min.css');?>" rel="stylesheet" >
 
 	<style type="text/css">
-		table.table.table-condensed.table-striped.table-bordered th,
-		table.table.table-condensed.table-striped.table-bordered td {
-			font-size: 11px;
+		@page { 
+			margin-top: 90px; 
+		}
+
+		table.table th,
+		table.table td {
+			font-size: 9px;
+			margin-top: 0;
+			margin-bottom: 0;
+			line-height: 0;
+			padding: 0;
 		}
 
 		.total {
-			margin: 20px 0 40px;
+			margin: 20px 0 30px;
 		}
 
 		.signature-item {
-			height: 60px;
+			height: 50px;
 			width: 250px;
+			font-size: 10px;
 			border-bottom: .5px solid black;
 			margin-right: 100px;
 		}
