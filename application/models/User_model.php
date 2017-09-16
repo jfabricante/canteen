@@ -177,4 +177,27 @@ class User_model extends CI_Model {
 			$this->db->update('users_meal_allowance_tbl', $config, array('user_id' => $params['employee']['id']));
 		}
 	}
+
+	public function fetch_balances($type = 'object')
+	{
+		$fields = array(
+				'a.id',
+				'a.meal_allowance',
+				'b.emp_no',
+				'b.fullname',
+			);
+
+		$query = $this->db->select($fields)
+				->from('users_meal_allowance_tbl AS a')
+				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
+				->order_by('b.emp_no')
+				->get();
+
+		if ($type == 'array')
+		{
+			return $query->result_array();
+		}
+
+		return $query->result();
+	}
 }
