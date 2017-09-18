@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('resources/plugins/datepicker/css/bootstrap-datepicker.min.css'); ?>">
 <!-- Items block -->
 <section class="content users-purchased">
 	<!-- row -->
@@ -51,6 +52,7 @@
 	</div>
 	<!-- End of row -->
 </section>
+<script type="text/javascript" src="<?php echo base_url('resources/plugins/datepicker/js/bootstrap-datepicker.min.js'); ?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.table').DataTable({
