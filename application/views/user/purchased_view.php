@@ -1,11 +1,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('resources/plugins/datepicker/css/bootstrap-datepicker.min.css'); ?>">
 <!-- Items block -->
 <section class="content users-purchased">
-	<!-- row -->
 	<div class="row">
-		<!-- col-md-6 -->
-		<div class="col-md-8">
-			<!-- Box danger -->
+		<div class="col-md-6">
+			<!-- Date range -->
 			<div class="box box-danger">
 				<!-- Content -->
 				<div class="box-body">
@@ -30,6 +28,42 @@
 						</tfoot>
 						<tbody>
 							<?php foreach($entities as $entity): ?>
+					<!-- form -->
+					<form action="<?php echo base_url('index.php/user/purchased_items'); ?>" method="post">
+						<di class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<div class="input-group date">
+										<span class="input-group-addon">From</span>
+										<input type="text" class="form-control datepicker" id="from" name="from" value="<?php echo isset($dates['from']) ? $dates['from'] : date('m/d/Y') ?>" required>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<div class="input-group date">
+										<span class="input-group-addon">To</span>
+										<input type="text" class="form-control datepicker" id="to" name="to" value="<?php echo isset($dates['to']) ? $dates['to'] : date('m/d/Y') ?>" required>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<input type="submit" class="form-control btn btn-danger btn-flat" value="Filter Dates">
+								</div>
+							</div>
+						</di>
+						
+					</form>
+					<!-- ./form -->
+				</div>
+				<!-- ./box-body -->
+			</div>
+			<!-- ./Date range -->
+		</div>
+
 								<tr>
 									<td><?php echo $entity['id']; ?></td>
 									<td><?php echo $entity['name']; ?></td>
