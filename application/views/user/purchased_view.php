@@ -64,6 +64,17 @@
 			<!-- ./Date range -->
 		</div>
 
+		<!-- Meal allowance -->
+		<div class="col-md-3">
+			<div class="box box-danger">
+				<div class="box-body text-center">
+					<h5 class="lead"><strong><?php echo $balance->meal_allowance > 0 ? "Remaining balance: " . $balance->meal_allowance : "Excess credit: " . $balance->meal_allowance ?></strong></h5>
+				</div>
+			</div>
+		</div>
+		<!-- ./Meal allowance -->
+	</div>
+
 								<tr>
 									<td><?php echo $entity['id']; ?></td>
 									<td><?php echo $entity['name']; ?></td>
