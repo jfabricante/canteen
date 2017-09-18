@@ -125,6 +125,10 @@
 		});
 
 		$('.table').DataTable({
+			// Define disabled column
+			"columnDefs": [{
+				"searchable": false, "targets": [1, 2, 3, 4]
+			}],
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 			"footerCallback": function(row, data, start, end, display) {
 				var api = this.api(), data;
@@ -137,6 +141,7 @@
 								
 						}, 0);
 
+				// Calculate result per page
 				totalPerPage = api.column(4, {page: 'current'})
 						.data()
 						.reduce((a, b) => {
@@ -145,6 +150,8 @@
 						}, 0);
 
 				$(api.column(4).footer()).html(totalPerPage.toFixed(2));
+
+				$(api.column(6).footer()).html(total.toFixed(2));
 			}
 		});
 	});
