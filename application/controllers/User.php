@@ -67,7 +67,13 @@ class User extends CI_Controller {
 
 	public function purchased_items()
 	{
-		$entities = $this->user->fetchPurchasedItems();
+		// Change to standard format
+		$config = array(
+				'from' => date('Y-m-d' ,strtotime($this->input->post('from'))),
+				'to'   => date('Y-m-d' ,strtotime($this->input->post('to'))),
+			);
+
+		$entities = $this->user->fetchPurchasedItems($config);
 
 		$data = array(
 				'title'         => 'Purchased Items',
