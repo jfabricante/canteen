@@ -5,29 +5,8 @@
 		<div class="col-md-6">
 			<!-- Date range -->
 			<div class="box box-danger">
-				<!-- Content -->
+				<!-- box-body -->
 				<div class="box-body">
-					<!-- Item table -->
-					<table class="table table-condensed table-striped table-bordered" id="items">
-						<thead>
-							<tr>
-								<th>Trans. ID</th>
-								<th>Item</th>
-								<th>Quantity</th>
-								<th>Unit Price</th>
-								<th>Total</th>
-								<th>Cashier</th>
-								<th>Trans. Date</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th colspan="4" style="text-align:right">Total:</th>
-								<th colspan="2"></th>
-							</tr>
-						</tfoot>
-						<tbody>
-							<?php foreach($entities as $entity): ?>
 					<!-- form -->
 					<form action="<?php echo base_url('index.php/user/purchased_items'); ?>" method="post">
 						<di class="row">
@@ -75,23 +54,62 @@
 		<!-- ./Meal allowance -->
 	</div>
 
+	<!-- row -->
+	<div class="row">
+		<!-- col-md-6 -->
+		<div class="col-md-9">
+			<?php if (count($entities)): ?>
+				<!-- Box danger -->
+				<div class="box box-danger">
+					<!-- Content -->
+					<div class="box-body">
+						<!-- Item table -->
+						<table class="table table-condensed table-striped table-bordered" id="items">
+							<thead>
 								<tr>
-									<td><?php echo $entity['id']; ?></td>
-									<td><?php echo $entity['name']; ?></td>
-									<td><?php echo $entity['quantity'] >= 0 ? $entity['quantity'] : '' ?></td>
-									<td><?php echo $entity['price'] >= 0 ? number_format($entity['price'], 2) : '' ?></td>
-									<td><?php echo $entity['total'] >= 0 ? number_format($entity['total'], 2) : '' ?></td>
-									<td><?php echo ucwords(strtolower($entity['cashier'])) ?></td>
-									<td><?php echo date('M d, Y h:i A', strtotime($entity['datetime'])) ?></td>
+									<th>Trans. ID</th>
+									<th>Item</th>
+									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Total</th>
+									<?php if($this->session->userdata('user_type') == 'administrator' ): ?>
+										<th>Employee</th>
+									<?php endif; ?>
+									<th>Cashier</th>
+									<th>Trans. Date</th>
 								</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-					<!-- End of table -->
+							</thead>
+							<tfoot>
+								<tr>
+									<th colspan="4" class="text-right">Total:</th>
+									<th></th>
+									<th class="text-right">Puchased Total</th>
+									<th></th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<?php foreach($entities as $entity): ?>
+									<tr>
+										<td><?php echo $entity['id']; ?></td>
+										<td><?php echo $entity['name']; ?></td>
+										<td><?php echo $entity['quantity'] >= 0 ? $entity['quantity'] : '' ?></td>
+										<td><?php echo $entity['price'] >= 0 ? number_format($entity['price'], 2) : '' ?></td>
+										<td><?php echo $entity['total'] >= 0 ? number_format($entity['total'], 2) : '' ?></td>
+										<?php if($this->session->userdata('user_type') == 'administrator' ): ?>
+											<td><?php echo ucwords(strtolower($entity['employee'])) ?></td>
+										<?php endif; ?>
+										<td><?php echo ucwords(strtolower($entity['cashier'])) ?></td>
+										<td><?php echo date('M d, Y h:i A', strtotime($entity['datetime'])) ?></td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+						<!-- End of table -->
+					</div>
+					<!-- End of content -->
 				</div>
-				<!-- End of content -->
-			</div>
-			<!-- End of danger -->
+				<!-- End of danger -->
+			<?php endif; ?>
 		</div>
 		<!-- End of col-md-6 -->
 	</div>
