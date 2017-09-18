@@ -201,7 +201,6 @@ class User_model extends CI_Model {
 		return $query->result();
 	}
 
-	public function fetchPurchasedItems()
 	public function read_balance($type = 'object')
 	{
 		$fields = array(
@@ -225,6 +224,7 @@ class User_model extends CI_Model {
 		return $query->row();
 	}
 
+	public function fetchPurchasedItems($params)
 	{
 		$fields = array(
 				'a.id',
@@ -239,14 +239,29 @@ class User_model extends CI_Model {
 
 		$clause = array('c.emp_no' => $this->session->userdata('emp_no'));
 
-		$query = $this->db->select($fields)
-				->from('transaction_tbl AS a')
-				->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
-				->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
-				->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
-				->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
-				->where($clause)
-				->get();
+		if ($this->session->userdata('user_type') == 'employee')
+		{
+			$query = $this->db->select($fields)
+					->from('transaction_tbl AS a')
+					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
+					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
+					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
+					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->where($clause)
+					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->get();
+		}
+		else
+		{
+			$query = $this->db->select($fields)
+					->from('transaction_tbl AS a')
+					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
+					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
+					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
+					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->get();
+		}
 
 		return $query->result_array();
 	}
