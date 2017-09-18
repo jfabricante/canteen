@@ -202,6 +202,29 @@ class User_model extends CI_Model {
 	}
 
 	public function fetchPurchasedItems()
+	public function read_balance($type = 'object')
+	{
+		$fields = array(
+				'a.id',
+				'a.meal_allowance',
+				'b.emp_no',
+				'b.fullname',
+			);
+
+		$query = $this->db->select($fields)
+				->from('users_meal_allowance_tbl AS a')
+				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
+				->where('emp_no', $this->session->userdata('emp_no'))
+				->get();
+
+		if ($type == 'array')
+		{
+			return $query->row_array();
+		}
+
+		return $query->row();
+	}
+
 	{
 		$fields = array(
 				'a.id',
