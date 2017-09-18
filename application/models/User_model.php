@@ -200,4 +200,31 @@ class User_model extends CI_Model {
 
 		return $query->result();
 	}
+
+	public function fetchPurchasedItems()
+	{
+		$fields = array(
+				'a.id',
+				'a.datetime',
+				'd.name',
+				'b.quantity',
+				'b.price',
+				'b.total',
+				'c.fullname AS employee',
+				'e.fullname AS cashier'
+			);
+
+		$clause = array('c.emp_no' => $this->session->userdata('emp_no'));
+
+		$query = $this->db->select($fields)
+				->from('transaction_tbl AS a')
+				->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
+				->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
+				->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
+				->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+				->where($clause)
+				->get();
+
+		return $query->result_array();
+	}
 }
