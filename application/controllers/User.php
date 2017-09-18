@@ -64,4 +64,17 @@ class User extends CI_Controller {
 
 		$this->load->view('include/template', $data);
 	}
+
+	public function purchased_items()
+	{
+		$entities = $this->user->fetchPurchasedItems();
+
+		$data = array(
+				'title'         => 'Purchased Items',
+				'content'       => 'user/purchased_view',
+				'entities'      => $entities,
+			);
+
+		$this->load->view('include/template', $data);
+	}
 }
