@@ -118,6 +118,12 @@
 <script type="text/javascript" src="<?php echo base_url('resources/plugins/datepicker/js/bootstrap-datepicker.min.js'); ?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.datepicker').datepicker();
+
+		$('#from').on('change', function() {
+			$('#to').val($(this).val());
+		});
+
 		$('.table').DataTable({
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 			"footerCallback": function(row, data, start, end, display) {
