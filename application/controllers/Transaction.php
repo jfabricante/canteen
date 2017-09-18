@@ -90,7 +90,7 @@ class Transaction extends CI_Controller {
 				$printer->feed(1);
 
 				$printer->text(str_pad("Total:", 38) . str_pad($params['totalPurchase'], 10) . "\n");
-				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n")
+				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
 				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'] ? $params['cash'] : '', 10) . "\n");
 				$printer->text(str_pad("Change:", 38) . str_pad($params['change'] ? $params['change'] : '', 10) . "\n");
 				$printer->feed(2);
@@ -184,5 +184,4 @@ class Transaction extends CI_Controller {
 		// Output the generated PDF to Browser
 		$dompdf->stream();
 	}
-
 }
