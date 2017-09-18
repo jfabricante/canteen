@@ -24,8 +24,8 @@
 								<tr>
 									<td><?php echo $entity->emp_no; ?></td>
 									<td><?php echo $entity->fullname; ?></td>
-									<td><?php echo $entity->meal_allowance >= 0 ? $entity->meal_allowance : '' ?></td>
-									<td><?php echo $entity->meal_allowance < 0 ? abs($entity->meal_allowance) : '' ?></td>
+									<td><?php echo $entity->meal_allowance >= 0 ? number_format($entity->meal_allowance, 2) : '' ?></td>
+									<td><?php echo $entity->meal_allowance < 0 ? number_format(abs($entity->meal_allowance), 2) : '' ?></td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
