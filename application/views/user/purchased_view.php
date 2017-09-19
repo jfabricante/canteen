@@ -81,9 +81,9 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th colspan="4" class="text-right">Total:</th>
+									<th colspan="4" class="text-right">Total this page:</th>
 									<th></th>
-									<th class="text-right">Puchased Total</th>
+									<th class="text-right">Total Purchased: </th>
 									<th></th>
 								</tr>
 							</tfoot>
