@@ -2,12 +2,19 @@
 <!-- page content -->
 <section class="content">
 	<div class="row">
-		<div class="col-md-7">
+		<!-- col-md-6 -->
+		<div class="col-md-6">
 			<?php echo $this->session->flashdata('message'); ?>
 			<div class="box box-danger">
+				<!-- box-header -->
+				<div class="box-header"></div>
+				<!-- /.box-header -->
+
+				<!-- box-body -->
 				<div class="box-body">
 					<!-- form -->
 					<form action="<?php echo base_url('index.php/transaction/handle_billing_report'); ?>" method="post">
+						<!-- row -->
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
@@ -27,7 +34,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<!-- pdf report -->
 									<button type="submit" class="btn btn-danger btn-flat" name="pdf_report">
@@ -42,11 +49,12 @@
 									<!-- ./excel report -->
 								</div>
 							</div>
-						</di>
-						
+						</div>
+						<!-- ./row -->
 					</form>
 					<!-- ./form -->
 				</div>
+				<!-- ./box-body -->
 			</div>
 		</div>
 	</div>
