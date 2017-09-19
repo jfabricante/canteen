@@ -123,9 +123,19 @@ class Transaction extends CI_Controller {
 	}
 
 	public function filter_billing_report()
+	public function handle_billing_report()
 	{
 		// instantiate and use the dompdf class
 		$dompdf = new Dompdf();
+		if ($this->input->post('pdf_report') !== null)
+		{
+			$this->_filter_billing_report();
+		}
+		else
+		{
+			$this->_billing_to_excel();	
+		}
+	}
 
 		// Change date format
 		$from = date('Y-m-d', strtotime($this->input->post('from')));
