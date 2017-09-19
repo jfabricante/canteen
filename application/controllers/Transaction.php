@@ -209,88 +209,111 @@ class Transaction extends CI_Controller {
 	}
 
 	// Create billing report on excel file
-	public function billing_to_excel()
+	protected function _billing_to_excel()
 	{
-		// Create php excel instance
-		$excelObj          = new PHPExcel();
-		$excelActiveSheet  = $excelObj->getActiveSheet();
-		$excelDefaultStyle = $excelObj->getDefaultStyle();
+		// Change date format
+		$from = date('Y-m-d', strtotime($this->input->post('from')));
+		$to   = date('Y-m-d', strtotime($this->input->post('to')));
 
 		$config = array(
-				'from' => '2017-09-01',
-				'to'   => '2017-09-20'
+				'from' => $from,
+				'to'   => $to
 			);
-
-		// Set text alignment to left
-		$excelDefaultStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-
-		// Set default fontsize to 9
-		$excelDefaultStyle->getFont()->setSize(9);
 
 		// Fetch data
 		$entities = $this->transaction->billing_report($config);
 
-		// Change the date format
-		$dataArray = array_map(function($item) {
-						$item['datetime']    = date('m/d/Y h:i:s A', strtotime($item['datetime']));
-						$item['credit_used'] = $item['credit_used'] ? number_format($item['credit_used'], 2) : ''; 
-						$item['cash']        = $item['cash'] ? number_format($item['cash'], 2) : '';
+		// Verify if there is something to generate
+		if (count($entities))
+		{
+			// Create php excel instance
+			$excelObj          = new PHPExcel();
+			$excelActiveSheet  = $excelObj->getActiveSheet();
+			$excelDefaultStyle = $excelObj->getDefaultStyle();
 
-						return array_values($item);
-					}, $entities);
+			// Set text alignment to left
+			$excelDefaultStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
-		// Set the Active sheet
-		$excelObj->setActiveSheetIndex(0);
+			// Set default fontsize to 9
+			$excelDefaultStyle->getFont()->setSize(8);
 
-		// Merge the cell for the billing title
-		$excelActiveSheet->mergeCells('A1:D1');
 
-		// Set the size to show it as a lead
-		$excelActiveSheet->getStyle('A1:D1')->getFont()->setSize(11);
+			// Change the date format
+			$dataArray = array_map(function($item) {
+							$item['datetime']    = date('m/d/Y h:i:s A', strtotime($item['datetime']));
+							$item['credit_used'] = $item['credit_used'] ? number_format($item['credit_used'], 2) : ''; 
+							$item['cash']        = $item['cash'] ? number_format($item['cash'], 2) : '';
 
-		// Add header to the excel
-		$excelActiveSheet->setCellValue('A1', 'Billing Report from ' . date('m/d/Y', strtotime($config['from'])) . ' to ' . date('m/d/Y', strtotime($config['to'])))
-				->setCellValue('A2', 'Trans. ID')
-				->setCellValue('B2', 'Employee')
-				->setCellValue('C2', 'Credit Used')
-				->setCellValue('D2', 'Cash Used')
-				->setCellValue('E2', 'Date')
-				->setCellValue('F2', 'Cashier');
+							return array_values($item);
+						}, $entities);
 
-		// Set the header to bold
-		$excelActiveSheet->getStyle('A2:F2')->getFont()->setBold(true);
+			// Set the Active sheet
+			$excelObj->setActiveSheetIndex(0);
 
-		// Set the with of the cell to autosize
-		$excelActiveSheet->getColumnDimension('B')->setAutoSize(true);
-		$excelActiveSheet->getColumnDimension('C')->setAutoSize(true);
-		$excelActiveSheet->getColumnDimension('D')->setAutoSize(true);
-		$excelActiveSheet->getColumnDimension('E')->setAutoSize(true);
-		$excelActiveSheet->getColumnDimension('F')->setAutoSize(true);
+			// Merge the cell for the billing title
+			$excelActiveSheet->mergeCells('A1:D1');
 
-		// Write the formatted data
-		$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
+			// Set the size to show it as a lead
+			$excelActiveSheet->getStyle('A1:D1')->getFont()->setSize(11);
 
-		// Apply background color on cell
-		$excelActiveSheet->getStyle('A2:F2')
-			->getFill()
-			->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
-			->getStartColor()
-			->setARGB('FF808080');
+			$excelActiveSheet->getHeaderFooter()->setOddHeader('&R Page &P of &N');
+			$excelActiveSheet->getHeaderFooter()->setEvenHeader('&R Page &P of &N');
 
-		// Change the text color to white
-		$excelActiveSheet->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
+			// Add header to the excel
+			$excelActiveSheet->setCellValue('A1', 'Billing Report from ' . date('m/d/Y', strtotime($config['from'])) . ' to ' . date('m/d/Y', strtotime($config['to'])))
+					->setCellValue('A2', 'Trans. ID')
+					->setCellValue('B2', 'Employee')
+					->setCellValue('C2', 'Credit Used')
+					->setCellValue('D2', 'Cash Used')
+					->setCellValue('E2', 'Date')
+					->setCellValue('F2', 'Cashier');
 
-		// Excel filename
-		$filename = 'billing_report.xlsx';
+			// Set the header to bold
+			$excelActiveSheet->getStyle('A2:F2')->getFont()->setBold(true);
 
-		// Content header information
-		header('Content-Type: application/vnd.ms-excel'); //mine type
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		header('Cached-Control: max-age=0');
+			// Set the with of the cell to autosize
+			$excelActiveSheet->getColumnDimension('B')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('C')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('D')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('E')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('F')->setAutoSize(true);
 
-		// Generate excel version using Excel 2017
-		$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel2007');
+			// Write the formatted data
+			$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
 
-		$objWriter->save('php://output');
+			/*echo '<pre>';
+			print_r($excelObj->setActiveSheetIndex(0)->getHighestRow());
+			echo '</pre>'; die;*/
+
+			// Apply background color on cell
+			$excelActiveSheet->getStyle('A2:F2')
+				->getFill()
+				->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+				->getStartColor()
+				->setARGB('FF808080');
+
+			// Change the text color to white
+			$excelActiveSheet->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
+
+			// Excel filename
+			$filename = 'billing_report.xlsx';
+
+			// Content header information
+			header('Content-Type: application/vnd.ms-excel'); //mine type
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Cached-Control: max-age=0');
+
+			// Generate excel version using Excel 2017
+			$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel2007');
+
+			$objWriter->save('php://output');
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-warning">There is no result on that date range!</div>');
+
+			redirect($this->agent->referrer());
+		}
+		
 	}
 }
