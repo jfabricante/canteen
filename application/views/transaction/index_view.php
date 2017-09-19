@@ -176,13 +176,13 @@
 											<button class="btn btn-flat btn-block" v-on:click="btnClick(6)">6</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
 										</li>
 										<li class="col-md-4 list-group-item">
 											<button class="btn btn-flat btn-block" v-on:click="btnClick(2)">2</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
 										</li>
 										<li class="col-md-4 list-group-item">
 											<button class="btn btn-flat btn-block" v-on:click="btnClick(0)">0</button>
