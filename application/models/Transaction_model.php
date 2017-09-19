@@ -55,10 +55,10 @@ class Transaction_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
+				'b.fullname AS employee',
 				'a.credit_used',
 				'a.cash',
 				'a.datetime',
-				'b.fullname AS employee',
 				'c.fullname AS cashier'
 			);
 
