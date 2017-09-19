@@ -697,7 +697,8 @@
 			},
 			performTransaction: function() {
 				console.log(this.remaining_amount)
-				if ((this.hasUser() && this.remaining_credit >= -200) || this.remaining_amount <= 0)
+
+				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0) || (this.remaining_amount <= 0 && this.cart.length > 0 ))
 				{
 					axios({
 						url: appUrl + '/transaction/store',
