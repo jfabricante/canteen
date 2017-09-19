@@ -23,7 +23,7 @@
 							<?php foreach($entities as $entity): ?>
 								<tr>
 									<td><?php echo $entity->emp_no; ?></td>
-									<td><?php echo $entity->fullname; ?></td>
+									<td><?php echo ucwords(strtolower($entity->fullname)); ?></td>
 									<td><?php echo $entity->meal_allowance >= 0 ? number_format($entity->meal_allowance, 2) : '' ?></td>
 									<td><?php echo $entity->meal_allowance < 0 ? number_format(abs($entity->meal_allowance), 2) : '' ?></td>
 								</tr>
