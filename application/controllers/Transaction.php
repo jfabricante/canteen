@@ -284,6 +284,14 @@ class Transaction extends CI_Controller {
 			// Write the formatted data
 			$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
 
+			$cell_key   = 'A' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
+			$cell_value = 'B' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
+
+			$excelActiveSheet->getStyle( $cell_key. ':' . $cell_value)->getFont()->setSize(11);
+			$excelActiveSheet->setCellValue($cell_key, 'Total: ');
+			$excelActiveSheet->setCellValue($cell_value, $total_credit);
+
+
 			/*echo '<pre>';
 			print_r($excelObj->setActiveSheetIndex(0)->getHighestRow());
 			echo '</pre>'; die;*/
