@@ -185,4 +185,90 @@ class Transaction extends CI_Controller {
 		// Output the generated PDF to Browser
 		$dompdf->stream();
 	}
+
+	// Create billing report on excel file
+	public function billing_to_excel()
+	{
+		// Create php excel instance
+		$excelObj          = new PHPExcel();
+		$excelActiveSheet  = $excelObj->getActiveSheet();
+		$excelDefaultStyle = $excelObj->getDefaultStyle();
+
+		$config = array(
+				'from' => '2017-09-01',
+				'to'   => '2017-09-20'
+			);
+
+		// Set text alignment to left
+		$excelDefaultStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+		// Set default fontsize to 9
+		$excelDefaultStyle->getFont()->setSize(9);
+
+		// Fetch data
+		$entities = $this->transaction->billing_report($config);
+
+		// Change the date format
+		$dataArray = array_map(function($item) {
+						$item['datetime']    = date('m/d/Y h:i:s A', strtotime($item['datetime']));
+						$item['credit_used'] = $item['credit_used'] ? number_format($item['credit_used'], 2) : ''; 
+						$item['cash']        = $item['cash'] ? number_format($item['cash'], 2) : '';
+
+						return array_values($item);
+					}, $entities);
+
+		// Set the Active sheet
+		$excelObj->setActiveSheetIndex(0);
+
+		// Merge the cell for the billing title
+		$excelActiveSheet->mergeCells('A1:D1');
+
+		// Set the size to show it as a lead
+		$excelActiveSheet->getStyle('A1:D1')->getFont()->setSize(11);
+
+		// Add header to the excel
+		$excelActiveSheet->setCellValue('A1', 'Billing Report from ' . date('m/d/Y', strtotime($config['from'])) . ' to ' . date('m/d/Y', strtotime($config['to'])))
+				->setCellValue('A2', 'Trans. ID')
+				->setCellValue('B2', 'Employee')
+				->setCellValue('C2', 'Credit Used')
+				->setCellValue('D2', 'Cash Used')
+				->setCellValue('E2', 'Date')
+				->setCellValue('F2', 'Cashier');
+
+		// Set the header to bold
+		$excelActiveSheet->getStyle('A2:F2')->getFont()->setBold(true);
+
+		// Set the with of the cell to autosize
+		$excelActiveSheet->getColumnDimension('B')->setAutoSize(true);
+		$excelActiveSheet->getColumnDimension('C')->setAutoSize(true);
+		$excelActiveSheet->getColumnDimension('D')->setAutoSize(true);
+		$excelActiveSheet->getColumnDimension('E')->setAutoSize(true);
+		$excelActiveSheet->getColumnDimension('F')->setAutoSize(true);
+
+		// Write the formatted data
+		$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
+
+		// Apply background color on cell
+		$excelActiveSheet->getStyle('A2:F2')
+			->getFill()
+			->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+			->getStartColor()
+			->setARGB('FF808080');
+
+		// Change the text color to white
+		$excelActiveSheet->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
+
+		// Excel filename
+		$filename = 'billing_report.xlsx';
+
+		// Content header information
+		header('Content-Type: application/vnd.ms-excel'); //mine type
+		header('Content-Disposition: attachment; filename="' . $filename . '"');
+		header('Cached-Control: max-age=0');
+
+		// Generate excel version using Excel 2017
+		$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel2007');
+
+		$objWriter->save('php://output');
+	}
 }
