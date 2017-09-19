@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once APPPATH . '/third_party/escpos-php/autoload.php';
 require_once APPPATH . '/third_party/dompdf/autoload.inc.php';
+require_once APPPATH . '/third_party/PHPExcel/Classes/PHPExcel.php';
 
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
