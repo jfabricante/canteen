@@ -29,7 +29,17 @@
 
 							<div class="col-md-4">
 								<div class="form-group">
-									<input type="submit" class="form-control btn btn-danger btn-flat" value="Generate Report">
+									<!-- pdf report -->
+									<button type="submit" class="btn btn-danger btn-flat" name="pdf_report">
+										<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+									</button>
+									<!-- ./pdf report -->
+
+									<!-- excel report -->
+									<button type="submit" class="btn btn-success btn-flat" name="excel_report">
+										<i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
+									</button>
+									<!-- ./excel report -->
 								</div>
 							</div>
 						</di>
