@@ -224,7 +224,7 @@ class Transaction extends CI_Controller {
 		$entities = $this->transaction->billing_report($config);
 
 		// Total Credit
-		$total_credit =  number_format(array_sum(array_column($entities, 'credit_used')), 2);
+		$total_bill =  number_format(array_sum(array_column($entities, 'credit_used')), 2);
 
 		// Verify if there is something to generate
 		if (count($entities))
@@ -237,7 +237,7 @@ class Transaction extends CI_Controller {
 			// Set text alignment to left
 			$excelDefaultStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
-			// Set default fontsize to 9
+			// Set default fontsize to 8
 			$excelDefaultStyle->getFont()->setSize(8);
 
 
