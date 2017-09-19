@@ -284,17 +284,14 @@ class Transaction extends CI_Controller {
 			// Write the formatted data
 			$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
 
+			// Calculate the last row and add another 2
 			$cell_key   = 'A' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
 			$cell_value = 'B' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
 
+			// Set the value on calculated location
 			$excelActiveSheet->getStyle( $cell_key. ':' . $cell_value)->getFont()->setSize(11);
 			$excelActiveSheet->setCellValue($cell_key, 'Total: ');
 			$excelActiveSheet->setCellValue($cell_value, $total_credit);
-
-
-			/*echo '<pre>';
-			print_r($excelObj->setActiveSheetIndex(0)->getHighestRow());
-			echo '</pre>'; die;*/
 
 			// Apply background color on cell
 			$excelActiveSheet->getStyle('A2:F2')
