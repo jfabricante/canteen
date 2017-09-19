@@ -134,7 +134,7 @@ class Transaction extends CI_Controller {
 		}
 	}
 
-	protected function _filter_billing_report()
+	protected function _billing_to_pdf()
 	{
 		// Change date format
 		$from = date('Y-m-d', strtotime($this->input->post('from')));
@@ -284,14 +284,14 @@ class Transaction extends CI_Controller {
 			// Write the formatted data
 			$excelActiveSheet->fromArray($dataArray, NULL, 'A3');
 
-			// Calculate the last row and add another 2
-			$cell_key   = 'A' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
-			$cell_value = 'B' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
+			// Calculate cell range to merge
+			$cell_from = 'A' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
+			$cell_to   = 'C' . (string)($excelObj->setActiveSheetIndex(0)->getHighestRow() + 2);
 
 			// Set the value on calculated location
-			$excelActiveSheet->getStyle( $cell_key. ':' . $cell_value)->getFont()->setSize(11);
-			$excelActiveSheet->setCellValue($cell_key, 'Total: ');
-			$excelActiveSheet->setCellValue($cell_value, $total_credit);
+			$excelActiveSheet->mergeCells($cell_from . ':' . $cell_to);
+			$excelActiveSheet->getStyle($cell_from. ':' . $cell_to)->getFont()->setSize(11);
+			$excelActiveSheet->setCellValue($cell_from, 'Total Bill Amount: ' . $total_bill);
 
 			// Apply background color on cell
 			$excelActiveSheet->getStyle('A2:F2')
