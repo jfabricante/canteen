@@ -122,11 +122,8 @@ class Transaction extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
-	public function filter_billing_report()
 	public function handle_billing_report()
 	{
-		// instantiate and use the dompdf class
-		$dompdf = new Dompdf();
 		if ($this->input->post('pdf_report') !== null)
 		{
 			$this->_filter_billing_report();
@@ -137,17 +134,11 @@ class Transaction extends CI_Controller {
 		}
 	}
 
+	protected function _filter_billing_report()
+	{
 		// Change date format
 		$from = date('Y-m-d', strtotime($this->input->post('from')));
 		$to   = date('Y-m-d', strtotime($this->input->post('to')));
-
-		// Header options
-		$font       = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
-		$size       = 8;
-		$color      = array(0, 0, 0);
-		$word_space = 0.0;  //  default
-		$char_space = 0.0;  //  default
-		$angle      = 0.0;   //  default
 
 		$config = array(
 				'from' => $from,
@@ -156,44 +147,65 @@ class Transaction extends CI_Controller {
 
 		$entities = $this->transaction->billing_report($config);
 
-		// Calculate the total bill from date filtered data
-		$total_bill = is_array($entities) ? array_sum(array_column($entities, 'credit_used')) : 0; 
+		// Verify if there is something to generate
+		if (count($entities))
+		{
+			// instantiate and use the dompdf class
+			$dompdf = new Dompdf();
 
-		$data = array(
-				'title'      => 'Billing Reports from ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to'])),
-				'entities'   => $entities,
-				'total_bill' => $total_bill
-			);
+			// Header options
+			$font       = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+			$size       = 8;
+			$color      = array(0, 0, 0);
+			$word_space = 0.0;  //  default
+			$char_space = 0.0;  //  default
+			$angle      = 0.0;   //  default
 
-		// Enable html5 parsing
-		$dompdf->set_option('isHtml5ParserEnabled', true);
+			// Calculate the total bill from date filtered data
+			$total_bill = is_array($entities) ? array_sum(array_column($entities, 'credit_used')) : 0; 
 
-		// Load the html to pdf
-		$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
+			$data = array(
+					'title'      => 'Billing Reports from ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to'])),
+					'entities'   => $entities,
+					'total_bill' => $total_bill
+				);
 
-        $text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
-        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
+			// Enable html5 parsing
+			$dompdf->set_option('isHtml5ParserEnabled', true);
 
-        $text = date('d/m/Y h:i A');
-        $dompdf->getCanvas()->page_text(400, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+			// Load the html to pdf
+			$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
 
-        $text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
-        $dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        $text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
+	        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
-        $dompdf->getCanvas()->page_text(520, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        $text = date('d/m/Y h:i A');
+	        $dompdf->getCanvas()->page_text(400, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-        $text = "Billing Report";
-        $size = 14;
-        $headerFont = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+	        $text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+	        $dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-        $dompdf->getCanvas()->page_text(40, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+	        $dompdf->getCanvas()->page_text(520, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-		// Render the HTML as PDF
-		$dompdf->render();
+	        $text = "Billing Report";
+	        $size = 14;
+	        $headerFont = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
 
-		// Output the generated PDF to Browser
-		$dompdf->stream();
+	        $dompdf->getCanvas()->page_text(40, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+			// Render the HTML as PDF
+			$dompdf->render();
+
+			// Output the generated PDF to Browser
+			$dompdf->stream();
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-warning">There is no result on that date range!</div>');
+
+			redirect($this->agent->referrer());
+		}
 	}
 
 	// Create billing report on excel file
