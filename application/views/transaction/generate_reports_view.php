@@ -3,12 +3,12 @@
 <section class="content">
 	<div class="row">
 		<div class="col-md-7">
+			<?php echo $this->session->flashdata('message'); ?>
 			<div class="box box-danger">
-
 				<div class="box-body">
 					<!-- form -->
-					<form action="<?php echo base_url('index.php/transaction/filter_billing_report'); ?>" method="post">
-						<di class="row">
+					<form action="<?php echo base_url('index.php/transaction/handle_billing_report'); ?>" method="post">
+						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
 									<div class="input-group date">
