@@ -126,7 +126,7 @@ class Transaction extends CI_Controller {
 	{
 		if ($this->input->post('pdf_report') !== null)
 		{
-			$this->_filter_billing_report();
+			$this->_billing_to_pdf();
 		}
 		else
 		{
