@@ -47,7 +47,7 @@
 		<div class="col-md-3">
 			<div class="box box-danger">
 				<div class="box-body text-center">
-					<h5 class="lead"><strong><?php echo $balance->meal_allowance >= 0 ? "Remaining balance: " . $balance->meal_allowance : "Excess credit: " . $balance->meal_allowance ?></strong></h5>
+					<h5 class="lead"><strong><?php echo $balance->meal_allowance >= 0 ? "Remaining balance: " . number_format($balance->meal_allowance, 2) : "Excess credit: " . number_format(abs($balance->meal_allowance), 2) ?></strong></h5>
 				</div>
 			</div>
 		</div>
