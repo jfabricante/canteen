@@ -137,6 +137,10 @@
 				total = api.column(4)
 						.data()
 						.reduce((a, b) => {
+							// Convert to string and remove the comma
+							a = a.toString().replace(/\,/g,'')
+							b = b.toString().replace(/\,/g,'')
+
 							return Number(a) + Number(b)
 								
 						}, 0);
@@ -145,6 +149,10 @@
 				totalPerPage = api.column(4, {page: 'current'})
 						.data()
 						.reduce((a, b) => {
+							// Convert to string and remove the comma
+							a = a.toString().replace(/\,/g,'')
+							b = b.toString().replace(/\,/g,'')
+
 							return Number(a) + Number(b)
 								
 						}, 0);
