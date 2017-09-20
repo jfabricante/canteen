@@ -157,9 +157,9 @@
 								
 						}, 0);
 
-				$(api.column(4).footer()).html(totalPerPage.toFixed(2));
+				$(api.column(4).footer()).html(totalPerPage.toLocaleString() + '.00');
 
-				$(api.column(6).footer()).html(total.toFixed(2));
+				$(api.column(6).footer()).html(total.toLocaleString() + '.00');
 			}
 		});
 	});
