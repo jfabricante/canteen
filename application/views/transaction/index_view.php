@@ -847,13 +847,12 @@
 					this.remaining_amount = Number(this.totalPurchase) - Number(this.employee.allowance) - Number(this.cash.amount)
 				}
 
-				if (this.cash.amount > 0)
+				// Cash and no user
+				if (this.cash.amount > 0 && !this.hasUser())
 				{
 					if (this.remaining_amount < 0)
 					{
-						var change = Math.abs(this.remaining_amount) > this.employee.allowance ? Math.abs(this.remaining_amount) - this.employee.allowance : Math.abs(this.remaining_amount)
-
-						this.$set(this.cash, 'change', change)
+						this.$set(this.cash, 'change', Math.abs(this.remaining_amount))
 						this.remaining_amount = 0
 
 						if (this.cash.change > 0)
@@ -867,27 +866,63 @@
 						this.$set(this.cash, 'change', 0)
 					}
 				}
-				else
+				else if (this.cash.amount == 0 && this.hasUser())
 				{
 					if (this.remaining_amount < 0)
 					{
 						this.remaining_credit = Math.abs(this.remaining_amount)
 						this.remaining_amount = 0
-						this.credit_used = this.totalPurchase
-						this.$set(this.cash, 'change', 0)
+						this.credit_used      = this.totalPurchase
 					}
-					else if (this.remaining_amount > 0 && this.hasUser())
+					else if (this.remaining_amount > 0)
 					{
-						this.remaining_credit = this.remaining_amount * -1
-						this.remaining_amount = Number(this.totalPurchase)
-						this.credit_used = this.totalPurchase
-						this.$set(this.cash, 'change', 0)
+						// Calculate remaining limit
+						var remaining_limit = 200 + Number(this.employee.allowance)
+						
+						// Calculate initial value
+						var calculated_amount = Number(this.totalPurchase) - Number(remaining_limit)
+
+						this.remaining_credit = this.employee.allowance > 0 ? Number(this.remaining_amount * -1) : Number(this.remaining_amount * -1) + Number(this.employee.allowance)
+						this.remaining_amount = Number(calculated_amount) > 0 ? calculated_amount : 0
+						this.credit_used      = this.totalPurchase
 					}
 					else
 					{
 						this.remaining_credit = 0
-						this.credit_used = 0
-						this.$set(this.cash, 'change', 0)
+						this.credit_used      = 0
+					}
+
+					this.$set(this.cash, 'change', 0)
+				}
+				else if (this.cash.amount > 0 && this.hasUser())
+				{
+					if (this.employee.allowance >= -200)
+					{
+						// Calculate remaining limit
+						var remaining_limit = 200 + Number(this.employee.allowance)
+						
+						// Calculate initial value
+						var calculated_amount = Number(this.totalPurchase) - Number(remaining_limit)
+
+						this.remaining_amount = Number(calculated_amount) > 0 ? calculated_amount : 0
+
+						if (calculated_amount > 0)
+						{
+							// Apply cash amount
+							calculated_amount = Number(calculated_amount) - Number(this.cash.amount)
+
+							// Set amount to be filled up
+							this.remaining_amount = Number(calculated_amount) > 0 ? calculated_amount : 0
+
+							this.remaining_credit = Number(this.employee.allowance) + Number(-1 * remaining_limit)
+
+							this.credit_used = remaining_limit
+
+							if (calculated_amount <= 0)
+							{
+								this.$set(this.cash, 'change', Math.abs(calculated_amount))
+							}
+						}
 					}
 				}
 			},
