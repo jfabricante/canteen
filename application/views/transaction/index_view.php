@@ -998,6 +998,7 @@
 		},
 	});
 
-	// Disable right click
-	//document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
+	// JQuery script
+	// document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
+
 </script>
