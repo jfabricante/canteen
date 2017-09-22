@@ -696,9 +696,8 @@
 				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
 			performTransaction: function() {
-				console.log(this.remaining_amount)
 
-				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0) || (this.remaining_amount <= 0 && this.cart.length > 0 ))
+				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0) || (this.remaining_amount <= 0 && this.cart.length > 0))
 				{
 					axios({
 						url: appUrl + '/transaction/store',
@@ -817,6 +816,7 @@
 					this.employee.id = ''
 					this.employee.fullname = ''
 					this.employee.allowance = 0
+					this.remaining_credit = 0
 
 					this.updateValues()
 				}
