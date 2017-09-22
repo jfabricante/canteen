@@ -837,7 +837,15 @@
 				this.$set(state, 'state', true)
 			},
 			updateValues: function() {
-				this.remaining_amount = Number(this.totalPurchase) - Number(this.employee.allowance) - Number(this.cash.amount)
+				// Calculate remaining amount
+				if (this.hasUser() && this.employee.allowance < 0)
+				{
+					this.remaining_amount = Number(this.totalPurchase) - Number(this.cash.amount)
+				}
+				else
+				{		
+					this.remaining_amount = Number(this.totalPurchase) - Number(this.employee.allowance) - Number(this.cash.amount)
+				}
 
 				if (this.cash.amount > 0)
 				{
