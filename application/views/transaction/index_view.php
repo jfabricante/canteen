@@ -635,6 +635,7 @@
 				else
 				{
 					alert("TM have reached its maximum limit")
+					console.log(this.predicted_total)
 				}
 
 				this.manageState(this.newItems)
