@@ -724,6 +724,18 @@
 						console.log(error);
 					});
 				}
+				else if (this.hasUser() && this.remaining_credit < 200 && this.cart.length > 0)
+				{
+					alert('Cannot do the transaction credit limit has been exceded!');
+				}				
+				else if (this.cart.length == 0)
+				{
+					alert('There is no purchased item!');
+				}
+				else if (!this.hasUser() && this.remaining_amount > 0)
+				{
+					alert('Not enough cash to perform the transaction!');
+				}
 			},
 			btnClick: function(value) {
 				// Check if quantity is editable
