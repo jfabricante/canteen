@@ -16,11 +16,11 @@
 			</div>
 
 			<div class="col-md-2">
-				<h4>Meal Allowance: {{ employee.allowance }}</h4>
+				<h4>Meal Allowance: {{ employee.allowance >= 0 ? employee.allowance : 0}}</h4>
 			</div>
 
 			<div class="col-md-2">
-				<h4>Remaining Credit: {{ remaining_credit }}</h4>
+				<h4>Remaining Credit: {{ remaining_credit <= -1 ? Math.abs(remaining_credit) : 0}}</h4>
 			</div>
 		</div>
 		<!-- row -->
