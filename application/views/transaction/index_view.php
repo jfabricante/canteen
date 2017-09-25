@@ -419,6 +419,12 @@
 						</table>
 						<!-- End of table -->
 					</div>
+					<!-- ./modal-body -->
+
+					<div class="modal-footer">
+						<button class="btn btn-info btn-flat pull-left" data-dismiss="modal">Close</button>
+						<button class="btn btn-danger btn-flat" @click="printTransaction">Print</button>
+					</div>
 				</div>
 			</div>
 		</div>
