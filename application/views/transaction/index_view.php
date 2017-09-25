@@ -987,6 +987,7 @@
 				this.cash_tendered    = 0
 				this.predicted_total  = 0
 				this.credit_used      = 0
+				this.to_print         = false
 
 				this.showValues()
 			},
@@ -1003,6 +1004,7 @@
 				console.log("Cash Tendered: " + this.cash_tendered)
 				console.log("Predicted Total: " + this.predicted_total)
 				console.log("Credit Used: " + this.credit_used)
+				console.log("Allowed printing: " + this.to_print)
 			},
 			imageExists: function(image_url)
 			{
