@@ -481,6 +481,8 @@
 			cash_tendered: 0,
 			predicted_total: 0,
 			credit_used: 0,
+			last_transaction_id: 0,
+			to_print: false
 		},
 		created() {
 			this.fetchCategories()
