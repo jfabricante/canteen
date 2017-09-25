@@ -720,12 +720,15 @@
 							change: this.cash.change || 0,
 							remaining_amount: this.remaining_amount || 0,
 							remaining_credit: this.remaining_credit || 0,
-							credit_used: this.credit_used || 0
+							credit_used: this.credit_used || 0,
+							to_print: this.to_print || false,
+							trans_id: this.last_transaction_id || 0
 						}
 					})
-					.then(function (response) {
+					.then((response) => {
 						// your action after success
-						console.log(response);
+						console.log(response.data)
+						this.last_transaction_id = response.data
 						$('#modal').modal('show')
 					})
 					.catch(function (error) {
