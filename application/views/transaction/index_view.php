@@ -594,7 +594,8 @@
 					barcode: item.barcode
 				}
 
-				console.log(this.newItems)
+				//console.log(this.newItems)
+				console.log(this.last_transaction_id)
 
 				var index = this.cartIndex(this.newItems)
 
