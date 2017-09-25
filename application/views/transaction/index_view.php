@@ -365,12 +365,12 @@
 		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modal" ref="modal">
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
-
+					<!-- modal-body -->
 					<div class="modal-body">
 						<!-- Item table -->
 						<p class="separator">
 							<span>Isuzu Philippines Corporation <br /></span>
-							<span>Transaction #1220422 <br /></span>
+							<span>Transaction#: {{ last_transaction_id }} <br /></span>
 							<span><?php echo date('D, M d, Y h:i A'); ?></span>
 						</p>
 						<p class="separator">
