@@ -749,6 +749,12 @@
 					alert('Not enough cash to perform the transaction!');
 				}
 			},
+			printTransaction: function()
+			{
+				this.to_print = true
+
+				this.performTransaction()
+			},
 			btnClick: function(value) {
 				// Check if quantity is editable
 				if (this.newItems.state === true) {
