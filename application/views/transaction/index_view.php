@@ -53,9 +53,9 @@
 							<tbody>
 								<tr v-for="(item, index) in cart">
 									<td>{{ _.toUpper(item.name) }}</td>
-									<td>&#8369; {{ item.price }}</td>
+									<td>{{ item.price }}</td>
 									<td>{{ item.quantity }}</td>
-									<td>&#8369;  {{ item.total }}</td>
+									<td>{{ item.total }}</td>
 									<td>
 										<a href="#" v-on:click="editItem(index)">
 											<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>	
