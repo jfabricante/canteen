@@ -90,275 +90,286 @@
 			</div>
 			<!-- End of col-md-4 -->
 
-			<!-- col-md-6 -->
-			<div class="col-md-2">
-				<!-- box-danger -->
-				<div class="box box-danger cart-form">
-					<div class="box-body">
-						<!-- Row -->
-						<div class="row">
-							<!-- col-md-12 -->
-							<div class="col-md-12">
-								<!-- Form -->
-								<form id="itemForm" class="form-horizonal" v-on:submit.prevent="updateItem" method="post" autocomplete="off">
-									<div class="form-group hidden">
-										<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
-									</div>
-
-									<div class="form-group">
-										<div class="row">
-											<label for="item" class="col-sm-4 control-label">Item</label>
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="item" name="item" v-model="_.toUpper(newItems.name)" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
+			<!-- col-md-8 -->
+			<div class="col-md-8">
+				<!-- row -->
+				<div class="row">
+					<!-- col-md-4 -->
+					<div class="col-md-4">
+						<!-- box-danger -->
+						<div class="box box-danger cart-form">
+							<div class="box-body">
+								<!-- Row -->
+								<div class="row">
+									<!-- col-md-12 -->
+									<div class="col-md-12">
+										<!-- Form -->
+										<form id="itemForm" class="form-horizonal" v-on:submit.prevent="updateItem" method="post" autocomplete="off">
+											<div class="form-group hidden">
+												<input type="number" class="form-control" id="id" name="id" v-model="newItems.id">
 											</div>
 
-											<div class="col-sm-12">
-												<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
-												<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
+											<div class="form-group">
+												<div class="row">
+													<label for="item" class="col-sm-4 control-label">Item</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="item" name="item" v-model="_.toUpper(newItems.name)" v-bind:class="{'input': true, 'is-danger': errors.has('item') }" readonly v-validate="'required'">
+													</div>
+
+													<div class="col-sm-12">
+														<i v-show="errors.has('item')" class="fa fa-warning text-danger"></i>
+														<span v-show="errors.has('item')" class="text-danger">{{ errors.first('item') }}</span>
+													</div>
+												</div>
 											</div>
-										</div>
-									</div>
 
-									<div class="form-group hidden">
-										<label for="price">Price</label>
-										<input type="text" class="form-control" id="price" name="price" v-model="newItems.price">
-									</div>
-
-									<div class="form-group">
-										<div class="row">
-											<label for="quantity" class="col-sm-4 control-label">Quantity</label>
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
+											<div class="form-group hidden">
+												<label for="price">Price</label>
+												<input type="text" class="form-control" id="price" name="price" v-model="newItems.price">
 											</div>
+
+											<div class="form-group">
+												<div class="row">
+													<label for="quantity" class="col-sm-4 control-label">Quantity</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" id="quantity" ref="quantity" name="quantity" v-model="newItems.quantity" v-validate="'required|min_value:1|max:6'" v-bind:class="{'input': true, 'is-danger': errors.has('quantity') }">
+													</div>
+												</div>
+
+												<div class="col-sm-12">
+													<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
+													<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
+												</div>
+
+											</div>
+
+											<div class="form-group hidden">
+												<label for="total">Total Amount</label>
+												<input type="text" class="form-control" id="total" name="total" v-model="newItems.total" v-bind:value="Number(newItems.quantity) * newItems.price">
+											</div>
+										
+											<div class="form-group pull-right">
+												<input type="submit" value="Update" class="btn btn-flat btn-danger">
+											</div>
+										</form>
+										<!-- End Form -->		
+									</div>
+									<!-- /col-md-12 -->
+
+									<!-- col-md-12 -->
+									<div class="col-md-12">
+										<!-- Calculator -->
+										<div class="calculator text-center">
+											<ul class="list-group">
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(7)">7</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(8)">8</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(9)">9</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(4)">4</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(5)">5</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(6)">6</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(2)">2</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick(0)">0</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="btnClick('.')">.</button>
+												</li>
+												<li class="col-md-4 list-group-item">
+													<button class="btn btn-flat btn-block" v-on:click="removeChar"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+												</li>
+											</ul>
 										</div>
+										<!-- /Calculator -->
+									</div>
+									<!-- /col-md-12 -->
 
-										<div class="col-sm-12">
-											<i v-show="errors.has('quantity')" class="fa fa-warning text-danger"></i>
-											<span v-show="errors.has('quantity')" class="text-danger">{{ errors.first('quantity') }}</span>
+									<!-- col-md-12 -->
+									<div class="col-md-12">
+										<div class="checkout text-center">
+											<button class="btn btn-flat btn-danger btn-block" v-on:click="showCheckoutPane">
+												<i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
+											</button>
 										</div>
+									</div>
+									<!-- /col-md-12 -->
 
-									</div>
-
-									<div class="form-group hidden">
-										<label for="total">Total Amount</label>
-										<input type="text" class="form-control" id="total" name="total" v-model="newItems.total" v-bind:value="Number(newItems.quantity) * newItems.price">
-									</div>
-								
-									<div class="form-group pull-right">
-										<input type="submit" value="Update" class="btn btn-flat btn-danger">
-									</div>
-								</form>
-								<!-- End Form -->		
+								</div>
+								<!-- /Row -->
 							</div>
-							<!-- /col-md-12 -->
+							<!-- /box-body -->
+						</div>
+						<!-- /box-danger -->
+					</div>
+					<!-- /col-md-4 -->
 
-							<!-- col-md-12 -->
-							<div class="col-md-12">
-								<!-- Calculator -->
-								<div class="calculator text-center">
-									<ul class="list-group">
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(7)">7</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(8)">8</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(9)">9</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(4)">4</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(5)">5</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(6)">6</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(2)">2</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(0)">0</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick('.')">.</button>
-										</li>
-										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="removeChar"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+					<!-- col-md-8 -->
+					<div class="col-md-8">
+						<!-- Danger box -->
+						<div class="box box-danger">
+							
+							<div class="box-header">
+								<div class="box-header with-border">
+									<h3 class="box-title">Categories</h3>
+								</div>
+							</div>
+
+							<!-- Box body -->
+							<div class="box-body">
+								<!-- Custom tabs -->
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li v-for="(category, index) in categories" class="" v-bind:class="{'active': index === 0}">
+											<a v-bind:href="'#' + index" data-toggle="tab" aria-expanded="false">{{ category.name }}</a>
 										</li>
 									</ul>
-								</div>
-								<!-- /Calculator -->
-							</div>
-							<!-- /col-md-12 -->
 
-							<!-- col-md-12 -->
-							<div class="col-md-12">
-								<div class="checkout text-center">
-									<button class="btn btn-flat btn-danger btn-block" v-on:click="showCheckoutPane">
-										<i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i>
-									</button>
-								</div>
-							</div>
-							<!-- /col-md-12 -->
-
-						</div>
-						<!-- /Row -->
-					</div>
-					<!-- /box-body -->
-				</div>
-				<!-- /box-danger -->
-			</div>
-			<!-- /col-md-3 -->
-
-			<!-- Items -->
-			<div class="col-md-6">
-				<!-- Danger box -->
-				<div class="box box-danger">
-					
-					<div class="box-header">
-						<div class="box-header with-border">
-							<h3 class="box-title">Categories</h3>
-						</div>
-					</div>
-
-					<!-- Box body -->
-					<div class="box-body">
-						<!-- Custom tabs -->
-						<div class="nav-tabs-custom">
-							<ul class="nav nav-tabs">
-								<li v-for="(category, index) in categories" class="" v-bind:class="{'active': index === 0}">
-									<a v-bind:href="'#' + index" data-toggle="tab" aria-expanded="false">{{ category.name }}</a>
-								</li>
-							</ul>
-
-							<div class="tab-content">
-								<!-- Tab pane -->
-								<div class="tab-pane" v-for="(category_items, index) in featuredItems" v-bind:id="index" v-bind:class="{'active': index === 0}">
-									<!-- Row -->
-									<div class="row">
-										<ul class="list-group">
-											<li  v-for="item in category_items" class="col-md-2 list-group-item" v-on:click="addItem(item)">
-												<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
-												<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
-												<p class="text-center">{{ _.toUpper(item.name) }}</p>
-												<p class="text-center">&#8369; {{ item.price }}</p>
-											</li>
-										</ul>
-									</div>
-									<!-- End of row -->
-								</div>
-								<!-- Tab pane -->
-
-								<!-- Checkout pane -->
-								<div class="tab-pane" id="checkout-pane">
-									<form class="form-horizonal" autocomplete="off" id="transaction-form" v-on:submit.prevent="performTransaction">
-										<fieldset>
-											<legend>Team Member Details</legend>
+									<div class="tab-content">
+										<!-- Tab pane -->
+										<div class="tab-pane" v-for="(category_items, index) in featuredItems" v-bind:id="index" v-bind:class="{'active': index === 0}">
 											<!-- Row -->
 											<div class="row">
-												<!-- TM details -->
-												<div class="col-md-9">
-													<div class="form-group">
-														<label class="col-sm-4 control-label" for="employee_no">Employee No.</label>
-														<div class="col-sm-8">
-															<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
-															<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
-															<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-4 control-label" for="employee_name" >Employee Name</label>
-														<div class="col-sm-8">
-															<input type="text" name="employee_name" id="employee_name" class="form-control" readonly v-model="employee.fullname">
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-4 control-label" for="meal_allowance">Meal Allowance</label>
-														<div class="col-sm-8">
-															<input type="text" name="meal_allowanace" id="meal_allowance" class="form-control" readonly v-model="employee.allowance">
-														</div>
-													</div>
-												</div>
-												<!-- /TM details -->
-
-												<!-- TM thumbnail -->
-												<div class="col-md-3">
-													<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
-													<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
-												</div>
-												<!-- /thumbnail -->
+												<ul class="list-group">
+													<li  v-for="item in category_items" class="col-md-2 list-group-item" v-on:click="addItem(item)">
+														<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
+														<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
+														<p class="text-center">{{ _.toUpper(item.name) }}</p>
+														<p class="text-center">&#8369; {{ item.price }}</p>
+													</li>
+												</ul>
 											</div>
-											<!-- /Row -->
-										</fieldset>
+											<!-- End of row -->
+										</div>
+										<!-- Tab pane -->
 
-										<fieldset class="form-group">
-											<legend>Transaction Details</legend>
-											<!-- row -->
-											<div class="row">
-												<div class="col-md-10">
-													<div>
-														<label class="col-sm-4 control-label" for="total_amount">Total Amount</label>
-														<div class="col-sm-8">
-															<input type="text" name="total_amount" id="total_amount" class="form-control" v-model="totalPurchase" readonly>
+										<!-- Checkout pane -->
+										<div class="tab-pane" id="checkout-pane">
+											<!-- form -->
+											<form class="form-horizonal" autocomplete="off" id="transaction-form" v-on:submit.prevent="performTransaction">
+												<fieldset>
+													<legend>Team Member Details</legend>
+													<!-- Row -->
+													<div class="row">
+														<!-- TM details -->
+														<div class="col-md-9">
+															<div class="form-group">
+																<label class="col-sm-5 control-label" for="employee_no">Employee No.</label>
+																<div class="col-sm-7">
+																	<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
+																	<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
+																	<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-sm-5 control-label" for="employee_name" >Employee Name</label>
+																<div class="col-sm-7">
+																	<input type="text" name="employee_name" id="employee_name" class="form-control" readonly v-model="employee.fullname">
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-sm-5 control-label" for="meal_allowance">Meal Allowance</label>
+																<div class="col-sm-7">
+																	<input type="text" name="meal_allowanace" id="meal_allowance" class="form-control" readonly v-model="employee.allowance">
+																</div>
+															</div>
 														</div>
-													</div>
-													<div>
-														<label class="col-sm-4 control-label" for="cash">Cash</label>
-														<div class="col-sm-8">
-															<input type="text" name="cash" id="cash" class="form-control" v-model="cash.amount" v-on:click="enableCashField" :readonly="toggleCashfield">
-														</div>
-													</div>
-													<div>
-														<label class="col-sm-4 control-label" for="change">Change</label>
-														<div class="col-sm-8">
-															<input type="text" name="change" id="change" class="form-control" v-model="cash.change" readonly>
-														</div>
-													</div>
+														<!-- /TM details -->
 
-													<div>
-														<label class="col-sm-4 control-label" for="remaining_amount">Remaining Amount</label>
-														<div class="col-sm-8">
-															<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" readonly v-model="remaining_amount">
+														<!-- TM thumbnail -->
+														<div class="col-md-3">
+															<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
+															<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
 														</div>
+														<!-- /thumbnail -->
 													</div>
+													<!-- /Row -->
+												</fieldset>
 
-													<div>
-														<label class="col-sm-4 control-label" for="remaining_credit">Remaining Credit</label>
-														<div class="col-sm-8">
-															<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" readonly v-model="remaining_credit">
-														</div>
-													</div>
+												<fieldset class="form-group">
+													<legend>Transaction Details</legend>
+													<!-- row -->
+													<div class="row">
+														<div class="col-md-10">
+															<div>
+																<label class="col-sm-5 control-label" for="total_amount">Total Amount</label>
+																<div class="col-sm-7">
+																	<input type="text" name="total_amount" id="total_amount" class="form-control" v-model="totalPurchase" readonly>
+																</div>
+															</div>
+															<div>
+																<label class="col-sm-5 control-label" for="cash">Cash</label>
+																<div class="col-sm-7">
+																	<input type="text" name="cash" id="cash" class="form-control" v-model="cash.amount" v-on:click="enableCashField" :readonly="toggleCashfield">
+																</div>
+															</div>
+															<div>
+																<label class="col-sm-5 control-label" for="change">Change</label>
+																<div class="col-sm-7">
+																	<input type="text" name="change" id="change" class="form-control" v-model="cash.change" readonly>
+																</div>
+															</div>
 
-													<div>
-														<div class="col-sm-12">
-															<button class="btn btn-flat btn-danger pull-right">Enter</button>
+															<div>
+																<label class="col-sm-5 control-label" for="remaining_amount">Remaining Amount</label>
+																<div class="col-sm-7">
+																	<input type="text" name="remaining_amount" id="remaining_amount" class="form-control" readonly v-model="remaining_amount">
+																</div>
+															</div>
+
+															<div>
+																<label class="col-sm-5 control-label" for="remaining_credit">Remaining Credit</label>
+																<div class="col-sm-7">
+																	<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" readonly v-model="remaining_credit">
+																</div>
+															</div>
+
+															<div>
+																<div class="col-sm-12">
+																	<button class="btn btn-flat btn-danger pull-right">Enter</button>
+																</div>
+															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-											<!-- /row -->
-										</fieldset>
-									</form>
+													<!-- /row -->
+												</fieldset>
+											</form>
+											<!-- /.form -->
+										</div>
+										<!-- /Checkout pane -->
+									</div>
+									<!-- /.tab-content -->
 								</div>
-								<!-- /Checkout pane -->
+								<!-- End of custom tabs -->
 							</div>
-							<!-- /.tab-content -->
+							<!-- End of box body -->
 						</div>
-						<!-- End of custom tabs -->
+						<!-- Danger box -->
 					</div>
-					<!-- End of box body -->
+					<!-- ./col-md-8 -->
 				</div>
-				<!-- Danger box -->
+				<!-- ./row -->
 			</div>
-			<!-- End of column -->
+			<!-- ./col-md-8 -->
+			
 		</div>
 		<!-- End of row -->
 
