@@ -225,11 +225,12 @@ div.dropdown-menu.open{
 	border-radius: 0;
 	border: 0;
 	height: auto;
-	padding: 2px;
+	padding: 3px;
 }
 
 .calculator .list-group-item .btn {
-	font-size: 30px;	
+	font-size: 30px;
+	padding: 15px;
 }
 
 .checkout {
