@@ -7,7 +7,7 @@
 				<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
 				<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
 			</div>
-			
+
 			<div class="col-md-3">
 				<h4>Fullname: {{ employee.fullname }}</h4>
 			</div>
@@ -271,7 +271,7 @@
 															<div class="form-group">
 																<label class="col-sm-5 control-label" for="employee_no">Employee No.</label>
 																<div class="col-sm-7">
-																	<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
+																	<input type="password" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
 																	<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
 																	<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
 																</div>
