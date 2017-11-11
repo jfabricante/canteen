@@ -651,8 +651,27 @@
 				}
 				else
 				{
-					alert("TM have reached its maximum limit")
-					console.log(this.predicted_total)
+					let confirmation = confirm(`You will have to pay additional amount of ${this.predicted_total - 200} to proceed on this transaction.`)
+
+					if (confirmation)
+					{
+						if (index !== undefined) {
+							this.newItems = {
+								id: this.cart[index].id,
+								name: this.cart[index].name,
+								price: this.cart[index].price,
+								quantity: ++this.cart[index].quantity,
+								total: this.cart[index].quantity * this.cart[index].price
+							}
+
+							this.cart.splice(index, 1, this.newItems)
+							this.itemIndex = index
+						}
+						else {
+							this.cart.push(this.newItems)
+							this.itemIndex = this.cartIndex(this.newItems)
+						}
+					}
 				}
 
 				this.manageState(this.newItems)
