@@ -157,9 +157,11 @@
 								
 						}, 0);
 
-				$(api.column(4).footer()).html(totalPerPage.toLocaleString() + '.00');
+				totalPerPage = totalPerPage.toLocaleString().indexOf('.') > -1 ? totalPerPage.toLocaleString() : totalPerPage.toLocaleString() + '.00';
+				total = total.toLocaleString().indexOf('.') > -1 ? total.toLocaleString() :  total.toLocaleString() + '.00';
 
-				$(api.column(6).footer()).html(total.toLocaleString() + '.00');
+				$(api.column(4).footer()).html(totalPerPage);
+				$(api.column(6).footer()).html(total);
 			}
 		});
 	});
