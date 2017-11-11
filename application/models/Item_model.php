@@ -46,6 +46,7 @@ class Item_model extends CI_Model {
 				'ROUND(a.price, 2) AS price',
 				'a.thumbnail',
 				'a.datetime',
+				'a.barcode',
 				'b.id AS item_category_id',
 				'b.category_id',
 				'c.name AS category'

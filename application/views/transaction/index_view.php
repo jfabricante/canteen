@@ -7,10 +7,7 @@
 				<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
 				<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
 			</div>
-			<div class="col-md-2">
-				<h4>Employee No: {{ employee.no }}</h4>
-			</div>
-
+			
 			<div class="col-md-3">
 				<h4>Fullname: {{ employee.fullname }}</h4>
 			</div>
