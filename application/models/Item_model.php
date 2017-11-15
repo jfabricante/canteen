@@ -99,6 +99,7 @@ class Item_model extends CI_Model {
 				);
 		}
 
+
 		if ($id > 0)
 		{
 			$this->db->update('items_tbl', $config, array('id' => $id));
@@ -109,13 +110,7 @@ class Item_model extends CI_Model {
 
 			$id = $this->db->insert_id();
 		}
-
-		$config = array(
-					'item_id'     => $id, 
-					'category_id' => $category_id
-				);
-
-		$this->_store_item_category($config);
+		
 
 		$config = array(
 				'item_id'  => $id,
@@ -125,12 +120,13 @@ class Item_model extends CI_Model {
 			);
 
 		$this->_store_item_price_modified($config);
-		
+
+		return $id;
 	}
 
-	protected function _store_item_category($params)
+	public function store_item_category($params)
 	{
-		$id = $this->input->post('item_category_id');
+		$id = $this->input->post('item_category_id') ? $this->input->post('item_category_id') : 0 ;
 
 		if ($id > 0)
 		{
