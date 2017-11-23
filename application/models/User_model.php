@@ -98,6 +98,7 @@ class User_model extends CI_Model {
 				->from('users_tbl AS a')
 				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
 				->join('roles_tbl AS c', 'b.role_id = c.id', 'INNER')
+				->order_by('a.fullname')
 				->get();
 
 		if ($type == 'object')
@@ -114,7 +115,10 @@ class User_model extends CI_Model {
 				'a.id',
 				'a.emp_no',
 				'a.fullname',
-				'b.meal_allowance'
+				'b.meal_allowance',
+				'b.load_by',
+				'b.last_meal_credit',
+				'b.last_meal_credit_date'
 			);
 
 		$clause = array(
