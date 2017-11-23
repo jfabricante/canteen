@@ -6,7 +6,7 @@ class Item extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-
+		
 		date_default_timezone_set('Asia/Manila');
 
 		$this->load->helper('form');
@@ -66,7 +66,14 @@ class Item extends CI_Controller {
 		$id   = $this->input->post('id');
 		$data = $this->_handle_upload();
 
-		$this->item->store($data);
+		$item_id = $this->item->store($data);
+
+		$config = array(
+				'item_id'     => $item_id, 
+				'category_id' => $this->input->post('category_id') ? $this->input->post('category_id') : 0
+			);
+
+		$this->item->store_item_category($config);
 
 		if ($id > 0)
 		{
