@@ -269,4 +269,28 @@ class User_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	// array params 
+	public function mealHistory($params)
+	{
+		$fields = array(
+				'a.id',
+				'a.payroll_date',
+				'a.adj_code',
+				'a.reference',
+				'a.adj_amount',
+				'a.type',
+				'a.load_by',
+			);
+
+		$query = $this->db->select($fields)
+				->from('users_meal_history_tbl AS a')
+				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
+				->where('a.user_id', $params['user_id'])
+				->where("DATE(a.payroll_date) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+				->get();
+
+		return $query->result_array();
+	}
+
 }
