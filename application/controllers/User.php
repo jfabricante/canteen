@@ -89,4 +89,86 @@ class User extends CI_Controller {
 
 		$this->load->view('include/template', $data);
 	}
+
+	protected function _excelReport($params, $params2, $params3)
+	{
+		$excelObj       = new PHPExcel();
+		$excelActiveSheet  = $excelObj->getActiveSheet();
+		$excelDefaultStyle = $excelObj->getDefaultStyle();
+
+		// Params for summation
+		$config = array(
+				'total' => 'Total',
+				'blank' => '',
+				'totalDebit' => array_sum(array_column($params, 'debit')),
+				'totalCredit' => array_sum(array_column($params, 'credit')),
+			);
+
+		$balance = $config['totalDebit'] - $config['totalCredit'];
+
+		$excelDefaultStyle->getAlignment()->setWrapText(true);
+		$excelDefaultStyle->getFont()->setSize(11)->setName('Calibri');
+
+		$excelActiveSheet->mergeCells('A1:D1');
+		$excelActiveSheet->setCellValue('A1','Meal Allowance Consumption');
+
+		$excelActiveSheet->mergeCells('A3:D3');
+		$excelActiveSheet->setCellValue('A3', 'Employee Name: ' . $params2['fullname']);
+
+		$excelActiveSheet->mergeCells('A4:D4');
+		$excelActiveSheet->setCellValue('A4', 'Trans. from ' . date('m/d/Y', strtotime($params3['from'])) . ' to ' . date('m/d/Y', strtotime($params3['to'])));
+
+		$excelActiveSheet->mergeCells('A5:D5');
+		$excelActiveSheet->setCellValue('A5', 'Balance as of ' . date('m/d/Y', strtotime($params3['to'])) . ' is ' . $balance);
+
+
+		if ($balance < 0)
+		{
+			$excelActiveSheet->mergeCells('A6:I6');
+			$excelActiveSheet->setCellValue('A6', 'You have credit balance of ' . abs($balance) . ' pesos to be deducted on next meal allowance credit');	
+		}
+		
+
+		// Paper Size
+		$excelActiveSheet->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+
+
+		$excelActiveSheet->setCellValue('A8', 'Trans. Date')
+							->setCellValue('B8', 'Trans. ID')
+							->setCellValue('C8', 'Debit')
+							->setCellValue('D8', 'Credit')
+							->setCellValue('E8', 'Remarks');
+
+
+		$excelActiveSheet->fromArray($params, NULL, 'A9');
+
+		$hRow = $excelActiveSheet->getHighestRow() + 1;
+
+		$excelActiveSheet->getStyle('C9:C' . $hRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00);
+		$excelActiveSheet->getStyle('D9:D' . $hRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00);
+
+		$excelActiveSheet->getColumnDimension('A')->setAutoSize(true);
+
+		for ($i = 8; $i < $hRow; $i++)
+		{
+			$excelActiveSheet->mergeCells('E'. $i . ':I' . $i);
+		}
+
+		$excelActiveSheet->fromArray($config, NULL, 'A' . $hRow);
+
+		// Excel filename
+		$filename = 'ledger.xls';
+
+		// Content header information
+		header('Content-Type: application/vnd.ms-excel'); //mine type
+		header('Content-Disposition: attachment; filename="' . $filename . '"');
+		header('Cached-Control: max-age=0');
+
+		// Generate excel version using Excel 2017
+		$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel5');
+
+		$objWriter->save('php://output');
+	}
+
+	}
 }
