@@ -90,6 +90,73 @@ class User extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+
+	protected function _handleLedger()
+	{
+		$config = array_map('trim', $this->input->post());
+
+		$data = array();
+
+		if (isset($config['emp_no']))
+		{
+			$user = (array)$this->user->read($config);
+
+			$config['user_id'] = $user['id'];
+			$config['from']    = date('Y-m-d', strtotime($config['from']));
+			$config['to']      = date('Y-m-d', strtotime($config['to']));
+
+			$mealHistory = $this->user->mealHistory($config);
+
+			$purchasedItems = $this->user->fetchPurchasedItems($config);
+
+			$adjAmountTotal = array_sum(array_column($mealHistory, 'adj_amount'));
+
+			$purchasedItemsTotal = array_sum(array_column($purchasedItems, 'total'));
+
+			$running_balance = $user['meal_allowance'] - $adjAmountTotal + $purchasedItemsTotal;
+
+			$data[] = array(
+					'trans_date' => date('m/d/Y', strtotime($config['from'] . ' -1 days')),
+					'trans_id'   => '',
+					'debit'      => $running_balance >= 0 ? number_format($running_balance, 2) : '',
+					'credit'     => $running_balance < 0 ? number_format(abs($running_balance), 2) : '',
+					'remarks'    => 'Disclaimer: Running balance before ' . date('m/d/Y', strtotime($config['from']))
+				);
+
+
+			foreach ($mealHistory as $entity)
+			{
+				$data[] = array(
+						'trans_date' => date('m/d/Y', strtotime($entity['payroll_date'])),
+						'trans_id'   => '',
+						'debit'      => $entity['adj_amount'] >= 0 ? number_format($entity['adj_amount'], 2) : '',
+						'credit'     => $entity['adj_amount'] < 0 ? number_format(abs($entity['adj_amount']), 2) : '',
+						'remarks'    => $entity['adj_code']
+					);
+			}
+
+			foreach ($purchasedItems as $entity)
+			{
+				$data[] = array(
+						'trans_date' => date('m/d/Y', strtotime($entity['datetime'])),
+						'trans_id'   => $entity['id'],
+						'debit'      => $entity['total'] <= 0 ? number_format($entity['total'], 2) : '',
+						'credit'     => $entity['total'] > 0 ? number_format(abs($entity['total']), 2) : '',
+						'remarks'    => $entity['name']
+					);
+			}
+
+			if (isset($config['excel_report']))
+			{
+				$this->_excelReport($data, $user, $config);
+			}
+
+		}
+
+		return $data;
+
+	}
+
 	protected function _excelReport($params, $params2, $params3)
 	{
 		$excelObj       = new PHPExcel();
