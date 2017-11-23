@@ -47,6 +47,8 @@
 
 			<li class="<?php echo $menu == 'user/purchased_items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/purchased_items') ?>"><i class="fa fa-table"></i><span>Purchased Items</span></a></li>
 
+			<li class="<?php echo $menu == 'user/ledger' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/ledger') ?>"><i class="fa fa-table"></i><span>Ledger</span></a></li>
+
 		</ul><!-- /.sidebar-menu -->
 
 	</section>
