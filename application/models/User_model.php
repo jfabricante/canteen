@@ -241,9 +241,23 @@ class User_model extends CI_Model {
 				'e.fullname AS cashier'
 			);
 
-		$clause = array('c.emp_no' => $this->session->userdata('emp_no'));
+		$emp_no = isset($params['emp_no']) ? $params['emp_no'] : $this->session->userdata('emp_no');
 
-		if ($this->session->userdata('user_type') == 'employee')
+		$clause = array('c.emp_no' => $emp_no);
+
+		if (isset($params['emp_no']))
+		{
+			$query = $this->db->select($fields)
+					->from('transaction_tbl AS a')
+					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
+					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
+					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
+					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->where($clause)
+					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->get();
+		}
+		else if ($this->session->userdata('user_type') == 'employee')
 		{
 			$query = $this->db->select($fields)
 					->from('transaction_tbl AS a')
