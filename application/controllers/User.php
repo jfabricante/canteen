@@ -90,6 +90,22 @@ class User extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function ledger()
+	{
+		$config = $this->input->post();
+
+		$entities = $this->_handleLedger();
+
+		$data = array(
+				'title'    => 'Ledger',
+				'content'  => 'user/ledger_view',
+				'rows'     => $this->user->fetch('array'),
+				'entities' => $entities,
+				'params'   => $config
+			);
+
+		$this->load->view('include/template', $data);
+	}
 
 	protected function _handleLedger()
 	{
