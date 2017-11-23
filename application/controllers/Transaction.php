@@ -164,7 +164,7 @@ class Transaction extends CI_Controller {
 			$color      = array(0, 0, 0);
 			$word_space = 0.0;  //  default
 			$char_space = 0.0;  //  default
-			$angle      = 0.0;   //  default
+			$angle      = 0.0;  //  default
 
 			// Calculate the total bill from date filtered data
 			$total_bill = is_array($entities) ? array_sum(array_column($entities, 'credit_used')) : 0; 
@@ -304,6 +304,15 @@ class Transaction extends CI_Controller {
 				->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
 				->getStartColor()
 				->setARGB('FF808080');
+
+			// Paper Size
+			$excelActiveSheet->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+
+			// Set margins
+			$excelActiveSheet->getPageMargins()->setTop(0.25);
+			$excelActiveSheet->getPageMargins()->setRight(0.25);
+			$excelActiveSheet->getPageMargins()->setLeft(0.25);
+			$excelActiveSheet->getPageMargins()->setBottom(0.25);
 
 			// Change the text color to white
 			$excelActiveSheet->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
