@@ -39,20 +39,24 @@ class Transaction extends CI_Controller {
 	public function store()
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
+		
+		// Print transaction when the cashier click print button
+		if ($data['to_print'])
+		{
+			$this->_generate_receipt($data);
+		}
+		else
+		{
+			$trans_id = $this->transaction->store($data);
 
-		echo '<pre>';
-		print_r($data);
-		echo '</pre>';
+			$data['trans_id'] = $trans_id;
 
-		$trans_id = $this->transaction->store($data);
+			$this->transaction->store_items($data, $trans_id);
 
-		$data['trans_id'] = $trans_id;
+			$this->user->update_allowance($data);
 
-		$this->transaction->store_items($data, $trans_id);
-
-		$this->user->update_allowance($data);
-
-		//$this->_generate_receipt($data);
+			echo json_encode($trans_id);
+		}
 	}
 
 	protected function _generate_receipt($params)
