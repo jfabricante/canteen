@@ -384,7 +384,8 @@
 						<p class="separator">
 							<span v-show="employee.fullname.length > 0">Customer: {{ _.startCase(_.toLower(employee.fullname)) }}<br /></span>
 							<span v-show="employee.allowance.length >= 1">Meal Allowance: {{ employee.allowance }}<br /></span>
-							<span>Cashier: <?php echo ucwords(strtolower($this->session->userdata('fullname'))) ?></span>
+							<span>Cashier: <?php echo ucwords(strtolower($this->session->userdata('fullname'))) ?><br /></span>
+							<span v-show="remaining_credit < 0">You have credit balance of {{ Math.abs(remaining_credit) }} pesos to be deducted on next meal allowance credit</span>
 						</p>
 						<table class="table table-condensed">
 							<tbody>
