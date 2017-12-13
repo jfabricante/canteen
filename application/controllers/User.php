@@ -35,6 +35,49 @@ class User extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function form()
+	{
+		$this->load->helper('form');
+
+		$id = $this->uri->segment(3);
+
+		$data = array(
+				'title'  => $id ? 'Update User Details' : 'Add New User',
+				'roles'  => $this->user->fetch_roles('array'),
+				'entity' => $id ? $this->user->readDetails($id) : ''
+			);
+
+		$this->load->view('user/form_view', $data);
+	}
+
+	public function store()
+	{
+		$config = $this->input->post();
+
+		$user_data = array(
+				'id'       => $config['id'],
+				'username' => $config['username'],
+				'password' => $config['password'],
+				'emp_no'   => $config['employee_no'],
+				'fullname' => $config['fullname'],
+				'datetime' => date('Y-m-d H:i:s')
+			);
+
+		$user_id = $this->user->store($user_data);
+
+		$role = $this->user->findRole($user_id);
+
+		$user_role = array(
+				'id'      => $role['id'] ? $role['id'] : 0,
+				'user_id' => $user_id,
+				'role_id' => $config['role_id']
+			);
+
+		$this->user->store_role($user_role);
+
+		redirect($this->agent->referrer());
+	}
+
 	public function count()
 	{
 		echo '<pre>';
