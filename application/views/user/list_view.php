@@ -8,7 +8,7 @@
 			<div class="box box-danger">
 				<!-- Content -->
 				<div class="box-header with-border">
-					<a href="<?php echo base_url('index.php/item/form') ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
+					<a href="<?php echo base_url('index.php/user/form') ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
 						<button class="btn btn-flat btn-success pull-right">Add Item <i class="fa fw fa-plus" aria-hidden="true"></i></button>
 					</a>
 				</div>
