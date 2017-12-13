@@ -71,15 +71,61 @@ class User_model extends CI_Model {
 		return $this;
 	}
 
-	public function store()
+	public function store($params)
 	{
-		if (count($params) > 0)
+		if ($params['id'] == 0)
 		{
+			unset($params['id']);
+
 			$this->db->insert('users_tbl', $params);
+
 			return $this->db->insert_id();
+		}
+		else
+		{
+			$this->db->update('users_tbl', $params, array('id' => $params['id']));
+
+			return $params['id'];
 		}
 
 		return 0;
+	}
+
+	public function readDetails($id)
+	{
+		$fields = array('a.*', 'b.role_id');
+
+		$query = $this->db->select($fields)
+				->from('users_tbl AS a')
+				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
+				->where('a.id', $id)
+				->get();
+
+		return $query->row_array();
+	}
+
+	public function store_role($params)
+	{
+		if ($params['id'] == 0)
+		{
+			unset($params['id']);
+
+			$this->db->insert('users_role_tbl', $params);
+		}
+		else
+		{
+			$this->db->update('users_role_tbl', $params, array('id' => $params['id']));
+		}
+	}
+
+	public function findRole($params)
+	{
+		$query = $this->db->select('id')
+				->from('users_role_tbl')
+				->where('user_id', $params)
+				->get();
+
+		return array_filter($query->row_array()) ? $query->row_array() : 0;
 	}
 
 	public function fetch($type = 'object')
