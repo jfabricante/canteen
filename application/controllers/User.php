@@ -150,6 +150,35 @@ class User extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function cashier_sales()
+	{
+		$entities = $this->_handleCashierSales();
+
+		$data = array(
+				'title'    => 'Cashier Sales Filter By Dates',
+				'content'  => 'user/cashier_view',
+				'rows'     => $this->user->cashiers(),
+				'entities' => $entities,
+				'params'   => $this->input->post() ? $this->input->post() : ''
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
+	protected function _handleCashierSales()
+	{
+		$config = array_map('trim', $this->input->post());
+
+		if (isset($config['emp_id']))
+		{
+			$config['user_id'] = $config['emp_id'];
+			$config['from']    = date('Y-m-d', strtotime($config['from']));
+			$config['to']      = date('Y-m-d', strtotime($config['to']));
+
+			return $this->user->cashierSales($config);
+		}
+	}
+
 	protected function _handleLedger()
 	{
 		$config = array_map('trim', $this->input->post());
@@ -296,5 +325,10 @@ class User extends CI_Controller {
 		$objWriter->save('php://output');
 	}
 
+	protected function _showVars($params)
+	{
+		echo '<pre>';
+		print_r($params);
+		echo '</pre>';
 	}
 }
