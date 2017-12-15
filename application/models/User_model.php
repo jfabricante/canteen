@@ -41,6 +41,47 @@ class User_model extends CI_Model {
 		return false;
 	}
 
+	public function cashiers()
+	{
+		$fields = array(
+				'a.id',
+				'a.username',
+				'a.fullname',
+				'a.emp_no',
+				'b.role_id',
+			);
+
+		$query = $this->db->select($fields)
+				->from('users_tbl AS a')
+				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
+				->where('b.role_id = 2')
+				->get();
+
+		return $query->result_array();
+	}
+
+	public function cashierSales($params)
+	{
+		$fields = array(
+				'a.id',
+				'a.datetime',
+				'c.name',
+				'b.quantity',
+				'b.price',
+				'b.total'
+			);
+
+		$query = $this->db->select($fields)
+				->from('transaction_tbl AS a')
+				->join('transaction_item_tbl AS b', 'a.id = b.trans_id')
+				->join('items_tbl AS c', 'c.id = b.item_id')
+				->where('cashier_id', $params['user_id'])
+				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+				->get();
+
+		return $query->result_array();
+	}
+
 	public function store_batch(array $data)
 	{
 		$this->db->insert_batch('users_tbl', $data);
