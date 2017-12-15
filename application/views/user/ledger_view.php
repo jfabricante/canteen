@@ -142,10 +142,6 @@
 			$('#to').val($(this).val());
 		});
 
-		/*$('#emp_no').on('change', function() {
-			alert($(this).val());
-		});*/
-
 		$('.table').DataTable({
 			// Define disabled column
 			"columnDefs": [{
