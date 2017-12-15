@@ -157,6 +157,7 @@ class Transaction extends CI_Controller {
 		{
 			// instantiate and use the dompdf class
 			$dompdf = new Dompdf();
+			$dompdf->set_paper('A4');
 
 			// Header options
 			$font       = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
@@ -181,7 +182,12 @@ class Transaction extends CI_Controller {
 			// Load the html to pdf
 			$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
 
-	        $text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
+
+			// Render the HTML as PDF
+			$dompdf->render();
+
+			// Add headers and pagination
+			$text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
 	        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
 	        $text = date('d/m/Y h:i A');
@@ -198,9 +204,6 @@ class Transaction extends CI_Controller {
 	        $headerFont = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
 
 	        $dompdf->getCanvas()->page_text(40, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
-
-			// Render the HTML as PDF
-			$dompdf->render();
 
 			// Output the generated PDF to Browser
 			$dompdf->stream();
