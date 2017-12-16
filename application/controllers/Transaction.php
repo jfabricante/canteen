@@ -119,9 +119,18 @@ class Transaction extends CI_Controller {
 
 	public function generate_billing_report()
 	{
+		$entities = array();
+
+		if (count($this->input->post()))
+		{
+			$entities = $this->_handleBillingReport();
+		}
+
 		$data = array(
-				'title'   => 'Filter Dates to Generate Billing Report',
-				'content' => 'transaction/generate_reports_view'
+				'title'    => 'Filter Dates to Generate Billing Report',
+				'content'  => 'transaction/generate_reports_view',
+				'entities' => $entities,
+				'params'   => $this->input->post()
 			);
 
 		$this->load->view('include/template', $data);
