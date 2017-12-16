@@ -98,4 +98,16 @@ class Transaction_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function createInvoice()
+	{
+		$config = array(
+				'user_id'      => $this->session->userdata('id'),
+				'date_created' => date('Y-m-d H:i:s')
+			);
+
+		$this->db->insert('invoice_tbl', $config);
+
+		return $this->db->insert_id();
+	}
+
 }
