@@ -133,4 +133,9 @@ class Transaction_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	public function updateInvoiceStatus($params)
+	{
+		$this->db->update('invoice_tbl', $params, array('id' => $params['id']));
+	}
+
 }
