@@ -341,4 +341,16 @@ class Transaction extends CI_Controller {
 		}
 		
 	}
+
+	public function invoice_list()
+	{
+		$data = array(
+				'title'    => 'List of Invoice',
+				'content'  => 'invoice/list_view',
+				'entities' => $this->transaction->invoiceList()
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
 }
