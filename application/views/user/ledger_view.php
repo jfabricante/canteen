@@ -24,7 +24,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="emp_no">Fullname</label>
-									<select name="emp_no" id="emp_no" class="form-control selectpicker" data-live-search="true">
+									<select name="emp_no" id="emp_no" class="form-control selectpicker" data-live-search="true" required>
 										<option></option>
 										<?php foreach($rows as $row): ?>
 											<option value="<?php echo $row['emp_no']; ?>" <?php echo isset($params['emp_no']) && ($row['emp_no'] == $params['emp_no']) ? 'selected' : '' ?>>
