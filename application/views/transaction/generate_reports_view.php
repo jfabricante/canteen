@@ -63,6 +63,41 @@
 					</form>
 					<!-- ./form -->
 				</div>
+				<!-- /.box-header -->
+
+				<!-- box-body -->
+				<div class="box-body">
+					<?php if (count($entities) > 0) : ?>
+						<table class="table table-condensed table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Trans ID</th>
+									<th>Employee</th>
+									<th>Credit Used</th>
+									<th>Cash Used</th>
+									<th>Date</th>
+									<th>Cashier</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $counter = 1; ?>
+								<?php foreach($entities as $entity) : ?>
+									<tr>
+										<td><?php echo $counter ?></td>
+										<td><?php echo $entity['id'] ?></td>
+										<td><?php echo $entity['employee']; ?></td>
+										<td><?php echo $entity['credit_used'] ? number_format($entity['credit_used'], 2) : ''; ?></td>
+										<td><?php echo $entity['cash'] ? number_format($entity['cash'], 2) : ''; ?></td>
+										<td><?php echo date('m/d/Y h:i A', strtotime($entity['datetime'])); ?></td>
+										<td><?php echo $entity['cashier']; ?></td>
+									</tr>
+									<?php $counter++; ?>
+								<?php endforeach ?>
+							</tbody>
+						</table>
+					<?php endif ?>
+				</div>
 				<!-- ./box-body -->
 			</div>
 		</div>
@@ -72,6 +107,8 @@
 <script type="text/javascript" src="<?php echo base_url('resources/plugins/datepicker/js/bootstrap-datepicker.min.js'); ?>"></script>
 <script type="text/javascript">
 	$('.datepicker').datepicker();
+
+	$('.table').DataTable();
 
 	$('#from').on('change', function() {
 		$('#to').val($(this).val());
