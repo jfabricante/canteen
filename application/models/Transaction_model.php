@@ -110,4 +110,20 @@ class Transaction_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function invoiceList()
+	{
+		$fields = array(
+				'a.*',
+				'b.fullname AS created_by',
+				'c.fullname AS updated_by'
+			);
+		$query = $this->db->select($fields)
+				->from('invoice_tbl AS a')
+				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
+				->join('users_tbl as c', 'a.last_user = c.id', 'LEFT')
+				->get();
+
+		return $query->result_array();
+	}
+
 }
