@@ -413,4 +413,20 @@ class Transaction extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
+	public function invoice_form()
+	{
+		$this->load->helper('form');
+
+		$id = $this->uri->segment(3);
+
+		$entity = $this->transaction->invoiceEntity($id);
+
+		$data = array(
+				'title'  => 'Update Invoice Status',
+				'entity' => $entity
+			);
+
+		$this->load->view('invoice/form_view', $data);
+	}
+
 }
