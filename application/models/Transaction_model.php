@@ -138,4 +138,8 @@ class Transaction_model extends CI_Model {
 		$this->db->update('invoice_tbl', $params, array('id' => $params['id']));
 	}
 
+	public function updateTransInvoice($params)
+	{
+		$this->db->update('transaction_tbl', $params, array('id' => $params['id']));
+	}
 }
