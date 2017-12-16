@@ -429,4 +429,21 @@ class Transaction extends CI_Controller {
 		$this->load->view('invoice/form_view', $data);
 	}
 
+	public function invoice_update()
+	{
+		$config = array_map('trim', $this->input->post());
+
+		unset($config['invoice_no']);
+
+		$config['status']      = ucfirst(strtolower($config['status']));
+		$config['last_user']   = $this->session->userdata('id');
+		$config['last_update'] = date('Y-m-d H:i:s');
+
+		$this->transaction->updateInvoiceStatus($config);
+
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Invoice has been updated!</div>');
+
+		redirect($this->agent->referrer());
+	}
+
 }
