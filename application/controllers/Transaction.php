@@ -189,7 +189,7 @@ class Transaction extends CI_Controller {
 		return $entities;
 	}
 
-	protected function _billing_to_pdf()
+	protected function _billing_to_pdf($entities, $invoice_id = 0)
 	{
 		// Change date format
 		$from = date('Y-m-d', strtotime($this->input->post('from')));
@@ -199,8 +199,6 @@ class Transaction extends CI_Controller {
 				'from' => $from,
 				'to'   => $to
 			);
-
-		$entities = $this->transaction->billing_report($config);
 
 		// Verify if there is something to generate
 		if (count($entities))
@@ -240,11 +238,23 @@ class Transaction extends CI_Controller {
 			$text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
 	        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-	        $text = date('d/m/Y h:i A');
+	        $text = date('m/d/Y h:i A');
 	        $dompdf->getCanvas()->page_text(400, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
 
-	        $text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
-	        $dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        if ($invoice_id > 0)
+	        {
+	        	$text = "Invoice No. " . sprintf('%06d',ucwords(strtolower($invoice_id)));
+	        	$dompdf->getCanvas()->page_text(400, 40, $text, $font, 10, $color, $word_space, $char_space, $angle);
+
+	        	$text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+	        	$dompdf->getCanvas()->page_text(400, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        }
+	        else
+	        {
+	        	$text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+	        	$dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        }
+	        
 
 	        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
 	        $dompdf->getCanvas()->page_text(520, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
@@ -285,7 +295,7 @@ class Transaction extends CI_Controller {
 		$total_bill = number_format(array_sum(array_column($entities, 'credit_used')), 2);
 
 		// Verify if there is something to generate
-		if (count($entities))
+		if (count($entities) > 0)
 		{
 			// Create php excel instance
 			$excelObj          = new PHPExcel();
@@ -371,7 +381,7 @@ class Transaction extends CI_Controller {
 			$excelActiveSheet->getStyle('A2:F2')->getFont()->getColor()->setRGB('FFFFFF');
 
 			// Excel filename
-			$filename = 'billing_report.xlsx';
+			$filename = 'billing_report.xls';
 
 			// Content header information
 			header('Content-Type: application/vnd.ms-excel'); //mine type
@@ -379,7 +389,7 @@ class Transaction extends CI_Controller {
 			header('Cached-Control: max-age=0');
 
 			// Generate excel version using Excel 2017
-			$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel2007');
+			$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel5');
 
 			$objWriter->save('php://output');
 		}
