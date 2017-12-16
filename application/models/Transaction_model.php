@@ -126,4 +126,11 @@ class Transaction_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function invoiceEntity($params)
+	{
+		$query = $this->db->get_where('invoice_tbl', array('id' => $params));
+
+		return $query->row_array();
+	}
+
 }
