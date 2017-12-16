@@ -136,16 +136,57 @@ class Transaction extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
-	public function handle_billing_report()
+	protected function _handleBillingReport()
 	{
+		$entities = array();
+
+		$from = date('Y-m-d', strtotime($this->input->post('from')));
+		$to   = date('Y-m-d', strtotime($this->input->post('to')));
+
+		$config = array(
+				'from' => $from,
+				'to'   => $to
+			);
+
 		if ($this->input->post('pdf_report') !== null)
 		{
-			$this->_billing_to_pdf();
+			$entities = $this->transaction->billing_report($config);
+
+			$this->_billing_to_pdf($entities);
 		}
-		else
+		else if ($this->input->post('excel_report') !== null)
 		{
 			$this->_billing_to_excel();	
 		}
+		else if ($this->input->post('filter_date') !== null)
+		{
+			$entities = $this->transaction->billing_report($config);
+		}
+		else
+		{
+			// Fetch data which has null invoice_id
+			$entities = $this->transaction->subjectForInvoice($config);
+
+			if (count($entities) > 0)
+			{
+				// Generate invoice_id
+				$invoice_id = $this->transaction->createInvoice();
+
+				foreach($entities as $entity)
+				{
+					$formatData = array(
+							'id'         => $entity['id'],
+							'invoice_id' => $invoice_id
+						);
+
+					$this->transaction->updateTransInvoice($formatData);
+				}
+
+				$this->_billing_to_pdf($entities, $invoice_id);
+			}
+		}
+
+		return $entities;
 	}
 
 	protected function _billing_to_pdf()
