@@ -60,13 +60,15 @@ class Transaction_model extends CI_Model {
 				'a.cash',
 				'a.datetime',
 				'c.fullname AS cashier',
-				'a.invoice_id'
+				'a.invoice_id',
+				'd.status'
 			);
 
 		$query = $this->db->select($fields)
 				->from('transaction_tbl  AS a')
 				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
 				->join('users_tbl AS c', 'a.cashier_id = c.id', 'INNER')
+				->join('invoice_tbl AS d', 'a.invoice_id = d.id', 'LEFT')
 				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 				->where('a.credit_used > 0')
 				->get();
