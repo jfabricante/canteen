@@ -865,9 +865,16 @@
 						}
 
 						this.updateValues()
+						this.manageState(this.employee)
 					})
 					.catch((error) => {
 						console.log(error)
+						alert('Employee No. does not exist!')
+						this.employee.id = ''
+						this.employee.fullname = ''
+						this.employee.allowance = 0
+						this.remaining_credit = 0
+						this.manageState(this.employee)
 					})
 				}
 				else {
@@ -1058,6 +1065,6 @@
 	});
 
 	// JQuery script
-	// document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
+	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
 
 </script>
