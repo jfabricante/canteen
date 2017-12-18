@@ -1,4 +1,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('resources/plugins/datepicker/css/bootstrap-datepicker.min.css'); ?>">
+<style type="text/css">
+	table.dataTable {
+		font-size: 90%;
+	}
+</style>
 <!-- page content -->
 <section class="content">
 	<div class="row">
@@ -78,6 +83,8 @@
 									<th>Cash Used</th>
 									<th>Date</th>
 									<th>Cashier</th>
+									<th>Invoice No.</th>
+									<th>Status</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -86,11 +93,13 @@
 									<tr>
 										<td><?php echo $counter ?></td>
 										<td><?php echo $entity['id'] ?></td>
-										<td><?php echo $entity['employee']; ?></td>
+										<td><?php echo ucwords(strtolower($entity['employee'])); ?></td>
 										<td><?php echo $entity['credit_used'] ? number_format($entity['credit_used'], 2) : ''; ?></td>
 										<td><?php echo $entity['cash'] ? number_format($entity['cash'], 2) : ''; ?></td>
 										<td><?php echo date('m/d/Y h:i A', strtotime($entity['datetime'])); ?></td>
-										<td><?php echo $entity['cashier']; ?></td>
+										<td><?php echo ucwords(strtolower($entity['cashier'])); ?></td>
+										<td><?php echo $entity['invoice_id'] ? sprintf('%06d', $entity['invoice_id']) : '' ?></td>
+										<td><?php echo $entity['status'] ?></td>
 									</tr>
 									<?php $counter++; ?>
 								<?php endforeach ?>
