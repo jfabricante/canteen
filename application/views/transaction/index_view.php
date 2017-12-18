@@ -815,9 +815,16 @@
 				}
 				else if (this.employee.state === true) {
 					var employee_no = _.toString(this.employee.no)
-					employee_no = employee_no.substring(0, this.employee.no.length - 1)
 
-					this.$set(this.employee, 'no', employee_no)
+					if (this.employee.no != undefined)
+					{
+						employee_no = employee_no.substring(0, this.employee.no.length - 1)
+
+						console.log(employee_no)
+
+						this.$set(this.employee, 'no', employee_no)
+					}
+					
 				}
 				else if (this.cash.state === true) {
 					var amount = _.toString(this.cash.amount)
