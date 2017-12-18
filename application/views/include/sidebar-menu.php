@@ -49,7 +49,12 @@
 
 			<li class="<?php echo $menu == 'user/ledger' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/ledger') ?>"><i class="fa fa-book"></i><span>Ledger</span></a></li>
 			
-			<li class="<?php echo $menu == 'user/cashier_sales' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/cashier_sales') ?>"><i class="fa fa-book"></i><span>Cashier Sales</span></a></li>
+			<li class="<?php echo $menu == 'user/cashier_sales' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/cashier_sales') ?>"><i class="fa fa-files-o"></i><span>Cashier Sales</span></a></li>
+
+			<li class="<?php echo $menu == 'transaction/invoice_list' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_list') ?>"><i class="fa fa-envelope"></i><span>Invoices</span></a></li>
+
+			<li class="<?php echo $menu == 'transaction/invoice_item' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_item') ?>"><i class="fa fa-circle"></i><span>Invoice Item</span></a></li>
+
 
 		</ul><!-- /.sidebar-menu -->
 
