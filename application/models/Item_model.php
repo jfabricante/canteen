@@ -151,6 +151,8 @@ class Item_model extends CI_Model {
 
 		$this->db->delete('items_tbl', array('id' => $id));
 
+		$this->db->delete('item_category_tbl', array('item_id', $id));
+
 		return $this;
 	}
 
