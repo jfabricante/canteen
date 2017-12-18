@@ -128,13 +128,15 @@ class Item_model extends CI_Model {
 	{
 		$id = $this->input->post('item_category_id') ? $this->input->post('item_category_id') : 0 ;
 
+		$params['id'] = $id;
+
 		if ($id > 0)
 		{
 			$this->db->update('item_category_tbl', $params, array('id' => $id));
 		}
 		else 
 		{
-			$this->db->insert('item_category_tbl', $params);
+			$this->db->replace('item_category_tbl', $params);
 		}
 	}
 
