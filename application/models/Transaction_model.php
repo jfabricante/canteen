@@ -144,4 +144,27 @@ class Transaction_model extends CI_Model {
 	{
 		$this->db->update('transaction_tbl', $params, array('id' => $params['id']));
 	}
+
+	public function fetchInvoiceItems($params)
+	{
+		$fields = array(
+				'a.id',
+				'a.status',
+				'b.id AS trans_id',
+				'b.credit_used',
+				'b.cash',
+				'b.datetime AS trans_date',
+				'c.fullname',
+			);
+
+		$query = $this->db->select($fields)
+				->from('invoice_tbl AS a')
+				->join('transaction_tbl AS b', 'a.id = b.invoice_id', 'INNER')
+				->join('users_tbl AS c', 'b.user_id = c.id', 'INNER')
+				->where('b.credit_used > 0')
+				->where('a.id', $params)
+				->get();
+
+		return $query->result_array();
+	}
 }
