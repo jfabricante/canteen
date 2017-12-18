@@ -734,8 +734,8 @@
 				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
 			},
 			performTransaction: function() {
-
-				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0) || (this.remaining_amount <= 0 && this.cart.length > 0))
+				console.log(this.remaining_amount)
+				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0 && this.remaining_amount < 0) || (this.remaining_amount <= 0 && this.cart.length > 0))
 				{
 					axios({
 						url: appUrl + '/transaction/store',
@@ -773,6 +773,10 @@
 					alert('There is no purchased item!');
 				}
 				else if (!this.hasUser() && this.remaining_amount > 0)
+				{
+					alert('Not enough cash to perform the transaction!');
+				}
+				else
 				{
 					alert('Not enough cash to perform the transaction!');
 				}
