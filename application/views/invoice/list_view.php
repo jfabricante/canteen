@@ -1,3 +1,8 @@
+<style type="text/css">
+	table.dataTable {
+		font-size: 90%;
+	}
+</style>
 <!-- Items block -->
 <section class="content items">
 	<!-- row -->
@@ -8,12 +13,6 @@
 			<?php echo $this->session->flashdata('message'); ?>
 			
 			<div class="box box-danger">
-				<!-- Content -->
-				<!-- <div class="box-header with-border">
-					<a href="<?php echo base_url('index.php/item/form') ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
-						<button class="btn btn-flat btn-success pull-right">Add Item <i class="fa fw fa-plus" aria-hidden="true"></i></button>
-					</a>
-				</div> -->
 
 				<div class="box-body">
 					<!-- Item table -->
@@ -27,7 +26,7 @@
 								<th>Date Created</th>
 								<th>Date Updated</th>
 								<th>Updated By</th>
-								<th>Edit</th>
+								<th>Update</th>
 							</tr>
 						</thead>
 
