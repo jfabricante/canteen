@@ -446,4 +446,26 @@ class Transaction extends CI_Controller {
 		redirect($this->agent->referrer());
 	}
 
+	public function invoice_item()
+	{
+		$entities = $this->_handleInvoiceItems($this->input->post('invoice_no'));
+
+		$data = array(
+				'title'    => 'List of Invoice Items',
+				'content'  => 'invoice/items_view',
+				'rows'     => $this->transaction->invoiceList(),
+				'params'   => $this->input->post(),
+				'entities' => $entities
+			);
+
+		$this->load->view('include/template', $data);
+	}	
+
+	protected function _handleInvoiceItems($params)
+	{
+		if (count($params))
+		{
+			return $this->transaction->fetchInvoiceItems($params);
+		}	
+	}
 }
