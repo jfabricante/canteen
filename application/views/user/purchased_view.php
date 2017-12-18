@@ -1,4 +1,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('resources/plugins/datepicker/css/bootstrap-datepicker.min.css'); ?>">
+<style type="text/css">
+	table.dataTable {
+		font-size: 90%;
+	}
+</style>
 <!-- Items block -->
 <section class="content users-purchased">
 	<div class="row">
