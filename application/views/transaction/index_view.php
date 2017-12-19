@@ -543,8 +543,14 @@
 		methods: {
 			// Create callback function to receive barcode when the scanner is already done
 			onBarcodeScanned (barcode) {
-				this.addItem(this.searchItem(barcode))
-				//console.log(barcode)
+				if (barcode.length > 6)
+				{
+					this.addItem(this.searchItem(barcode))
+				}
+				else
+				{
+					this.$set(this.employee, 'no', barcode)
+				}
 			},
 			searchItem: function(bc) {
 				var items = _.flattenDeep(this.categoryItems)
