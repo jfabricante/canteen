@@ -43,7 +43,7 @@
 							<!-- col-md-4 -->
 							<div class="col-md-2">
 								<div class="form-group">
-									<button class="btn btn-flat btn-danger search-invoice" type="submit">Submit</button>
+									<button class="btn btn-flat btn-danger search-invoice" type="submit">Search</button>
 								</div>
 							</div>
 							<!-- ./col-md-4 -->
