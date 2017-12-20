@@ -52,24 +52,13 @@ class User extends CI_Controller {
 
 	public function store()
 	{
-		$config = $this->input->post();
+		$config = array_map('trim', $this->input->post());
 
-		$user_data = array(
-				'id'       => $config['id'],
-				'username' => $config['username'],
-				'password' => $config['password'],
-				'emp_no'   => $config['employee_no'],
-				'fullname' => $config['fullname'],
-				'datetime' => date('Y-m-d H:i:s')
-			);
-
-		$user_id = $this->user->store($user_data);
-
-		$role = $this->user->findRole($user_id);
+		$role = $this->user->findRole($config['id']);
 
 		$user_role = array(
 				'id'      => $role['id'] ? $role['id'] : 0,
-				'user_id' => $user_id,
+				'user_id' => $config['id'],
 				'role_id' => $config['role_id']
 			);
 
@@ -95,7 +84,7 @@ class User extends CI_Controller {
 	public function entity()
 	{
 		$config =  array(
-				'emp_no' => $this->input->get('employee_no')
+				'employee_no' => $this->input->get('employee_no')
 			);
 
 		echo $this->user->read($config) ? json_encode($this->user->read($config)) : '';
@@ -123,7 +112,7 @@ class User extends CI_Controller {
 		$entities = $this->user->fetchPurchasedItems($config);
 
 		$data = array(
-				'title'    => 'Purchased Items',
+				'title'    => 'Sales Order',
 				'content'  => 'user/purchased_view',
 				'entities' => $entities,
 				'dates'    => $this->input->post(),
@@ -150,45 +139,16 @@ class User extends CI_Controller {
 		$this->load->view('include/template', $data);
 	}
 
-	public function cashier_sales()
-	{
-		$entities = $this->_handleCashierSales();
-
-		$data = array(
-				'title'    => 'Cashier Sales Filter By Dates',
-				'content'  => 'user/cashier_view',
-				'rows'     => $this->user->cashiers(),
-				'entities' => $entities,
-				'params'   => $this->input->post() ? $this->input->post() : ''
-			);
-
-		$this->load->view('include/template', $data);
-	}
-
-	protected function _handleCashierSales()
-	{
-		$config = array_map('trim', $this->input->post());
-
-		if (isset($config['emp_id']))
-		{
-			$config['user_id'] = $config['emp_id'];
-			$config['from']    = date('Y-m-d', strtotime($config['from']));
-			$config['to']      = date('Y-m-d', strtotime($config['to']));
-
-			return $this->user->cashierSales($config);
-		}
-	}
-
 	protected function _handleLedger()
 	{
 		$config = array_map('trim', $this->input->post());
 
 		$data = array();
 
-		if (isset($config['emp_no']))
+		if (isset($config['employee_no']))
 		{
 			$user = (array)$this->user->read($config);
-
+			
 			$config['user_id'] = $user['id'];
 			$config['from']    = date('Y-m-d', strtotime($config['from']));
 			$config['to']      = date('Y-m-d', strtotime($config['to']));
@@ -210,7 +170,6 @@ class User extends CI_Controller {
 					'credit'     => $running_balance < 0 ? number_format(abs($running_balance), 2) : '',
 					'remarks'    => 'Disclaimer: Running balance before ' . date('m/d/Y', strtotime($config['from']))
 				);
-
 
 			foreach ($mealHistory as $entity)
 			{
@@ -242,7 +201,35 @@ class User extends CI_Controller {
 		}
 
 		return $data;
+	}
 
+	public function cashier_sales()
+	{
+		$entities = $this->_handleCashierSales();
+
+		$data = array(
+				'title'    => 'Cashier Sales Filter By Dates',
+				'content'  => 'user/cashier_view',
+				'rows'     => $this->user->cashiers(),
+				'entities' => $entities,
+				'params'   => $this->input->post() ? $this->input->post() : ''
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
+	protected function _handleCashierSales()
+	{
+		$config = array_map('trim', $this->input->post());
+
+		if (isset($config['emp_id']))
+		{
+			$config['user_id'] = $config['emp_id'];
+			$config['from']    = date('Y-m-d', strtotime($config['from']));
+			$config['to']      = date('Y-m-d', strtotime($config['to']));
+
+			return $this->user->cashierSales($config);
+		}
 	}
 
 	protected function _excelReport($params, $params2, $params3)
