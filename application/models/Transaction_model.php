@@ -55,23 +55,24 @@ class Transaction_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
-				'b.fullname AS employee',
+				"CONCAT(b.first_name,' ', b.last_name) AS employee",
 				'a.credit_used',
 				'a.cash',
 				'a.datetime',
-				'c.fullname AS cashier',
+				"CONCAT(c.first_name,' ', c.last_name) AS cashier",
 				'a.invoice_id',
 				'd.status'
 			);
 
 		$query = $this->db->select($fields)
-				->from('transaction_tbl  AS a')
-				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
-				->join('users_tbl AS c', 'a.cashier_id = c.id', 'INNER')
+				->from('transaction_tbl AS a')
+				->join('ipc_central.personal_information_tab AS b', 'a.user_id = b.employee_id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'a.cashier_id = c.employee_id', 'INNER')
 				->join('invoice_tbl AS d', 'a.invoice_id = d.id', 'LEFT')
 				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 				->where('a.credit_used > 0')
 				->get();
+
 
 		return $query->result_array();
 	}
@@ -80,18 +81,18 @@ class Transaction_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
-				'b.fullname AS employee',
+				"CONCAT(b.first_name,' ', b.last_name) AS employee",
 				'a.credit_used',
 				'a.cash',
 				'a.datetime',
-				'c.fullname AS cashier',
+				"CONCAT(c.first_name,' ', c.last_name) AS cashier",
 				'a.invoice_id'
 			);
 
 		$query = $this->db->select($fields)
 				->from('transaction_tbl  AS a')
-				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
-				->join('users_tbl AS c', 'a.cashier_id = c.id', 'INNER')
+				->join('ipc_central.personal_information_tab AS b', 'a.user_id = b.employee_id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'a.cashier_id = c.employee_id', 'INNER')
 				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 				->where('invoice_id IS NULL')
 				->where('a.credit_used > 0')
@@ -116,13 +117,13 @@ class Transaction_model extends CI_Model {
 	{
 		$fields = array(
 				'a.*',
-				'b.fullname AS created_by',
-				'c.fullname AS updated_by'
+				"CONCAT(b.first_name,' ', b.last_name) AS created_by",
+				"CONCAT(c.first_name,' ', c.last_name) AS updated_by"
 			);
 		$query = $this->db->select($fields)
 				->from('invoice_tbl AS a')
-				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
-				->join('users_tbl as c', 'a.last_user = c.id', 'LEFT')
+				->join('ipc_central.personal_information_tab AS b', 'a.user_id = b.employee_id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'a.last_user = c.employee_id', 'LEFT')
 				->get();
 
 		return $query->result_array();
@@ -154,13 +155,13 @@ class Transaction_model extends CI_Model {
 				'b.credit_used',
 				'b.cash',
 				'b.datetime AS trans_date',
-				'c.fullname',
+				"CONCAT(c.first_name,' ', c.last_name) AS fullname",
 			);
 
 		$query = $this->db->select($fields)
 				->from('invoice_tbl AS a')
 				->join('transaction_tbl AS b', 'a.id = b.invoice_id', 'INNER')
-				->join('users_tbl AS c', 'b.user_id = c.id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'b.user_id = c.employee_id', 'INNER')
 				->where('b.credit_used > 0')
 				->where('a.id', $params)
 				->get();
