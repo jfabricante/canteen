@@ -15,22 +15,17 @@
 
 		<div class="form-group">
 			<label for="username">Username</label>
-			<input type="text" class="form-control" id="username" name="username" value="<?php echo isset($entity['username']) ? $entity['username'] : ''; ?>" required autofocus />
-		</div>
-
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input type="password" class="form-control" id="password" name="password" value="<?php echo isset($entity['password']) ? $entity['password'] : ''; ?>" required />
+			<input type="text" class="form-control" id="username" name="username" value="<?php echo isset($entity['employee_no']) ? $entity['employee_no'] : ''; ?>" readonly autofocus />
 		</div>
 
 		<div class="form-group">
 			<label for="employee_no">Employee No.</label>
-			<input type="text" class="form-control" id="employee_no" name="employee_no" value="<?php echo isset($entity['emp_no']) ? $entity['emp_no'] : ''; ?>" />
+			<input type="text" class="form-control" id="employee_no" name="employee_no" value="<?php echo isset($entity['employee_no']) ? $entity['employee_no'] : ''; ?>" readonly />
 		</div>
 
 		<div class="form-group">
-			<label for="fullname">Fullname</label>
-			<input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo isset($entity['fullname']) ? $entity['fullname'] : ''; ?>" />
+			<label for="fullname">Name</label>
+			<input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo isset($entity['fullname']) ? $entity['fullname'] : ''; ?>" readonly/>
 		</div>
 
 		<div class="form-group">
@@ -38,7 +33,7 @@
 			<select name="role_id" id="role_id" class="form-control selectpicker" data-live-search="true" required>
 				<option></option>
 				<?php foreach($roles as $row): ?>
-					<option value="<?php echo $row['id']; ?>" <?php echo isset($entity['role_id']) ? $row['id'] == $entity['role_id'] ? 'selected' : '' : ''?> ><?php echo $row['user_type']; ?></option>
+					<option value="<?php echo $row['id']; ?>" <?php echo isset($entity['role_id']) ? $row['id'] == $entity['role_id'] ? 'selected' : '' : ''?> ><?php echo ucfirst($row['user_type']); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
