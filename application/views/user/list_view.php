@@ -3,16 +3,10 @@
 	<!-- row -->
 	<div class="row">
 		<!-- col-md-6 -->
-		<div class="col-md-10">
+		<div class="col-md-9">
 			<!-- Box danger -->
 			<div class="box box-danger">
 				<!-- Content -->
-				<div class="box-header with-border">
-					<a href="<?php echo base_url('index.php/user/form') ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
-						<button class="btn btn-flat btn-success pull-right">Add Item <i class="fa fw fa-plus" aria-hidden="true"></i></button>
-					</a>
-				</div>
-
 				<div class="box-body">
 					<!-- Item table -->
 					<table class="table table-condensed table-striped table-bordered">
@@ -23,9 +17,7 @@
 								<th>Employee no.</th>
 								<th>Fullname</th>
 								<th>User type</th>
-								<th>Date Time</th>
 								<th>Edit</th>
-								<th>Delete</th>
 							</tr>
 						</thead>
 
@@ -34,19 +26,13 @@
 							<?php foreach($users as $user): ?>
 								<tr>
 									<td><?php echo $count ?></td>
-									<td><?php echo $user->username; ?></td>
-									<td><?php echo $user->emp_no; ?></td>
+									<td><?php echo $user->employee_no; ?></td>
+									<td><?php echo $user->employee_no; ?></td>
 									<td><?php echo ucwords(strtolower($user->fullname)); ?></td>
-									<td><?php echo ucfirst($user->user_type); ?></td>
-									<td><?php echo date('m/d/Y h:i A', strtotime($user->datetime)); ?></td>
+									<td><?php echo isset($user->user_type) ? ucfirst($user->user_type) : ''; ?></td>
 									<td>
 										<a href="<?php echo base_url('index.php/user/form/' . $user->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
-										</a>
-									</td>
-									<td>
-										<a href="<?php echo base_url('index.php/user/notice/' . $user->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
-											<i class="fa fa-trash" aria-hidden="true"></i>
 										</a>
 									</td>
 								</tr>
