@@ -64,24 +64,35 @@ class Item extends CI_Controller {
 	public function store()
 	{
 		$id   = $this->input->post('id');
-		$data = $this->_handle_upload();
 
-		$item_id = $this->item->store($data);
+		$pattern = '/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/';
+		// $pattern = '/([0-9])|(\"|\}|\{|!|@|£|\$|%|\^|\&|\(\)|\?|\|||\[|\]|-|\=|\+|\§|\±)/';
 
-		$config = array(
-				'item_id'     => $item_id, 
-				'category_id' => $this->input->post('category_id') ? $this->input->post('category_id') : 0
-			);
-
-		$this->item->store_item_category($config);
-
-		if ($id > 0)
+		if (preg_match($pattern, $this->input->post('name')))
 		{
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been updated!</div>');
+		    $this->session->set_flashdata('message', '<div class="alert alert-warning">Item name contains special characters.</div>');
 		}
 		else
 		{
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been added!</div>');
+			$data = $this->_handle_upload();
+
+			$item_id = $this->item->store($data);
+
+			$config = array(
+					'item_id'     => $item_id, 
+					'category_id' => $this->input->post('category_id') ? $this->input->post('category_id') : 0
+				);
+
+			$this->item->store_item_category($config);
+
+			if ($id > 0)
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been updated!</div>');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Item has been added!</div>');
+			}
 		}
 
 		redirect('/item/list_');
