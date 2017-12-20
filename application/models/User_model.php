@@ -7,35 +7,36 @@ class User_model extends CI_Model {
 		parent::__construct();
 
 		$this->load->database();
+
+		$this->intellexion = $this->load->database('intellexion', true);
+
+		$this->ipc_central = $this->load->database('ipc_central', true);
 	}
 
-	// Return user credentials
 	public function exist()
 	{
-		$config = array(
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password')
-			);
+		$config = array_map('trim', $this->input->post());
 
 		$fields = array(
 				'a.id',
-				'a.username',
-				'a.fullname',
-				'a.emp_no',
-				'b.role_id',
-				'c.user_type'
-			);
+				'a.employee_no',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'e.user_type'
+			);	
 
-		$query = $this->db->select($fields)
-				->from('users_tbl AS a')
-				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
-				->join('roles_tbl AS c', 'b.role_id = c.id', 'INNER')
-				->where($config)
+		$query = $this->ipc_central->select($fields)
+				->from('employee_masterfile_tab AS a')
+				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
+				->join('password_tab AS c', 'a.id = c.employee_id', 'INNER')
+				->join('canteenv2.users_role_tbl AS d', 'a.id = d.user_id', 'INNER')
+				->join('canteenv2.roles_tbl AS e', 'd.role_id = e.id', 'INNER')
+				->where('a.employee_no', $config['username'])
+				->where('c.password', $config['password'])
 				->get();
 
 		if ($query->num_rows())
 		{
-			return $query->row_array();	
+			return $query->row_array();
 		}
 
 		return false;
