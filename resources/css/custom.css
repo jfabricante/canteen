@@ -203,7 +203,8 @@ div.dropdown-menu.open{
  * Cart
  */
 .cart-items .box-body {
-	max-height: 75vh;
+	max-height: 65vh;
+	min-height: : 560px;
 	overflow-y: scroll;
 }
 
