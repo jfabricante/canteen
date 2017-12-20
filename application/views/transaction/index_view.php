@@ -1,3 +1,9 @@
+<style type="text/css">
+	.cart-items,
+	.category-menu {
+		min-height: 560px;
+	}
+</style>
 <!-- Items block -->
 <section class="content transaction">
 	<!-- App -->
