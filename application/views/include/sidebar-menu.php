@@ -45,7 +45,7 @@
 
 			<li class="<?php echo $menu == 'user/balances' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/balances') ?>"><i class="fa fa-credit-card"></i><span>Balances</span></a></li>
 
-			<li class="<?php echo $menu == 'user/purchased_items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/purchased_items') ?>"><i class="fa fa-database"></i><span>Purchased Items</span></a></li>
+			<li class="<?php echo $menu == 'user/purchased_items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/purchased_items') ?>"><i class="fa fa-database"></i><span>Sales Order</span></a></li>
 
 			<li class="<?php echo $menu == 'user/ledger' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/ledger') ?>"><i class="fa fa-book"></i><span>Ledger</span></a></li>
 			
