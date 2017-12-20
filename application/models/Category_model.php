@@ -116,10 +116,26 @@ class Category_model extends CI_Model {
 		}
 		else
 		{
-			$this->db->insert('category_tbl', $config);
+			if ($this->hasDuplicateCategory($config))
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-warning">Category name is already exist!</div>');
+
+				redirect($this->agent->referrer());
+			}
+			else
+			{
+				$this->db->insert('category_tbl', $config);
+			}
 		}
 
 		return $this;
+	}
+
+	public function hasDuplicateCategory($params)
+	{
+		$query = $this->db->where('name', $params['name'])->get('category_tbl');
+
+		return $query->num_rows();
 	}
 
 	public function delete()
