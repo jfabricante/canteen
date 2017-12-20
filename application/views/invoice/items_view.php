@@ -77,7 +77,7 @@
 										<td><?php echo $entity['trans_id'] ?></td>
 										<td><?php echo $entity['credit_used'] ?></td>
 										<td><?php echo $entity['cash'] ?></td>
-										<td><?php echo $entity['fullname'] ?></td>
+										<td><?php echo ucwords(strtolower($entity['fullname'])) ?></td>
 										<td><?php echo date('m/d/Y h:i A', strtotime($entity['trans_date'])) ?></td>
 										<td><?php echo $entity['status'] ?></td>
 									</tr>
