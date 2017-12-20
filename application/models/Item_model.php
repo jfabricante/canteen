@@ -68,13 +68,24 @@ class Item_model extends CI_Model {
 		}
 	}
 
+	public function hasDuplicateBarcode($params)
+	{
+		$query = $this->db->where('barcode', $params['barcode'])
+				->where('barcode !=', '')
+				->get('items_tbl');
+
+		return $query->num_rows();
+	}
+
 	public function store($params)
 	{
-		$id          = $this->input->post('id');
-		$name        = ucfirst(strtolower(trim($this->input->post('name'))));
-		$price       = $this->input->post('price');
-		$barcode     = $this->input->post('barcode');
-		$category_id = $this->input->post('category_id');
+		$config = array_map('trim', $this->input->post());
+
+		$id          = $config['id'];
+		$name        = ucfirst(strtolower($config['name']));
+		$price       = $config['price'];
+		$barcode     = $config['barcode'];
+		$category_id = $config['category_id'];
 		$datetime    = date('Y-m-d H:i:s');
 
 		$config = array();
@@ -106,12 +117,21 @@ class Item_model extends CI_Model {
 		}
 		else
 		{
-			$this->db->insert('items_tbl', $config);
+			if ($this->hasDuplicateBarcode($config))
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-warning">Barcode already exist.</div>');
 
-			$id = $this->db->insert_id();
+				redirect($this->agent->referrer());
+			}
+			else
+			{
+				$this->db->insert('items_tbl', $config);
+
+				$id = $this->db->insert_id();
+			}
+			
 		}
 		
-
 		$config = array(
 				'item_id'  => $id,
 				'price'    => $price,
