@@ -3,7 +3,7 @@
 	<!-- row -->
 	<div class="row">
 		<!-- col-md-6 -->
-		<div class="col-md-7">
+		<div class="col-md-10">
 			<!-- Box danger -->
 			<?php echo $this->session->flashdata('message'); ?>
 			
@@ -20,11 +20,10 @@
 					<table class="table table-condensed table-striped table-bordered">
 						<thead>
 							<tr>
-								<th>#</th>
+								<th>Thumbnail</th>
 								<th>Name</th>
 								<th>Price</th>
 								<th>Category</th>
-								<th>Thumbnail</th>
 								<th>Barcode</th>
 								<th>Date Time</th>
 								<th>Edit</th>
@@ -36,14 +35,13 @@
 							<?php $count = 1; ?>
 							<?php foreach($items as $item): ?>
 								<tr>
-									<td><?php echo $count ?></td>
-									<td><?php echo strtoupper($item->name); ?></td>
-									<td><?php echo $item->price; ?></td>
-									<td><?php echo $item->category; ?></td>
 									<td class="text-center">
 										<img class="img-responsive item-thumbnail" src="<?php echo $item->thumbnail ? base_url('/resources/thumbnail/' . $item->thumbnail) : base_url('/resources/thumbnail/no-image.png'); ?>" style="width: 100px">
 									</td>
-									<td><?php echo $item->barcode ? $item->barcode : ''; ?></td>
+									<td><?php echo strtoupper($item->name); ?></td>
+									<td><?php echo $item->price; ?></td>
+									<td><?php echo $item->category; ?></td>
+									<td><?php echo $item->barcode != 'null' ? $item->barcode : ''; ?></td>
 									<td><?php echo date('m/d/Y h:i A', strtotime($item->datetime)); ?></td>
 									<td>
 										<a href="<?php echo base_url('index.php/item/form/' . $item->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
