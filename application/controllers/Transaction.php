@@ -80,7 +80,6 @@ class Transaction extends CI_Controller {
 				$printer->text("Customer: " . ucwords(strtolower($params['employee']['fullname'])) . "\n");
 				$printer->text("Meal Allowance: " . $params['employee']['allowance'] . "\n");
 				$printer->text("Cashier: " . ucwords(strtolower($this->session->userdata('fullname'))) . "\n");
-				$params['remaining_credit'] < 0 ? $printer->text("You have credit balance of " . $params['remaining_credit'] . " pesos to be deducted on next meal allowance credit\n") : '';
 				$printer->text(str_pad('', 48, '-'));
 				$printer->feed(1);
 
@@ -99,6 +98,8 @@ class Transaction extends CI_Controller {
 				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
 				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'] ? $params['cash'] : '', 10) . "\n");
 				$printer->text(str_pad("Change:", 38) . str_pad($params['change'] ? $params['change'] : '', 10) . "\n");
+				$printer->text(str_pad('', 48, '-'));
+				$params['remaining_credit'] < 0 ? $printer->text("You have credit balance of " . $params['remaining_credit'] . " pesos to be deducted on next meal allowance credit\n") : '';
 				$printer->feed(2);
 				$printer->text(str_pad('', 48, '_') . "\n");
 				$printer->setJustification(Printer::JUSTIFY_CENTER);
