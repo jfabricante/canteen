@@ -26,6 +26,7 @@ class Ipc_model extends CI_Model {
 					->join('personal_information_tab AS b', 'a.id = b.employee_id', 'LEFT')
 					->order_by('a.id')
 					->where('last_name IS NOT NULL')
+					->where('a.status_id <= 4')
 					->get();
 
 		if ($params['type'] == 'object')
@@ -139,6 +140,21 @@ class Ipc_model extends CI_Model {
 				->get();
 
 		return $query->row_array();
+	}
+
+	public function fetchActiveUsers()
+	{
+		$fields = array(
+				'a.id',
+				'a.employee_no'
+			);
+
+		$query = $this->db->select($fields)
+				->from('employee_masterfile_tab AS a')
+				->where('a.status_id <= 4')
+				->get();
+
+		return $query->result_array();
 	}
 
 }
