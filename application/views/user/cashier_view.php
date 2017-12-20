@@ -62,13 +62,6 @@
 									<input type="submit" class="form-control btn btn-danger btn-flat" value="Filter Dates" />
 								</div>
 							</div>
-
-							<!-- <div class="col-md-2">
-								<br />
-								<div class="form-group">
-									<input type="submit" class="form-control btn btn-success btn-flat" name="excel_report" value="Create Report" />
-								</div>
-							</div> -->
 						</div>
 						<!-- ./row -->
 					</form>
@@ -97,8 +90,8 @@
 									<th>Trans. Date</th>
 									<th>Trans. ID</th>
 									<th>Item</th>
-									<th>Quantity</th>
 									<th>Price</th>
+									<th>Quantity</th>
 									<th>Total</th>
 								</tr>
 							</thead>
@@ -118,9 +111,9 @@
 										<td><?php echo date('m/d/Y', strtotime($entity['datetime'])); ?></td>
 										<td><?php echo $entity['id']; ?></td>
 										<td><?php echo $entity['name'] ?></td>
+										<td><?php echo number_format($entity['price'], 2) ?></td>
 										<td><?php echo $entity['quantity'] ?></td>
-										<td><?php echo $entity['price'] ?></td>
-										<td><?php echo $entity['total'] ?></td>
+										<td><?php echo number_format($entity['total'], 2) ?></td>
 									</tr>
 								<?php endforeach; ?>
 							</tbody>
