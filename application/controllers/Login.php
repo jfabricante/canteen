@@ -10,6 +10,8 @@ class Login extends CI_Controller {
 		$helpers = array('form');
 
 		$this->load->helper($helpers);
+
+		$this->load->model('user_model', 'user');
 	}
 
 	public function index()
@@ -93,8 +95,6 @@ class Login extends CI_Controller {
 
 	protected function _user_exist()
 	{
-		$this->load->model('user_model', 'user');
-
 		return is_array($this->user->exist()) ? $this->user->exist() : false;
 	}
 }
