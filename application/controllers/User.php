@@ -331,4 +331,31 @@ class User extends CI_Controller {
 		print_r($params);
 		echo '</pre>';
 	}
+
+	public function transfer_balances()
+	{
+		$userBalances = $this->user->fetchBalances();
+		$activeUsers  = $this->ipc->fetchActiveUsers();
+
+		$config = array();
+
+		foreach ($userBalances as $userEntity)
+		{
+			foreach ($activeUsers as $activeEntity)
+			{
+				if ($userEntity['emp_id'] == $activeEntity['employee_no'])
+				{
+					$config[] = array(
+							'user_id'               => $activeEntity['id'],
+							'meal_allowance'        => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							'datetime'              => $userEntity['lastUpdate'],
+							'last_meal_credit'      => $userEntity['last_meal_credit'],
+							'last_meal_credit_date' => $userEntity['last_credit_date']
+						);
+				}
+			}
+		}
+
+		$this->user->transferBalances($config);
+	}
 }
