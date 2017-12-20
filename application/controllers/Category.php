@@ -42,15 +42,25 @@ class Category extends CI_Controller {
 	{
 		$id = $this->input->post('id') ? $this->input->post('id') : 0;
 
-		$this->category->store();
+		$pattern = '/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/';
+		// $pattern = '/([0-9])|(\"|\}|\{|!|@|£|\$|%|\^|\&|\(\)|\?|\|||\[|\]|-|\=|\+|\§|\±)/';
 
-		if ($id > 0)
+		if (preg_match($pattern, $this->input->post('name')))
 		{
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been updated!</div>');
+		    $this->session->set_flashdata('message', '<div class="alert alert-warning">Item name contains special characters.</div>');
 		}
 		else
 		{
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been added!</div>');
+			$this->category->store();
+
+			if ($id > 0)
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been updated!</div>');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Category has been added!</div>');
+			}
 		}
 
 		redirect('/category/list_');
