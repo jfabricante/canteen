@@ -46,16 +46,16 @@ class User_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
-				'a.username',
-				'a.fullname',
-				'a.emp_no',
-				'b.role_id',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'a.employee_no',
+				'c.role_id',
 			);
 
 		$query = $this->db->select($fields)
-				->from('users_tbl AS a')
-				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
-				->where('b.role_id = 2')
+				->from('ipc_central.employee_masterfile_tab AS a')
+				->join('ipc_central.personal_information_tab AS b', 'a.id = b.employee_id')
+				->join('users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
+				->where('c.role_id = 2')
 				->get();
 
 		return $query->result_array();
@@ -135,11 +135,17 @@ class User_model extends CI_Model {
 
 	public function readDetails($id)
 	{
-		$fields = array('a.*', 'b.role_id');
+		$fields = array(
+				'a.id',
+				'a.employee_no',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'c.role_id'
+			);
 
 		$query = $this->db->select($fields)
-				->from('users_tbl AS a')
-				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
+				->from('ipc_central.employee_masterfile_tab AS a')
+				->join('ipc_central.personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
+				->join('users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
 				->where('a.id', $id)
 				->get();
 
@@ -174,19 +180,17 @@ class User_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
-				'a.username',
-				'a.fullname',
-				'a.emp_no',
-				'a.datetime',
-				'b.id AS users_role_id',
-				'c.user_type'
+				'a.employee_no',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'd.user_type'
 			);
 
-		$data = $this->db->select($fields)
-				->from('users_tbl AS a')
-				->join('users_role_tbl AS b', 'a.id = b.user_id', 'INNER')
-				->join('roles_tbl AS c', 'b.role_id = c.id', 'INNER')
-				->order_by('a.fullname')
+		$data = $this->ipc_central->select($fields)
+				->from('employee_masterfile_tab AS a')
+				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
+				->join('canteenv2.users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
+				->join('canteenv2.roles_tbl as d', 'c.role_id = d.id', 'INNER')
+				->where('a.status_id <= 4')
 				->get();
 
 		if ($type == 'object')
@@ -201,21 +205,22 @@ class User_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
-				'a.emp_no',
-				'a.fullname',
-				'b.meal_allowance',
-				'b.load_by',
-				'b.last_meal_credit',
-				'b.last_meal_credit_date'
+				'a.employee_no',
+				"CONCAT(b.first_name,' ', b.last_name) AS fullname",
+				'c.meal_allowance',
+				'c.load_by',
+				'c.last_meal_credit',
+				'c.last_meal_credit_date'
 			);
 
 		$clause = array(
-				'a.emp_no' => $params['emp_no']
+				'a.employee_no' => $params['employee_no']
 			);
 
-		$query = $this->db->select($fields)
-				->from('users_tbl AS a')
-				->join('users_meal_allowance_tbl AS b', 'a.id = b.user_id', 'INNER')
+		$query = $this->ipc_central->select($fields)
+				->from('employee_masterfile_tab AS a')
+				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
+				->join('canteenv2.users_meal_allowance_tbl AS c', 'a.id = c.user_id', 'LEFT')
 				->where($clause)
 				->get();
 
@@ -298,14 +303,15 @@ class User_model extends CI_Model {
 		$fields = array(
 				'a.id',
 				'a.meal_allowance',
-				'b.emp_no',
-				'b.fullname',
+				'b.employee_no',
+				"CONCAT(c.first_name,' ', c.last_name) AS fullname"
 			);
 
 		$query = $this->db->select($fields)
 				->from('users_meal_allowance_tbl AS a')
-				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
-				->where('emp_no', $this->session->userdata('emp_no'))
+				->join('ipc_central.employee_masterfile_tab AS b', 'a.user_id = b.id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'b.id = c.employee_id', 'INNER')
+				->where('b.employee_no', $this->session->userdata('employee_no'))
 				->get();
 
 		if ($type == 'array')
@@ -325,22 +331,23 @@ class User_model extends CI_Model {
 				'b.quantity',
 				'b.price',
 				'b.total',
-				'c.fullname AS employee',
-				'e.fullname AS cashier'
+				"CONCAT(c.first_name,' ', c.last_name) AS employee",
+				"CONCAT(e.first_name,' ', e.last_name) AS cashier"
 			);
 
-		$emp_no = isset($params['emp_no']) ? $params['emp_no'] : $this->session->userdata('emp_no');
+		$emp_no = isset($params['employee_no']) ? $params['employee_no'] : $this->session->userdata('employee_no');
 
-		$clause = array('c.emp_no' => $emp_no);
+		$clause = array('f.employee_no' => $emp_no);
 
-		if (isset($params['emp_no']))
+		if (isset($params['employee_no']))
 		{
 			$query = $this->db->select($fields)
 					->from('transaction_tbl AS a')
 					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
-					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
 					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
-					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS c', 'a.user_id = c.employee_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS e', 'a.cashier_id = e.employee_id', 'INNER')
+					->join('ipc_central.employee_masterfile_tab AS f', 'c.employee_id = f.id', 'INNER')
 					->where($clause)
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 					->get();
@@ -350,9 +357,10 @@ class User_model extends CI_Model {
 			$query = $this->db->select($fields)
 					->from('transaction_tbl AS a')
 					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
-					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
 					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
-					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS c', 'a.user_id = c.employee_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS e', 'a.cashier_id = e.employee_id', 'INNER')
+					->join('ipc_central.employee_masterfile_tab AS f', 'c.employee_id = f.id', 'INNER')
 					->where($clause)
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 					->get();
@@ -362,9 +370,9 @@ class User_model extends CI_Model {
 			$query = $this->db->select($fields)
 					->from('transaction_tbl AS a')
 					->join('transaction_item_tbl AS b', 'a.id = b.trans_id', 'INNER')
-					->join('users_tbl AS c', 'c.id = a.user_id', 'INNER')
 					->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
-					->join('users_tbl AS e', 'e.id = a.cashier_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS c', 'a.user_id = c.employee_id', 'INNER')
+					->join('ipc_central.personal_information_tab AS e', 'a.cashier_id = e.employee_id', 'INNER')
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 					->get();
 		}
@@ -387,12 +395,24 @@ class User_model extends CI_Model {
 
 		$query = $this->db->select($fields)
 				->from('users_meal_history_tbl AS a')
-				->join('users_tbl AS b', 'a.user_id = b.id', 'INNER')
 				->where('a.user_id', $params['user_id'])
 				->where("DATE(a.payroll_date) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 				->get();
 
 		return $query->result_array();
+	}
+
+	public function fetchBalances()
+	{
+		$query = $this->intellexion->get_where('employees', array('last_meal_credit >' => 0));
+
+		return $query->result_array();
+	}
+
+	public function transferBalances($params)
+	{
+		$this->db->truncate('users_meal_allowance_tbl');
+		$this->db->insert_batch('users_meal_allowance_tbl', $params);
 	}
 
 }
