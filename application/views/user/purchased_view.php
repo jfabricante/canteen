@@ -14,7 +14,7 @@
 				<div class="box-body">
 					<!-- form -->
 					<form action="<?php echo base_url('index.php/user/purchased_items'); ?>" method="post">
-						<di class="row">
+						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
 									<div class="input-group date">
@@ -38,7 +38,7 @@
 									<input type="submit" class="form-control btn btn-danger btn-flat" value="Filter Dates">
 								</div>
 							</div>
-						</di>
+						</div>
 						
 					</form>
 					<!-- ./form -->
@@ -49,13 +49,15 @@
 		</div>
 
 		<!-- Meal allowance -->
-		<div class="col-md-3">
-			<div class="box box-danger">
-				<div class="box-body text-center">
-					<h5 class="lead"><strong><?php echo $balance->meal_allowance >= 0 ? "Remaining balance: " . number_format($balance->meal_allowance, 2) : "Excess credit: " . number_format(abs($balance->meal_allowance), 2) ?></strong></h5>
+		<?php if(isset($balance->meal_allowance)): ?>
+			<div class="col-md-3">
+				<div class="box box-danger">
+					<div class="box-body text-center">
+						<h5 class="lead"><strong><?php echo $balance->meal_allowance >= 0 ? "Remaining balance: " . number_format($balance->meal_allowance, 2) : "Excess credit: " . number_format(abs($balance->meal_allowance), 2) ?></strong></h5>
+					</div>
 				</div>
 			</div>
-		</div>
+		<?php endif ?>
 		<!-- ./Meal allowance -->
 	</div>
 
@@ -106,7 +108,7 @@
 										<td><?php echo ucwords(strtolower($entity['cashier'])) ?></td>
 										<td><?php echo date('M d, Y h:i A', strtotime($entity['datetime'])) ?></td>
 									</tr>
-								<?php endforeach; ?>
+								<?php endforeach ?>
 							</tbody>
 						</table>
 						<!-- End of table -->
