@@ -34,7 +34,7 @@
 								<tr>
 									<td><?php echo $count; ?></td>
 									<td><?php echo $category->name; ?></td>
-									<td><?php echo $category->datetime; ?></td>
+									<td><?php echo date('m/d/Y h:i A', strtotime($category->datetime)); ?></td>
 									<td>
 										<a href="<?php echo base_url('index.php/category/form/' . $category->id); ?>"  data-toggle="modal" data-target=".bs-example-modal-sm">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
