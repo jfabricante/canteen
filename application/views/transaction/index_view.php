@@ -798,7 +798,7 @@
 				}				
 				else if (this.cart.length == 0)
 				{
-					alert('There is no purchased item!');
+					alert('There is no item be processed!');
 				}
 				else if (!this.hasUser() && this.remaining_amount > 0)
 				{
