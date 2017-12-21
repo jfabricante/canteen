@@ -38,7 +38,7 @@ class Login extends CI_Controller {
 			}
 			else
 			{
-				redirect('user/purchased_items')
+				redirect('user/purchased_items');
 			}
 			
 		}
