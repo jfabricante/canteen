@@ -145,7 +145,7 @@ class User_model extends CI_Model {
 		$query = $this->db->select($fields)
 				->from('ipc_central.employee_masterfile_tab AS a')
 				->join('ipc_central.personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
-				->join('users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
+				->join('users_role_tbl AS c', 'a.id = c.user_id', 'LEFT')
 				->where('a.id', $id)
 				->get();
 
@@ -188,8 +188,8 @@ class User_model extends CI_Model {
 		$data = $this->ipc_central->select($fields)
 				->from('employee_masterfile_tab AS a')
 				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
-				->join('canteenv2.users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
-				->join('canteenv2.roles_tbl as d', 'c.role_id = d.id', 'INNER')
+				->join('canteenv2.users_role_tbl AS c', 'a.id = c.user_id', 'LEFT')
+				->join('canteenv2.roles_tbl as d', 'c.role_id = d.id', 'LEFT')
 				->where('a.status_id <= 4')
 				->get();
 
