@@ -31,29 +31,41 @@
 			
 			<?php $menu = $this->uri->uri_string(); ?>
 
-			<li class="<?php echo $menu == 'item/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/list_') ?>"><i class="fa fa-dot-circle-o"></i><span>Items</span></a></li>
+			<?php //if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+				<li class="<?php echo $menu == 'item/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/list_') ?>"><i class="fa fa-dot-circle-o"></i><span>Items</span></a></li>
 
-			<li class="<?php echo $menu == 'category/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/list_') ?>"><i class="fa fa-tags"></i><span>Categories</span></a></li>
+				<li class="<?php echo $menu == 'category/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/list_') ?>"><i class="fa fa-tags"></i><span>Categories</span></a></li>
 
-			<li class="<?php echo $menu == 'category/set_menu' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/set_menu') ?>"><i class="fa fa-bars"></i><span>Set Menu</span></a></li>
+				<li class="<?php echo $menu == 'category/set_menu' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/set_menu') ?>"><i class="fa fa-bars"></i><span>Set Menu</span></a></li>
 
-			<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-user"></i><span>Users</span></a></li>
+				<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-user"></i><span>Users</span></a></li>
+			<?php //endif ?>
 
-			<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-shopping-cart"></i><span>POS</span></a></li>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator', 'cashier'))): ?>
+				<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-shopping-cart"></i><span>POS</span></a></li>
+			<?php endif ?>
 
-			<li class="<?php echo $menu == 'transaction/generate_billing_report' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/generate_billing_report') ?>"><i class="fa fa-bar-chart"></i><span>Billing Report</span></a></li>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+				<li class="<?php echo $menu == 'transaction/generate_billing_report' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/generate_billing_report') ?>"><i class="fa fa-bar-chart"></i><span>Billing Report</span></a></li>
+			<?php endif ?>
 
-			<li class="<?php echo $menu == 'user/balances' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/balances') ?>"><i class="fa fa-credit-card"></i><span>Balances</span></a></li>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+				<li class="<?php echo $menu == 'user/balances' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/balances') ?>"><i class="fa fa-credit-card"></i><span>Balances</span></a></li>
+			<?php endif ?>
 
-			<li class="<?php echo $menu == 'user/purchased_items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/purchased_items') ?>"><i class="fa fa-database"></i><span>Sales Order</span></a></li>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator', 'employee'))): ?>
+				<li class="<?php echo $menu == 'user/purchased_items' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/purchased_items') ?>"><i class="fa fa-database"></i><span>Sales Order</span></a></li>
+			<?php endif ?>
 
-			<li class="<?php echo $menu == 'user/ledger' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/ledger') ?>"><i class="fa fa-book"></i><span>Ledger</span></a></li>
-			
-			<li class="<?php echo $menu == 'user/cashier_sales' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/cashier_sales') ?>"><i class="fa fa-files-o"></i><span>Cashier Sales</span></a></li>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+				<li class="<?php echo $menu == 'user/ledger' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/ledger') ?>"><i class="fa fa-book"></i><span>Ledger</span></a></li>
+				
+				<li class="<?php echo $menu == 'user/cashier_sales' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/cashier_sales') ?>"><i class="fa fa-files-o"></i><span>Cashier Sales</span></a></li>
 
-			<li class="<?php echo $menu == 'transaction/invoice_list' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_list') ?>"><i class="fa fa-envelope"></i><span>Invoices</span></a></li>
+				<li class="<?php echo $menu == 'transaction/invoice_list' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_list') ?>"><i class="fa fa-envelope"></i><span>Invoices</span></a></li>
 
-			<li class="<?php echo $menu == 'transaction/invoice_item' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_item') ?>"><i class="fa fa-circle"></i><span>Invoice Item</span></a></li>
+				<li class="<?php echo $menu == 'transaction/invoice_item' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_item') ?>"><i class="fa fa-circle"></i><span>Invoice Item</span></a></li>
+			<?php endif ?>
 
 
 		</ul><!-- /.sidebar-menu -->
