@@ -76,8 +76,8 @@
 								<tr>
 									<th>Trans. ID</th>
 									<th>Item</th>
-									<th>Quantity</th>
 									<th>Unit Price</th>
+									<th>Quantity</th>
 									<th>Total</th>
 									<?php if($this->session->userdata('user_type') == 'administrator' ): ?>
 										<th>Employee</th>
@@ -99,8 +99,8 @@
 									<tr>
 										<td><?php echo $entity['id']; ?></td>
 										<td><?php echo $entity['name']; ?></td>
-										<td><?php echo $entity['quantity'] >= 0 ? $entity['quantity'] : '' ?></td>
 										<td><?php echo $entity['price'] >= 0 ? number_format($entity['price'], 2) : '' ?></td>
+										<td><?php echo $entity['quantity'] >= 0 ? $entity['quantity'] : '' ?></td>
 										<td><?php echo $entity['total'] >= 0 ? number_format($entity['total'], 2) : '' ?></td>
 										<?php if($this->session->userdata('user_type') == 'administrator' ): ?>
 											<td><?php echo ucwords(strtolower($entity['employee'])) ?></td>
