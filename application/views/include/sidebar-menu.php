@@ -31,7 +31,7 @@
 			
 			<?php $menu = $this->uri->uri_string(); ?>
 
-			<?php //if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+			<?php if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
 				<li class="<?php echo $menu == 'item/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/list_') ?>"><i class="fa fa-dot-circle-o"></i><span>Items</span></a></li>
 
 				<li class="<?php echo $menu == 'category/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/list_') ?>"><i class="fa fa-tags"></i><span>Categories</span></a></li>
