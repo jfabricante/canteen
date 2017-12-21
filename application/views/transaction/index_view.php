@@ -189,7 +189,7 @@
 									</thead>
 									<tbody>
 										<tr v-for="(item, index) in cart">
-											<td>{{ _.toUpper(item.name) }}</td>
+											<td>{{ item.name }}</td>
 											<td>{{ item.price }}</td>
 											<td>{{ item.quantity }}</td>
 											<td>{{ item.total }}</td>
