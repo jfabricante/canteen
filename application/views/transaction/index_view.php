@@ -234,7 +234,7 @@
 							
 							<div class="box-header">
 								<div class="box-header with-border">
-									<h3 class="box-title">Categories</h3>
+									<h3 class="box-title">Menu</h3>
 								</div>
 							</div>
 
