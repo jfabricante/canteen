@@ -258,7 +258,7 @@
 														<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
 														<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
 														<p class="text-center">{{ item.name }}</p>
-														<p class="text-center">&#8369; {{ item.price }}</p>
+														<p class="text-center">&#8369; {{ Number(item.price).toFixed(2) }}</p>
 													</li>
 												</ul>
 											</div>
@@ -526,6 +526,7 @@
 				this.$set(this.employee, 'hasThumbnail', this.imageExists(tmUrl + this.employee_no + '.JPG') ? true : false)
 			},
 			'cash.amount': function() {
+				this.cash.amount = this.cash.amount.toFixed(2)
 				this.updateValues()
 			},
 			totalPurchase: function() {
@@ -621,9 +622,9 @@
 				this.newItems = {
 					id: item.id,
 					name: item.name,
-					price: item.price,
+					price: Number(item.price).toFixed(2),
 					quantity: 1,
-					total: item.price,
+					total: Number(item.price).toFixed(2),
 					barcode: item.barcode
 				}
 
@@ -641,9 +642,9 @@
 						this.newItems = {
 							id: this.cart[index].id,
 							name: this.cart[index].name,
-							price: this.cart[index].price,
+							price: Number(this.cart[index].price).toFixed(2),
 							quantity: ++this.cart[index].quantity,
-							total: this.cart[index].quantity * this.cart[index].price
+							total: Number(this.cart[index].quantity * this.cart[index].price).toFixed(2)
 						}
 
 						this.cart.splice(index, 1, this.newItems)
@@ -661,9 +662,9 @@
 						this.newItems = {
 							id: this.cart[index].id,
 							name: this.cart[index].name,
-							price: this.cart[index].price,
+							price: Number(this.cart[index].price).toFixed(2),
 							quantity: ++this.cart[index].quantity,
-							total: this.cart[index].quantity * this.cart[index].price
+							total: Number(this.cart[index].quantity * this.cart[index].price).toFixed(2)
 						}
 
 						this.cart.splice(index, 1, this.newItems)
@@ -684,9 +685,9 @@
 							this.newItems = {
 								id: this.cart[index].id,
 								name: this.cart[index].name,
-								price: this.cart[index].price,
+								price: Number(this.cart[index].price).toFixed(2),
 								quantity: ++this.cart[index].quantity,
-								total: this.cart[index].quantity * this.cart[index].price
+								total: Number(this.cart[index].quantity * this.cart[index].price).toFixed(2)
 							}
 
 							this.cart.splice(index, 1, this.newItems)
@@ -724,9 +725,9 @@
 				this.newItems = {
 						id: this.cart[index].id,
 						name: this.cart[index].name,
-						price: this.cart[index].price,
+						price: Number(this.cart[index].price).toFixed(2),
 						quantity: this.cart[index].quantity,
-						total: this.cart[index].total
+						total: Number(this.cart[index].total).toFixed(2)
 					}
 
 				this.manageState(this.newItems)
@@ -737,6 +738,8 @@
 					if (result)
 					{
 						this.newItems.total = Number(this.newItems.price) * this.newItems.quantity
+
+						this.newItems.total = Number(this.newItems.total).toFixed(2)
 
 						this.cart.splice(this.itemIndex, 1, this.newItems)
 
@@ -756,6 +759,7 @@
 			},
 			updateTotalPurchase: function() {
 				this.totalPurchase = _.chain(this.cart).map((prop) => { return Number(prop.total) }).sum()
+				this.totalPurchase = Number(this.totalPurchase).toFixed(2)
 			},
 			performTransaction: function() {
 				console.log(this.remaining_amount)
@@ -929,7 +933,6 @@
 				if (this.hasUser() && this.employee.allowance < 0)
 				{
 					this.remaining_amount = Number(this.totalPurchase) - Number(this.cash.amount)
-					this.remaining_amount = this.remaining_amount
 				}
 				else
 				{		
