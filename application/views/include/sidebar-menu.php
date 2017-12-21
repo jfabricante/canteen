@@ -39,7 +39,7 @@
 				<li class="<?php echo $menu == 'category/set_menu' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/category/set_menu') ?>"><i class="fa fa-bars"></i><span>Set Menu</span></a></li>
 
 				<li class="<?php echo $menu == 'user/list_' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/list_') ?>"><i class="fa fa-user"></i><span>Users</span></a></li>
-			<?php //endif ?>
+			<?php endif ?>
 
 			<?php if (in_array($this->session->userdata('user_type'), array('administrator', 'cashier'))): ?>
 				<li class="<?php echo $menu == 'transaction/index' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/index') ?>"><i class="fa fa-shopping-cart"></i><span>POS</span></a></li>
