@@ -138,4 +138,92 @@ class Item extends CI_Controller {
 	{
 		echo json_encode($this->item->browseFeaturedItems());
 	}
+
+	public function oldMenu()
+	{
+		$category = array(
+				'Meal'   => 1,
+				'Pastry' => 2,
+				'Snack'  => 3,
+				'Drinks' => 4,
+				'Others' => 5
+			);
+
+		$oldMenu = $this->item->fetchOldMenu();
+
+		$config = array();
+
+		foreach ($oldMenu as $menu)
+		{
+			if (strpos($menu['item_name'], '/'))
+			{
+				$menus = array_map('trim', explode('/', $menu['item_name']));
+
+				foreach ($menus as $row)
+				{
+					if (strpos($row, '-'))
+					{
+						$config[] = array(
+								'name'        => substr($row, 2),
+								'category_id' => $category[$menu['item_type']],
+								'price'       => $menu['price']
+							);
+					}
+					else
+					{
+						$config[] = array(
+								'name'        => $row,
+								'category_id' => $category[$menu['item_type']],
+								'price'       => $menu['price']
+							);	
+					}
+				}
+			}
+			else
+			{
+				if (strpos($menu['item_name'], '-'))
+				{
+					$config[] = array(
+							'name'        => substr($menu['item_name'], 2),
+							'category_id' => $category[$menu['item_type']],
+							'price'       => $menu['price']
+						);
+				}
+				else
+				{
+					$config[] = array(
+							'name'        => $menu['item_name'],
+							'category_id' => $category[$menu['item_type']],
+							'price'       => $menu['price']
+						);
+				}
+				
+			}
+		}
+
+		$datetime = date('Y-m-d H:i:s');
+
+		foreach ($config as $entity)
+		{
+			$item = array(
+					'name'     => $entity['name'],
+					'price'    => $entity['price'],
+					'datetime' => $datetime
+				);
+
+			$item_id = $this->item->insertItem($item);
+
+			$item_category = array(
+					'item_id'     => $item_id,
+					'category_id' => $entity['category_id'],
+				);
+
+			$this->item->insertCategory($item_category);
+		}
+
+		echo '<pre>';
+		// print_r($this->item->fetchOldMenu());
+		print_r($config);
+		echo '<pre>';
+	}
 }
