@@ -258,7 +258,7 @@ div.dropdown-menu.open{
 .transaction .separator {
 	border-bottom-color: #333;
 	border-bottom-width: 1px;
-	border-bottom-style: dashed;
+	border-bottom-style: solid;
 	padding: 10px 0;
 	margin: 0;
 }

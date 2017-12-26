@@ -44,6 +44,8 @@ class Transaction extends CI_Controller {
 		if ($data['to_print'])
 		{
 			$this->_generate_receipt($data);
+
+			echo json_encode($data['trans_id']);
 		}
 		else
 		{
@@ -62,49 +64,70 @@ class Transaction extends CI_Controller {
 	protected function _generate_receipt($params)
 	{
 		try {
-			$connector = new WindowsPrintConnector('smb://BARCODE08/EPSON TM-T82II Receipt');
+			// $connector = new WindowsPrintConnector('smb://BARCODE08/EPSON TM-T82II Receipt');
+			$connector = new WindowsPrintConnector('smb://IPCPC367/EPSON TM-T82II Receipt6');
 			$printer = new Printer($connector);
 
 			$printer->initialize();
 
-			$copies = array("***Customer Copy***", "***Cashier Copy***");
+			// $copies = array("***Customer Copy***", "***Cashier Copy***");
+			$copies = array("***Customer's Copy***");
 
 			foreach ($copies as $row) 
 			{
-				$printer->text("Isuzu Philippines Corporation\n");
-				$printer->text("Transaction#: " . $params['trans_id'] . "\n");
-				$printer->text(date('D, M d, Y h:i A') . "\n");
+				$printer->text("ISUZU PHILIPPINES CORPORATION\n");
 				$printer->text(str_pad('', 48, '-'));
 				$printer->feed(1);
 
-				$printer->text("Customer: " . ucwords(strtolower($params['employee']['fullname'])) . "\n");
-				$printer->text("Meal Allowance: " . $params['employee']['allowance'] . "\n");
-				$printer->text("Cashier: " . ucwords(strtolower($this->session->userdata('fullname'))) . "\n");
+				if ($params['employee']['fullname'])
+				{
+					$printer->text("Name: " . ucwords(strtolower($params['employee']['fullname'])) . "\n");
+					$params['remaining_credit'] < 0 ? $printer->text("You have " . number_format($params['remaining_credit'], 2) . " meal credit balance, this will be deducted on the next Payroll Cut-off \n") : '';
+					$printer->text(str_pad('', 48, '-'));
+					$printer->feed(1);
+				}
+
+				$printer->text(str_pad('Qty', 6));
+				$printer->text(str_pad('Description', 32));
+				$printer->text(str_pad('Total', 10) . "\n");
 				$printer->text(str_pad('', 48, '-'));
 				$printer->feed(1);
-
-				$printer->text("Purchased Items\n");
 
 				foreach ($params['cart'] as $item) 
 				{
-					$printer->text(str_pad($item['name'], 32));
-					$printer->text(str_pad($item['quantity'] . 'x' , 6));
+					$printer->text(str_pad($item['quantity'], 6));
+
+					if ($item['quantity'] > 1)
+					{
+						$printer->text(str_pad($item['name'], 25));
+						$printer->text('@' . str_pad($item['price'], 7));
+					}
+					else
+					{
+						$printer->text(str_pad($item['name'], 32));
+					}
 					$printer->text(str_pad($item['total'], 10) . "\n");
 				}
 				$printer->text(str_pad('', 48, '-'));
 				$printer->feed(1);
 
-				$printer->text(str_pad("Total:", 38) . str_pad($params['totalPurchase'], 10) . "\n");
+				$printer->text(str_pad("Total Transaction:", 38) . str_pad($params['totalPurchase'], 10) . "\n");
+				$printer->text(str_pad("Meal Allowance: ", 38) . str_pad($params['employee']['allowance'], 10) . "\n");
 				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
 				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'] ? $params['cash'] : '', 10) . "\n");
 				$printer->text(str_pad("Change:", 38) . str_pad($params['change'] ? $params['change'] : '', 10) . "\n");
 				$printer->text(str_pad('', 48, '-'));
-				$params['remaining_credit'] < 0 ? $printer->text("You have credit balance of " . $params['remaining_credit'] . " pesos to be deducted on next meal allowance credit\n") : '';
 				$printer->feed(2);
-				$printer->text(str_pad('', 48, '_') . "\n");
+
+				$printer->text("Transaction Number: " . $params['trans_id'] . "\n");
+				$printer->text('TXN Date/Time: ' . date('D, M d, Y h:i A') . "\n");
+				$printer->text("Cashier: " . ucwords(strtolower($this->session->userdata('fullname'))) . "\n");
+
+
+				$printer->feed(2);
 				$printer->setJustification(Printer::JUSTIFY_CENTER);
-				$printer->text("SIGNATURE\n");
-				$printer->text($row . "\n");
+				$printer->text("Have a Great Day! :)\n");
+				// $printer->text($row . "\n");
 				$printer->feed();
 				$printer->setJustification();
 				$printer->cut();
