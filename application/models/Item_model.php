@@ -7,6 +7,7 @@ class Item_model extends CI_Model {
 		parent::__construct();
 
 		$this->load->database();
+		$this->intellexion = $this->load->database('intellexion', true);
 	}
 
 	public function browse(array $params = array('type' => 'object'))
@@ -222,5 +223,26 @@ class Item_model extends CI_Model {
 				->get();
 
 		return $query->result_array();
+	}
+
+	public function fetchOldMenu()
+	{
+		$query = $this->intellexion->select('*')
+				->from('inventory')
+				->get();
+
+		return $query->result_array();	
+	}
+
+	public function insertItem($params)
+	{
+		$this->db->replace('items_tbl', $params);
+
+		return $this->db->insert_id();
+	}
+
+	public function insertCategory($params)
+	{
+		$this->db->replace('item_category_tbl', $params);
 	}
 }
