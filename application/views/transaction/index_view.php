@@ -24,7 +24,7 @@
 			</div>
 
 			<div class="col-md-2">
-				<h4>Remaining Credit: {{ remaining_credit <= -1 ? Math.abs(remaining_credit) : 0}}</h4>
+				<h4>Remaining Allowance: {{ remaining_credit <= -1 ? Math.abs(remaining_credit) : 0}}</h4>
 			</div>
 		</div>
 		<!-- row -->
