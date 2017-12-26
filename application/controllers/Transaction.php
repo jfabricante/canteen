@@ -99,7 +99,7 @@ class Transaction extends CI_Controller {
 
 					if ($item['quantity'] > 1)
 					{
-						$printer->text(str_pad($item['name'], 25));
+						$printer->text(str_pad($item['name'], 24));
 						$printer->text('@' . str_pad($item['price'], 7));
 					}
 					else
@@ -113,7 +113,16 @@ class Transaction extends CI_Controller {
 
 				$printer->text(str_pad("Total Transaction:", 38) . str_pad($params['totalPurchase'], 10) . "\n");
 				$printer->text(str_pad("Meal Allowance: ", 38) . str_pad($params['employee']['allowance'], 10) . "\n");
-				$printer->text(str_pad("Remaining balance:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
+
+				if ($params['remaining_credit'] > 0)
+				{
+					$printer->text(str_pad("Remaining Allowance:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
+				}
+				else
+				{
+					$printer->text(str_pad("Credit:", 38) . str_pad($params['remaining_credit'], 10) . "\n");
+				}
+				
 				$printer->text(str_pad("Cash:", 38) . str_pad($params['cash'] ? $params['cash'] : '', 10) . "\n");
 				$printer->text(str_pad("Change:", 38) . str_pad($params['change'] ? $params['change'] : '', 10) . "\n");
 				$printer->text(str_pad('', 48, '-'));
