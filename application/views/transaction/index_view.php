@@ -1,3 +1,4 @@
+<?php //echo $_SERVER['REMOTE_ADDR']; ?>
 <style type="text/css">
 	.cart-items,
 	.category-menu {
@@ -385,42 +386,50 @@
 					<div class="modal-body">
 						<!-- Item table -->
 						<p class="separator">
-							<span>Isuzu Philippines Corporation <br /></span>
-							<span>Transaction#: {{ last_transaction_id }} <br /></span>
-							<span><?php echo date('D, M d, Y h:i A'); ?></span>
+							<span><strong>ISUZU PHILIPPINES CORPORATION</strong><br></span>
 						</p>
-						<p class="separator">
-							<span v-show="employee.fullname.length > 0">Customer: {{ _.startCase(_.toLower(employee.fullname)) }}<br /></span>
-							<span v-show="employee.allowance.length >= 1">Meal Allowance: {{ employee.allowance }}<br /></span>
-							<span>Cashier: <?php echo ucwords(strtolower($this->session->userdata('fullname'))) ?><br /></span>
+						<p v-show="employee.fullname.length > 0" class="separator">
+							<span v-show="employee.fullname.length > 0"><strong>Name: {{ _.startCase(_.toLower(employee.fullname)) }}</strong><br /></span>
+							<span v-show="remaining_credit < 0">You have <strong>{{ Math.abs(Number(remaining_credit).toFixed(2)) }}</strong> credit balance, this will be deducted on the next Payroll Cut-off</span>
 						</p>
 						<table class="table table-condensed separator">
 							<tbody>
 								<!-- Items header -->
-								<tr>
-									<td>Purchased Items</td>
+								<tr class="separator">
+									<td>Qty</td>
+									<td>Description</td>
+									<td></td>
+									<td>Total</td>
 								</tr>
 
 								<!-- List of items -->
 								<tr v-for="(item, index) in cart" v-bind:class="{'separator': index === (cart.length - 1)}">
+									<td>{{ item.quantity }}</td>
 									<td>{{ item.name }}</td>
-									<td>{{ item.quantity + 'x' }}</td>
+									<td v-if="item.quantity > 1">{{ '@' + parseInt(item.price) }}</td>
+									<td v-else></td>
 									<td>{{ item.total }}</td>
 								</tr>
 
 								<!-- Purchase total -->
 								<tr>
-									<td colspan="2">Total: </td>
+									<td colspan="2">Total Transaction: </td>
 									<td>{{ totalPurchase }}</td>
 								</tr>
 
+								<tr>
+									<td colspan="2">Meal Allowance: </td>
+									<!-- <span v-show="employee.allowance.length >= 1">Meal Allowance: {{ employee.allowance }}<br /></span> -->
+									<td>{{ employee.allowance }}</td>
+								</tr>
+								
 								<!-- Remaining Credit -->
 								<tr>
-									<td colspan="2">Credit: </td>
-									<td>{{ remaining_credit }}</td>
+									<td colspan="2"><strong>Remaining Allowance: </strong></td>
+									<td><strong>{{ remaining_credit }}</strong></td>
 								</tr>
 
-								<!-- Cash tendered -->
+								<!-- Cash -->
 								<tr>
 									<td colspan="2">Cash: </td>
 									<td>{{ cash.amount }}</td>
@@ -434,9 +443,11 @@
 							</tbody>
 						</table>
 						<!-- End of table -->
-						<strong>
-							<span v-show="remaining_credit < 0">You have credit balance of {{ Math.abs(remaining_credit) }} pesos to be deducted on next meal allowance credit</span>
-						</strong>
+						<span>Transaction Number: {{ last_transaction_id }} <br></span>
+						<span>TXN Date/Time: <?php echo date('D, M d, Y h:i A'); ?> <br></span>
+						<span>Cashier: <?php echo ucwords(strtolower($this->session->userdata('fullname'))) ?><br /></span>
+						<br>
+						<div class="text-center"><strong>Have a Great Day! :)</strong></div>
 						
 					</div>
 					<!-- ./modal-body -->
@@ -526,7 +537,6 @@
 				this.$set(this.employee, 'hasThumbnail', this.imageExists(tmUrl + this.employee_no + '.JPG') ? true : false)
 			},
 			'cash.amount': function() {
-				this.cash.amount = this.cash.amount.toFixed(2)
 				this.updateValues()
 			},
 			totalPurchase: function() {
@@ -537,13 +547,13 @@
 			},
 			remaining_amount: function() {
 				this.updateValues()
-				this.remaining_amount = this.remaining_amount.toFixed(2)
+				this.remaining_amount = Number(this.remaining_amount).toFixed(2)
 			},
 			remaining_credit: function() {
-				this.remaining_credit = this.remaining_credit.toFixed(2)
+				this.remaining_credit = Number(this.remaining_credit).toFixed(2)
 			},
 			'cash.change': function() {
-				this.cash.change = this.cash.change.toFixed(2)
+				this.cash.change = Number(this.cash.change).toFixed(2)
 			}
 		},
 		computed: {
