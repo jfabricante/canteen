@@ -352,6 +352,7 @@ class User extends CI_Controller {
 	{
 		if (count($this->session->userdata()) < 3)
 		{
+			$this->session->set_flashdata('message', '<div class="alert alert-warning">Login first!</div>');
 			redirect(base_url());
 		}
 	}
