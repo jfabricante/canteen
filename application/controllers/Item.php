@@ -141,6 +141,13 @@ class Item extends CI_Controller {
 		echo json_encode($this->item->browseFeaturedItems());
 	}
 
+	public function ajax_has_duplicate()
+	{
+		$hasDuplicate = $this->item->hasDuplicateBarcode($this->input->post());
+
+		echo json_encode(array_values($hasDuplicate));
+	}
+
 	public function oldMenu()
 	{
 		$category = array(

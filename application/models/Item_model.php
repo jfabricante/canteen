@@ -71,11 +71,14 @@ class Item_model extends CI_Model {
 
 	public function hasDuplicateBarcode($params)
 	{
-		$query = $this->db->where('barcode', $params['barcode'])
+		$fields = array('name', 'price', 'barcode');
+
+		$query = $this->db->select($fields)
+				->where('barcode', $params['barcode'])
 				->where('barcode !=', '')
 				->get('items_tbl');
 
-		return $query->num_rows();
+		return $query->row_array();
 	}
 
 	public function store($params)
