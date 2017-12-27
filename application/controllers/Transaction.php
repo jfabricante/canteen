@@ -67,7 +67,9 @@ class Transaction extends CI_Controller {
 	{
 		try {
 			// $connector = new WindowsPrintConnector('smb://BARCODE08/EPSON TM-T82II Receipt');
-			$connector = new WindowsPrintConnector('smb://IPCPC367/EPSON TM-T82II Receipt6');
+			// $connector = new WindowsPrintConnector('smb://IPCPC367/EPSON TM-T82II Receipt6');
+			// $connector = new WindowsPrintConnector('smb://localhost/EPSON TM-T82II Receipt6');
+			$connector = new WindowsPrintConnector('smb://localhost/EPSON TM-T82II Receipt');
 			$printer = new Printer($connector);
 
 			$printer->initialize();
