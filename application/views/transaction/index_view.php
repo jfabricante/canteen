@@ -23,8 +23,12 @@
 				<h4>Meal Allowance: {{ employee.allowance >= 0 ? employee.allowance : 0}}</h4>
 			</div>
 
-			<div class="col-md-2">
-				<h4>Remaining Allowance: {{ remaining_credit <= -1 ? Math.abs(remaining_credit) : 0}}</h4>
+			<div class="col-md-2" v-if="remaining_credit >= 0">
+				<h4>Remaining Allowance: {{ Math.abs(remaining_credit) }}</h4>
+			</div>
+
+			<div class="col-md-2" v-else>
+				<h4>Credit: {{ Math.abs(remaining_credit) }}</h4>
 			</div>
 		</div>
 		<!-- row -->
@@ -413,31 +417,36 @@
 
 								<!-- Purchase total -->
 								<tr>
-									<td colspan="2">Total Transaction: </td>
+									<td colspan="3">Total Transaction: </td>
 									<td>{{ totalPurchase }}</td>
 								</tr>
 
 								<tr>
-									<td colspan="2">Meal Allowance: </td>
+									<td colspan="3">Meal Allowance: </td>
 									<!-- <span v-show="employee.allowance.length >= 1">Meal Allowance: {{ employee.allowance }}<br /></span> -->
 									<td>{{ employee.allowance }}</td>
 								</tr>
 								
 								<!-- Remaining Credit -->
-								<tr>
-									<td colspan="2"><strong>Remaining Allowance: </strong></td>
+								<tr v-if="Number(remaining_credit) >= 0">
+									<td colspan="3"><strong>Remaining Allowance: </strong></td>
+									<td><strong>{{ remaining_credit }}</strong></td>
+								</tr>
+
+								<tr v-else>
+									<td colspan="3"><strong>Credit: </strong></td>
 									<td><strong>{{ remaining_credit }}</strong></td>
 								</tr>
 
 								<!-- Cash -->
 								<tr>
-									<td colspan="2">Cash: </td>
+									<td colspan="3">Cash: </td>
 									<td>{{ cash.amount }}</td>
 								</tr>
 
 								<!-- Customer's change -->
 								<tr>
-									<td colspan="2">Change: </td>
+									<td colspan="3">Change: </td>
 									<td>{{ cash.change }}</td>
 								</tr>
 							</tbody>
