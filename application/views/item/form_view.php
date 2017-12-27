@@ -48,7 +48,7 @@
 	<div class="modal-footer">
 		<div class="form-group">
 			<button type="button" class="btn btn-flat btn-info pull-left" data-dismiss="modal">Close</button>
-			<input type="submit" value="Submit" class="btn btn-flat btn-danger">
+			<input type="submit" value="Submit" class="btn btn-flat btn-danger" id="btn-submit">
 		</div>
 	</div>
 	
@@ -57,6 +57,36 @@
 <script src="<?php echo base_url('resources/plugins/select/js/bootstrap-select.min.js');?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		const appUrl = "<?php echo base_url('index.php'); ?>";
+
 		$('.selectpicker').selectpicker({});
+
+		const $name    = $('#name');
+		const $barcode = $('#barcode');
+
+		$name.on('keyup', function() {
+			let $self = $(this);
+
+			if(/^[a-zA-Z0-9- ]*$/.test($self.val()) == false)
+			{
+			    alert('Item name contains illegal character(s).');
+			}
+		});
+
+		$barcode.on('keyup', function() {
+			let $self = $(this);
+
+			$.post(appUrl + '/item/ajax_has_duplicate', {barcode: $self.val()})
+			.done(function(data){
+				let result = JSON.parse(data);
+
+				if (result.length > 0)
+				{
+					alert('The barcode of this item is already exist ' + result.join(', '));	
+				}
+			});
+
+		});
+
 	});
 </script>
