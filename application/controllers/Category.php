@@ -7,6 +7,8 @@ class Category extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->_redirectUnauthorized();
+
 		$this->load->model('category_model', 'category');
 	}
 
@@ -105,5 +107,13 @@ class Category extends CI_Controller {
 	public function ajax_featured_items()
 	{
 		echo json_encode($this->category->fetch_featured_items());
+	}
+
+	protected function _redirectUnauthorized()
+	{
+		if (count($this->session->userdata()) < 3)
+		{
+			redirect(base_url());
+		}
 	}
 }

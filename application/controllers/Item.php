@@ -7,6 +7,8 @@ class Item extends CI_Controller {
 	{
 		parent::__construct();
 		
+		$this->_redirectUnauthorized();
+
 		date_default_timezone_set('Asia/Manila');
 
 		$this->load->helper('form');
@@ -225,5 +227,13 @@ class Item extends CI_Controller {
 		// print_r($this->item->fetchOldMenu());
 		print_r($config);
 		echo '<pre>';
+	}
+
+	protected function _redirectUnauthorized()
+	{
+		if (count($this->session->userdata()) < 3)
+		{
+			redirect(base_url());
+		}
 	}
 }

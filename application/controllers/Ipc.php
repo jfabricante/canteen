@@ -7,6 +7,8 @@ class Ipc extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->_redirectUnauthorized();
+
 		// Load model
 		$this->load->model('ipc_model', 'ipc');
 	}
@@ -27,6 +29,14 @@ class Ipc extends CI_Controller {
 		$data = $this->ipc->fetch_department_head($emp_no);
 
 		echo json_encode($data);
+	}
+
+	protected function _redirectUnauthorized()
+	{
+		if (count($this->session->userdata()) < 3)
+		{
+			redirect(base_url());
+		}
 	}
 
 }

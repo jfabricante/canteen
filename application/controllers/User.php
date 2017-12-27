@@ -11,6 +11,8 @@ class User extends CI_Controller {
 
 		parent::__construct();
 
+		$this->_redirectUnauthorized();
+
 		$this->load->model('user_model', 'user');
 		$this->load->model('ipc_model', 'ipc');
 	}
@@ -344,5 +346,13 @@ class User extends CI_Controller {
 		}
 
 		$this->user->transferBalances($config);
+	}
+
+	protected function _redirectUnauthorized()
+	{
+		if (count($this->session->userdata()) < 3)
+		{
+			redirect(base_url());
+		}
 	}
 }
