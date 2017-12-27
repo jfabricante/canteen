@@ -9,6 +9,8 @@ class Category extends CI_Controller {
 
 		$this->_redirectUnauthorized();
 
+		date_default_timezone_set('Asia/Manila');
+
 		$this->load->model('category_model', 'category');
 	}
 
@@ -49,7 +51,7 @@ class Category extends CI_Controller {
 
 		if (preg_match($pattern, $this->input->post('name')))
 		{
-		    $this->session->set_flashdata('message', '<div class="alert alert-warning">Item name contains special characters.</div>');
+		    $this->session->set_flashdata('message', '<div class="alert alert-warning">Category name contains special characters.</div>');
 		}
 		else
 		{
