@@ -25,4 +25,20 @@
 	</div>
 	
 </form><!-- End Form -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		const appUrl = "<?php echo base_url('index.php'); ?>";
+
+		const $name = $('#name');
+
+		$name.on('keyup', function() {
+			let $self = $(this);
+
+			if(/^[a-zA-Z0-9- ]*$/.test($self.val()) == false)
+			{
+			    alert('Category name contains illegal character(s).');
+			}
+		});
+	});
+</script>
 					
