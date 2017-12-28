@@ -21,21 +21,38 @@
 					<!-- form -->
 					<form action="<?php echo base_url('index.php/user/ledger'); ?>" method="post">
 						<div class="row">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="employee_no">Fullname</label>
-									<select name="employee_no" id="employee_no" class="form-control selectpicker" data-live-search="true" required>
-										<option></option>
-										<?php foreach($rows as $row): ?>
-											<option value="<?php echo $row['employee_no']; ?>" <?php echo isset($params['employee_no']) && ($row['employee_no'] == $params['employee_no']) ? 'selected' : '' ?>>
-												<?php echo $row['fullname']; ?>
-											</option>
-										<?php endforeach; ?>
-									</select>
+							
+							<?php if (in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="employee_no">Fullname</label>
+										<select name="employee_no" id="employee_no" class="form-control selectpicker" data-live-search="true" required>
+											<option></option>
+											<?php foreach($rows as $row): ?>
+												<option value="<?php echo $row['employee_no']; ?>" <?php echo isset($params['employee_no']) && ($row['employee_no'] == $params['employee_no']) ? 'selected' : '' ?>>
+													<?php echo $row['fullname']; ?>
+												</option>
+											<?php endforeach; ?>
+										</select>
+									</div>
 								</div>
-							</div>
+							<?php else: ?>
+								<div class="col-md-4 hidden">
+									<div class="form-group">
+										<label for="employee_no">Fullname</label>
+										<select name="employee_no" id="employee_no" class="form-control selectpicker" data-live-search="true" required>
+											<option></option>
+											<?php foreach($rows as $row): ?>
+												<option value="<?php echo $row['employee_no']; ?>" <?php echo ($row['employee_no'] == $this->session->userdata('employee_no')) ? 'selected' : '' ?>>
+													<?php echo $row['fullname']; ?>
+												</option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+								</div>
+							<?php endif ?>
 
-							<div class="col-md-2">
+							<div class="<?php echo $this->session->userdata('user_type') == 'employee' ? 'col-md-3' : 'col-md-2' ?>">
 								<br />
 								<div class="form-group">
 									<div class="input-group date">
@@ -45,7 +62,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-2">
+							<div class="<?php echo $this->session->userdata('user_type') == 'employee' ? 'col-md-3' : 'col-md-2' ?>">
 								<br />
 								<div class="form-group">
 									<div class="input-group date">
@@ -55,19 +72,21 @@
 								</div>
 							</div>
 
-							<div class="col-md-2">
+							<div class="<?php echo $this->session->userdata('user_type') == 'employee' ? 'col-md-3' : 'col-md-2' ?>">
 								<br />
 								<div class="form-group">
 									<input type="submit" class="form-control btn btn-danger btn-flat" name="filter_dates" value="Filter Dates" />
 								</div>
 							</div>
 
-							<div class="col-md-2">
-								<br />
-								<div class="form-group">
-									<input type="submit" class="form-control btn btn-success btn-flat" name="excel_report" value="Create Report" />
+							<?php if(in_array($this->session->userdata('user_type'), array('administrator'))): ?>
+								<div class="col-md-2">
+									<br />
+									<div class="form-group">
+										<input type="submit" class="form-control btn btn-success btn-flat" name="excel_report" value="Create Report" />
+									</div>
 								</div>
-							</div>
+							<?php endif ?>
 						</div>
 						
 					</form>
