@@ -4,6 +4,10 @@
 	.category-menu {
 		min-height: 560px;
 	}
+	.img-responsive.thumbnail {
+		border: 1px solid #839192;
+		box-shadow: 5px 5px #839192;
+	}
 </style>
 <!-- Items block -->
 <section class="content transaction">
@@ -11,8 +15,8 @@
 	<div id="app">
 		<div class="row">
 			<div class="col-md-1 page-thumbnail">
-				<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
-				<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
+				<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive thumbnail">
+				<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive thumbnail">
 			</div>
 
 			<div class="col-md-3">
@@ -306,8 +310,8 @@
 
 														<!-- TM thumbnail -->
 														<div class="col-md-3">
-															<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive">
-															<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive">
+															<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive thumbnail">
+															<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive thumbnail">
 														</div>
 														<!-- /thumbnail -->
 													</div>
