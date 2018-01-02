@@ -328,6 +328,8 @@ class User extends CI_Controller {
 
 		$config = array();
 
+		$config2 = array();
+
 		foreach ($userBalances as $userEntity)
 		{
 			foreach ($activeUsers as $activeEntity)
@@ -341,11 +343,21 @@ class User extends CI_Controller {
 							'last_meal_credit'      => $userEntity['last_meal_credit'],
 							'last_meal_credit_date' => $userEntity['last_credit_date']
 						);
+
+					$config2[] = array(
+							'user_id'      => $activeEntity['id'],
+							'payroll_date' => $userEntity['lastUpdate'],
+							'adj_code'     => 'Balance migrated from old system',
+							'reference'    => 'Manual',
+							'adj_amount'   => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							'last_update'  => date('Y-m-d H:i:s')
+						); 
 				}
 			}
 		}
 
 		$this->user->transferBalances($config);
+		$this->user->mealHistoryBatch($config2);
 	}
 
 	protected function _redirectUnauthorized()

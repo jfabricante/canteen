@@ -415,4 +415,10 @@ class User_model extends CI_Model {
 		$this->db->insert_batch('users_meal_allowance_tbl', $params);
 	}
 
+	public function mealHistoryBatch($params)
+	{
+		$this->db->truncate('users_meal_history_tbl');
+		$this->db->insert_batch('users_meal_history_tbl', $params);
+	}
+
 }
