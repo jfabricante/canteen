@@ -888,6 +888,9 @@
 				var $checkout_pane = $('#checkout-pane')
 				var $nav_tabs = $('.nav-tabs')
 
+				// Set the focus
+				this.manageState(this.employee)
+
 				// Remove the active states on its siblings
 				$checkout_pane.siblings().removeClass('active')
 				$checkout_pane.addClass('active')
