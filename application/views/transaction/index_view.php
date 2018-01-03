@@ -23,15 +23,15 @@
 				<h4>Name: {{ employee.fullname }}</h4>
 			</div>
 
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<h4>Meal Allowance: {{ employee.allowance >= 0 ? employee.allowance : 0}}</h4>
 			</div>
 
-			<div class="col-md-2" v-if="remaining_credit >= 0">
+			<div class="col-md-3" v-if="remaining_credit >= 0">
 				<h4>Remaining Allowance: {{ Math.abs(remaining_credit) }}</h4>
 			</div>
 
-			<div class="col-md-2" v-else>
+			<div class="col-md-3" v-else>
 				<h4>Credit: {{ Math.abs(remaining_credit) }}</h4>
 			</div>
 		</div>
