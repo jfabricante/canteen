@@ -1121,4 +1121,8 @@
 	// JQuery script
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
 
+	$(document).ready(function() {
+		$('body').addClass('sidebar-collapse');
+	});
+
 </script>
