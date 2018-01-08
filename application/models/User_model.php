@@ -220,7 +220,7 @@ class User_model extends CI_Model {
 		$query = $this->ipc_central->select($fields)
 				->from('employee_masterfile_tab AS a')
 				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
-				->join('canteenv2.users_meal_allowance_tbl AS c', 'a.id = c.user_id', 'LEFT')
+				->join('canteenv2.users_meal_allowance_tbl AS c', 'a.id = c.user_id', 'INNER')
 				->where($clause)
 				->get();
 
