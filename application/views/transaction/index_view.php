@@ -836,25 +836,26 @@
 				this.performTransaction()
 			},
 			btnClick: function(value, event) {
-				// console.log()
-				if (event.detail == 1)
+				if (event.detail == 0)
 				{
-					// Check if quantity is editable
-					if (this.newItems.state === true) {
-						var concat = _.toString(this.newItems.quantity) + _.toString(value)
+					return
+				}
 
-						this.$set(this.newItems, 'quantity', concat)
-					}
-					else if (this.employee.state === true) {
-						var concat = _.toString(this.employee.no) + _.toString(value)
+				// Check if quantity is editable
+				if (this.newItems.state === true) {
+					var concat = _.toString(this.newItems.quantity) + _.toString(value)
 
-						this.$set(this.employee, 'no', concat)
-					}
-					else if (this.cash.state === true) {
-						var concat = _.toString(this.cash.amount) + _.toString(value)
+					this.$set(this.newItems, 'quantity', concat)
+				}
+				else if (this.employee.state === true) {
+					var concat = _.toString(this.employee.no) + _.toString(value)
 
-						this.$set(this.cash, 'amount', concat)
-					}
+					this.$set(this.employee, 'no', concat)
+				}
+				else if (this.cash.state === true) {
+					var concat = _.toString(this.cash.amount) + _.toString(value)
+
+					this.$set(this.cash, 'amount', concat)
 				}	
 			},
 			removeChar: function() {
