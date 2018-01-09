@@ -105,37 +105,37 @@
 								<div class="calculator text-center">
 									<ul class="list-group">
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(7)">7</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(7, $event)" >7</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(8)">8</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(8, $event)" @keyup.enter.stop>8</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(9)">9</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(9, $event)">9</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(4)">4</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(4, $event)">4</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(5)">5</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(5, $event)">5</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(6)">6</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(6, $event)">6</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(1)">1</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(1, $event)">1</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(2)">2</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(2, $event)">2</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(3)">3</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(3, $event)">3</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(0)">0</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(0, $event)">0</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick('.')">.</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick('.', $event)">.</button>
 										</li>
 										<li class="col-md-4 list-group-item">
 											<button class="btn btn-flat btn-block" v-on:click="removeChar"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -288,7 +288,7 @@
 															<div class="form-group">
 																<label class="col-sm-5 control-label" for="employee_no">Employee No.</label>
 																<div class="col-sm-7">
-																	<input type="password" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)">
+																	<input type="password" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)" ref="employee_no">
 																	<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
 																	<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
 																</div>
@@ -651,9 +651,6 @@
 					barcode: item.barcode
 				}
 
-				console.log(this.last_transaction_id)
-				console.log(this.newItems.quantity)
-
 				var index = this.cartIndex(this.newItems)
 
 				this.predicted_total = Number(this.totalPurchase) + Number(this.newItems.total) - Number(this.employee.allowance) - Number(this.cash.amount)
@@ -838,23 +835,27 @@
 
 				this.performTransaction()
 			},
-			btnClick: function(value) {
-				// Check if quantity is editable
-				if (this.newItems.state === true) {
-					var concat = _.toString(this.newItems.quantity) + _.toString(value)
+			btnClick: function(value, event) {
+				// console.log()
+				if (event.detail == 1)
+				{
+					// Check if quantity is editable
+					if (this.newItems.state === true) {
+						var concat = _.toString(this.newItems.quantity) + _.toString(value)
 
-					this.$set(this.newItems, 'quantity', concat)
-				}
-				else if (this.employee.state === true) {
-					var concat = _.toString(this.employee.no) + _.toString(value)
+						this.$set(this.newItems, 'quantity', concat)
+					}
+					else if (this.employee.state === true) {
+						var concat = _.toString(this.employee.no) + _.toString(value)
 
-					this.$set(this.employee, 'no', concat)
-				}
-				else if (this.cash.state === true) {
-					var concat = _.toString(this.cash.amount) + _.toString(value)
+						this.$set(this.employee, 'no', concat)
+					}
+					else if (this.cash.state === true) {
+						var concat = _.toString(this.cash.amount) + _.toString(value)
 
-					this.$set(this.cash, 'amount', concat)
-				}
+						this.$set(this.cash, 'amount', concat)
+					}
+				}	
 			},
 			removeChar: function() {
 				// Check if quantity is editable
