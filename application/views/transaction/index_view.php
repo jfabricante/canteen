@@ -108,7 +108,7 @@
 											<button class="btn btn-flat btn-block" v-on:click="btnClick(7, $event)" >7</button>
 										</li>
 										<li class="col-md-4 list-group-item">
-											<button class="btn btn-flat btn-block" v-on:click="btnClick(8, $event)" @keyup.enter.stop>8</button>
+											<button class="btn btn-flat btn-block" v-on:click="btnClick(8, $event)">8</button>
 										</li>
 										<li class="col-md-4 list-group-item">
 											<button class="btn btn-flat btn-block" v-on:click="btnClick(9, $event)">9</button>
