@@ -16,6 +16,8 @@ class Transaction extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->load->library('session');
+
 		$this->_redirectUnauthorized();
 
 		// Set the default timezone

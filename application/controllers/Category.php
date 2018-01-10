@@ -7,6 +7,8 @@ class Category extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->load->library('session');
+		
 		$this->_redirectUnauthorized();
 
 		date_default_timezone_set('Asia/Manila');

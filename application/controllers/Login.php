@@ -9,6 +9,8 @@ class Login extends CI_Controller {
 
 		$helpers = array('form');
 
+		$this->load->library('session');
+
 		$this->load->helper($helpers);
 
 		$this->load->model('user_model', 'user');

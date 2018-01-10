@@ -7,6 +7,8 @@ class Ipc extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->load->library('session');
+
 		$this->_redirectUnauthorized();
 
 		// Load model

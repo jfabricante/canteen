@@ -11,6 +11,8 @@ class User extends CI_Controller {
 
 		parent::__construct();
 
+		$this->load->library('session');
+
 		$this->_redirectUnauthorized();
 
 		$this->load->model('user_model', 'user');
