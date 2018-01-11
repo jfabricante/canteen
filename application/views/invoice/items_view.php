@@ -40,13 +40,21 @@
 							</div>
 							<!-- ./col-md-4 -->
 
-							<!-- col-md-4 -->
+							<!-- col-md-2 -->
 							<div class="col-md-2">
 								<div class="form-group">
-									<button class="btn btn-flat btn-danger search-invoice" type="submit">Search</button>
+									<button class="btn btn-flat btn-danger search-invoice btn-block" name="search" type="submit">Search</button>
 								</div>
 							</div>
-							<!-- ./col-md-4 -->
+							<!-- ./col-md-2 -->
+
+							<!-- col-md-2 -->
+							<div class="col-md-2">
+								<div class="form-group">
+									<button class="btn btn-flat btn-info search-invoice btn-block" name="invoice_report" type="submit">Create Report</button>
+								</div>
+							</div>
+							<!-- ./col-md-2 -->
 
 						</div>
 						<!-- ./row -->
