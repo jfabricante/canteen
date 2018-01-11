@@ -283,7 +283,7 @@ class Transaction extends CI_Controller {
 
 	        if ($invoice_id > 0)
 	        {
-	        	$text = "Invoice No. " . sprintf('%06d',ucwords(strtolower($invoice_id)));
+	        	$text = "Invoice No. " . sprintf('%06d',$invoice_id);
 	        	$dompdf->getCanvas()->page_text(400, 40, $text, $font, 10, $color, $word_space, $char_space, $angle);
 
 	        	$text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
@@ -488,7 +488,7 @@ class Transaction extends CI_Controller {
 
 	public function invoice_item()
 	{
-		$entities = $this->_handleInvoiceItems($this->input->post('invoice_no'));
+		$entities = $this->_handleInvoiceItems($this->input->post());
 
 		$data = array(
 				'title'    => 'List of Invoice Items',
@@ -503,10 +503,105 @@ class Transaction extends CI_Controller {
 
 	protected function _handleInvoiceItems($params)
 	{
-		if (count($params))
+		if (isset($params['invoice_report']))
 		{
-			return $this->transaction->fetchInvoiceItems($params);
-		}	
+			$this->_handleInvoiceReport($params);
+		}
+		else if (isset($params['search']))
+		{
+			return $this->transaction->fetchInvoiceItems($params['invoice_no']);
+		}
+	}
+
+	protected function _handleInvoiceReport($params)
+	{
+		$entities = $this->transaction->getInvoiceitems($params);
+
+		$split = explode('to', $entities[0]['date_covered']);
+
+		// Change date format
+		$from = date('Y-m-d', strtotime($split[0]));
+		$to   = date('Y-m-d', strtotime($split[1]));
+
+		$config = array(
+				'from' => $from,
+				'to'   => $to
+			);
+
+		// Verify if there is something to generate
+		if (count($entities))
+		{
+			// instantiate and use the dompdf class
+			$dompdf = new Dompdf();
+			$dompdf->set_paper('A4');
+
+			// Header options
+			$font       = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+			$size       = 8;
+			$color      = array(0, 0, 0);
+			$word_space = 0.0;  //  default
+			$char_space = 0.0;  //  default
+			$angle      = 0.0;  //  default
+
+			// Calculate the total bill from date filtered data
+			$total_bill = is_array($entities) ? array_sum(array_column($entities, 'credit_used')) : 0;
+
+			$data = array(
+					'title'      => 'Billing Reports from ' . $entities[0]['date_covered'],
+					'entities'   => $entities,
+					'total_bill' => $total_bill
+				);
+
+			// Enable html5 parsing
+			$dompdf->set_option('isHtml5ParserEnabled', true);
+
+			// Load the html to pdf
+			$dompdf->loadHtml($this->load->view('transaction/billing_reports_view', $data, true));
+
+
+			// Render the HTML as PDF
+			$dompdf->render();
+
+			// Add headers and pagination
+			$text = 'From ' . $entities[0]['date_covered'];
+	        $dompdf->getCanvas()->page_text(40, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+	        $text = date('m/d/Y h:i A');
+	        $dompdf->getCanvas()->page_text(400, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+	        if (isset($entities[0]['invoice_id']))
+	        {
+	        	$text = "Invoice No. " . sprintf('%06d', $entities[0]['invoice_id']);
+	        	$dompdf->getCanvas()->page_text(400, 40, $text, $font, 10, $color, $word_space, $char_space, $angle);
+
+	        	$text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+	        	$dompdf->getCanvas()->page_text(400, 55, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        }
+	        else
+	        {
+	        	$text = "Printed by: " . ucwords(strtolower($this->session->userdata('fullname')));
+	        	$dompdf->getCanvas()->page_text(400, 45, $text, $font, $size, $color, $word_space, $char_space, $angle);
+	        }
+	        
+
+	        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+	        $dompdf->getCanvas()->page_text(520, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+	        $text = "Billing Report";
+	        $size = 14;
+	        $headerFont = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+
+	        $dompdf->getCanvas()->page_text(40, 30, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+			// Output the generated PDF to Browser
+			$dompdf->stream();
+		}
+		else
+		{
+			// $this->session->set_flashdata('message', '<div class="alert alert-warning">There is no result on that date range!</div>');
+
+			redirect($this->agent->referrer());
+		}
 	}
 
 	protected function _redirectUnauthorized()
