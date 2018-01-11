@@ -608,7 +608,7 @@
 				return false				
 			},
 			fetchCategories: function() {
-				axios.get(appUrl + '/category/ajax_category_list')
+				axios.get(appUrl + '/category/ajax_featured_categories')
 				.then((response) => {
 					this.categories = response.data
 				})
@@ -782,7 +782,6 @@
 				this.totalPurchase = Number(this.totalPurchase).toFixed(2)
 			},
 			performTransaction: function() {
-				console.log(this.remaining_amount)
 				if ((this.hasUser() && this.remaining_credit >= -200 && this.cart.length > 0 && this.remaining_amount < 0) || (this.remaining_amount <= 0 && this.cart.length > 0))
 				{
 					axios({
