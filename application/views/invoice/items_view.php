@@ -83,7 +83,7 @@
 									<tr>
 										<td><?php echo $count ?></td>
 										<td><?php echo $entity['trans_id'] ?></td>
-										<td><?php echo $entity['credit_used'] ?></td>
+										<td><?php echo number_format($entity['credit_used'], 2) ?></td>
 										<td><?php echo $entity['cash'] ?></td>
 										<td><?php echo ucwords(strtolower($entity['fullname'])) ?></td>
 										<td><?php echo date('m/d/Y h:i A', strtotime($entity['trans_date'])) ?></td>
