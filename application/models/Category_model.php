@@ -19,6 +19,18 @@ class Category_model extends CI_Model {
 		return $this->db->get('category_tbl')->result_array();
 	}
 
+	public function featured_categories()
+	{
+		$query = $this->db->distinct('a.id')
+				->select('a.*')
+				->from('category_tbl AS a')
+				->join('item_category_tbl AS b', 'a.id = b.category_id', 'INNER')
+				->join('featured_items_tbl AS c', 'b.item_id = c.item_id', 'INNER')
+				->get();
+
+		return $query->result_array();
+	}
+
 	public function fetch_category_items()
 	{
 		$categories = $this->browse();
