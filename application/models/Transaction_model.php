@@ -77,6 +77,34 @@ class Transaction_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function getInvoiceItems($params)
+	{
+		$fields = array(
+				'a.id',
+				"CONCAT(b.first_name,' ', b.last_name) AS employee",
+				'a.credit_used',
+				'a.cash',
+				'a.datetime',
+				"CONCAT(c.first_name,' ', c.last_name) AS cashier",
+				'a.invoice_id',
+				'd.status',
+				'd.date_covered'
+			);
+
+		$query = $this->db->select($fields)
+				->from('transaction_tbl AS a')
+				->join('ipc_central.personal_information_tab AS b', 'a.user_id = b.employee_id', 'INNER')
+				->join('ipc_central.personal_information_tab AS c', 'a.cashier_id = c.employee_id', 'INNER')
+				->join('invoice_tbl AS d', 'a.invoice_id = d.id', 'LEFT')
+				->where('d.id', $params['invoice_no'])
+				->where('a.credit_used > 0')
+				->get();
+
+
+		return $query->result_array();
+	}
+
+
 	public function subjectForInvoice($params)
 	{
 		$fields = array(
@@ -105,14 +133,15 @@ class Transaction_model extends CI_Model {
 	{
 		$config = array(
 				'user_id'      => $this->session->userdata('id'),
-				'date_created' => date('Y-m-d H:i:s')
+				'date_created' => date('Y-m-d H:i:s'),
+				'date_covered' => date('M d, Y', strtotime($this->input->post('from'))) . ' to ' . date('M d, Y', strtotime($this->input->post('to')))
 			);
 
 		$this->db->insert('invoice_tbl', $config);
 
 		return $this->db->insert_id();
 	}
-
+ 
 	public function invoiceList()
 	{
 		$fields = array(
