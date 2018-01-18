@@ -248,4 +248,14 @@ class Item_model extends CI_Model {
 	{
 		$this->db->replace('item_category_tbl', $params);
 	}
+
+	public function fetchItemsBarcode()
+	{
+		$query = $this->db->select('barcode')
+				->from('items_tbl')
+				->where('barcode IS NOT NULL')
+				->get();
+
+		return $query->result_array();
+	}
 }
