@@ -238,6 +238,42 @@ class Item extends CI_Controller {
 		echo '<pre>';
 	}
 
+	public function items_barcode()
+	{
+		$config = array_column($this->item->fetchItemsBarcode(), 'barcode');
+		$barcode = array_filter($config, 'is_numeric');
+
+		$items = array('Pastillas', 'Polvoron', 'Polvoron Goldilocks', 'Candy', 'Chocnut', 'Flatops', 'Cookies', 'Sugar', 'Yakult', 'Yema', 'Mani S', 'Mani B', 'Napkin', 'Plastic Cup', 'Styrocup', 'Chuckie', 'Milk', 'Choco', 'Coffee', 'Donuts', 'Dutch mill');
+
+		// $items = array_column($this->item->browse(array('type' => 'array')), 'name');
+
+		$unique = array();
+
+		$config = array();
+
+		while (count($unique) < count($items))
+		{
+			$generated = sprintf("%d", abs(rand(100000000, 999999999)));
+
+			while (in_array($generated, $barcode) && in_array($generated, $unique))
+			{
+				$generated = sprintf("%d", abs(rand(100000000, 999999999)));
+			}
+
+			array_push($unique, $generated);
+		}
+
+		for($i = 0; $i < count($items); $i++)
+		{
+			$config[] = array(
+				'item'    => $items[$i],
+				'barcode' => $unique[$i]
+			);
+		}
+
+		$this->_createPdf($config);
+	}
+
 	protected function _redirectUnauthorized()
 	{
 		if (count($this->session->userdata()) < 3)
