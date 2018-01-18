@@ -127,13 +127,18 @@ class Item_model extends CI_Model {
 
 				redirect($this->agent->referrer());
 			}
+			else if ($this->_productNameExist($config))
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-warning">Item name already exist.</div>');
+
+				redirect($this->agent->referrer());
+			}
 			else
 			{
 				$this->db->insert('items_tbl', $config);
 
 				$id = $this->db->insert_id();
 			}
-			
 		}
 		
 		$config = array(
@@ -146,6 +151,13 @@ class Item_model extends CI_Model {
 		$this->_store_item_price_modified($config);
 
 		return $id;
+	}
+
+	protected function _productNameExist($params)
+	{
+		$query = $this->db->get_where('items_tbl', array('name' => $params['name']));
+
+		return $query->num_rows();
 	}
 
 	public function store_item_category($params)
