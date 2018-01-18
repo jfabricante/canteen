@@ -274,6 +274,126 @@ class Item extends CI_Controller {
 		$this->_createPdf($config);
 	}
 
+	protected function _createPdf($params)
+	{
+		ob_start();
+		// Create TCPDF instance
+		$pdf = new TCPDF;
+
+		// set header and footer fonts
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+		// set default monospaced font
+		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+		// set margins
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+		// set auto page breaks
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+		// set image scale factor
+		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+		// set some language-dependent strings (optional)
+		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+		    require_once(dirname(__FILE__).'/lang/eng.php');
+		    $pdf->setLanguageArray($l);
+		}
+
+		// set font
+		$pdf->SetFont('helvetica', '', 25);
+
+		// add a page
+		$pdf->AddPage();
+
+		// -----------------------------------------------------------------------------
+
+		$style = array(
+		    'position'     => '',
+		    'align'        => 'L',
+		    'stretch'      => false,
+		    'fitwidth'     => true,
+		    'cellfitalign' => '',
+		    'border'       => false,
+		    'hpadding'     => 'auto',
+		    'vpadding'     => 'auto',
+		    'fgcolor'      => array(0,0,0),
+		    'bgcolor'      => false,
+		    'text'         => true,
+		    'font'         => 'helveticaB',  //array(255,255,255),
+		    'stretchtext'  => 4
+		);
+
+		$style['fontsize'] = 12;
+
+		// set color for background
+		$pdf->SetFillColor(255, 255, 255);
+
+		// set color for text
+		$pdf->SetTextColor(0, 0, 0);
+
+		$content = '';
+
+		$px = 15;
+		$py = 20;
+
+		$bx = 15;
+		$by = 30;
+
+		$count = 1;
+
+		$x = $pdf->getX();
+		$y = $pdf->getY();
+
+		$style7 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 128, 0));
+
+		$pdf->Text(15, 4, 'Category');
+
+		foreach ($params as $entity)
+		{
+			if ($count > 0 && $count % 2 == 0)
+			{
+				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
+
+				$pdf->writeHTMLCell(0, 0, $px + 100, $py, '<span>' . $entity['item'] . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx + 100, $by, '', 20, 0.4, $style, 'M');
+
+				$py = $py + 40;
+				$by = $by + 40;
+			}
+			else
+			{
+				$pdf->Rect($px, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
+				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . $entity['item'] . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx, $by, '', 20, 0.4, $style, 'M');
+			}
+
+
+			if ($count % 12 == 0)
+			{
+				$pdf->AddPage();
+				$pdf->Text(15, 4, 'Category');
+
+				$px = 15;
+				$py = 20;
+
+				$bx = 15;
+				$by = 30;
+			}
+
+			$count++;
+
+		}
+
+		ob_end_clean();
+		
+		echo $pdf->Output('barcode.pdf', 'I');
+	}
+
 	protected function _redirectUnauthorized()
 	{
 		if (count($this->session->userdata()) < 3)
