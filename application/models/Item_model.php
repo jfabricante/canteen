@@ -270,4 +270,29 @@ class Item_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function fetchItemsNoBarcode()
+	{
+		$fields = array(
+				'a.id',
+				'a.name',
+				'a.price',
+				'a.thumbnail',
+				'a.datetime',
+				'c.name AS category_name',
+			);
+
+		$query = $this->db->select($fields)
+				->from('items_tbl AS a')
+				->join('item_category_tbl AS b', 'a.id = b.item_id', 'INNER')
+				->join('category_tbl AS c', 'b.category_id = c.id', 'INNER')
+				->where("a.barcode = ''")
+				->or_where("a.barcode = 'null'")
+				->or_where("a.barcode = 'NULL'")
+				->or_where("a.barcode IS NULL")
+				->order_by('c.id')
+				->get();
+
+		return $query->result_array();
+	}
 }
