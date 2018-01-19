@@ -398,6 +398,36 @@ class Item extends CI_Controller {
 		echo $pdf->Output('barcode.pdf', 'I');
 	}
 
+	public function diff_form()
+	{
+		$data = array(
+				'title'   => 'Upload file',
+				'content' => 'item/diff_view',
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
+	public function ajax_excel_file()
+	{
+		$excelContent = $this->input->post()['data'];
+
+		$excelItems = array_column($excelContent, 'ITEM');
+
+		$excelItems = array_map('strtoupper', $excelItems);
+
+		$sourceItem = $this->item->browse(array('type' => 'array'));
+
+		$sourceItem = array_column($sourceItem, 'name');
+
+		$sourceItem = array_map('strtoupper', $sourceItem);
+
+
+		echo '<pre>';
+		print_r(array_diff($excelItems, $sourceItem));
+		echo '</pre>';
+	}
+
 	protected function _redirectUnauthorized()
 	{
 		if (count($this->session->userdata()) < 3)
