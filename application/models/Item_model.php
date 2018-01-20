@@ -295,4 +295,25 @@ class Item_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function updateItemBarcode($params)
+	{
+		$this->db->update('items_tbl', $params, array('id' => $params['id']));
+	}
+
+	public function fetchCreatedBarcode()
+	{
+		$fields = array('a.*', 'c.name AS category');
+
+		$query = $this->db->select($fields)
+				->from('items_tbl AS a')
+				->join('item_category_tbl AS b', 'a.id = b.item_id', 'INNER')
+				->join('category_tbl AS c', 'b.category_id = c.id', 'INNER')
+				->like('barcode', 'IPC')
+				->order_by('c.name')
+				->order_by('a.name')
+				->get();
+
+		return $query->result_array();
+	}
 }
