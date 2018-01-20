@@ -250,32 +250,37 @@ class Item extends CI_Controller {
 
 		while (count($unique) < count($items))
 		{
-			$generated = sprintf("%d", abs(rand(100000000, 999999999)));
+			$generated = 'IPC' . sprintf("%d", abs(rand(100000000, 999999999)));
 
 			while (in_array($generated, $barcode) || in_array($generated, $unique))
 			{
-				$generated = sprintf("%d", abs(rand(100000000, 999999999)));
+				$generated = 'IPC' . sprintf("%d", abs(rand(100000000, 999999999)));
 			}
 
-			array_push($unique, 'IPC' . $generated);
+			array_push($unique, $generated);
 		}
 
 		for($i = 0; $i < count($items); $i++)
 		{
-			/*$config[] = array(
+			$temp = array(
 				'id'      => $items[$i]['id'],
-				'item'    => $items[$i]['name'],
+				'name'    => $items[$i]['name'],
 				'barcode' => $unique[$i]
-			);*/
-			$items[$i]['barcode'] = $unique[$i];
+			);
+
+			$this->item->updateItemBarcode($temp);
 		}
+	}
 
-		echo '<pre>';
-		print_r($items);
-		echo '</pre>'; die;
+	public function display_barcode_layout()
+	{
+		$entities = $this->item->fetchCreatedBarcode();
 
-		// $this->_createPdf($config);
-		$this->_createPdf($items);	
+		/*echo '<pre>';
+		print_r($entities);
+		echo '</pre>';*/
+
+		$this->_createPdf($entities);		
 	}
 
 	protected function _createPdf($params)
@@ -355,7 +360,9 @@ class Item extends CI_Controller {
 
 		$style7 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 128, 0));
 
-		$pdf->Text(15, 4, 'Category');
+		$pdf->Text(15, 4, $params[0]['category']);
+
+		$currentCat = $params[0]['category'];
 
 		foreach ($params as $entity)
 		{
@@ -363,7 +370,7 @@ class Item extends CI_Controller {
 			{
 				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
 
-				$pdf->writeHTMLCell(0, 0, $px + 100, $py, '<span>' . substr($entity['name'], 0, 12) . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->writeHTMLCell(0, 0, $px + 100, $py, '<span>' . ucwords(strtolower(substr($entity['name'], 0, 15))) . '</span>', 0, 0, false, true, 'B',false);
 				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx + 100, $by, '', 20, 0.4, $style, 'M');
 
 				$py = $py + 40;
@@ -372,15 +379,18 @@ class Item extends CI_Controller {
 			else
 			{
 				$pdf->Rect($px, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
-				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . substr($entity['name'], 0, 12) . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . ucwords(strtolower(substr($entity['name'], 0, 15))) . '</span>', 0, 0, false, true, 'B',false);
 				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx, $by, 80, 20, 0.4, $style, 'M');
 			}
 
 
-			if ($count % 12 == 0)
+			if ($count % 12 == 0 || $currentCat != $entity['category'])
 			{
 				$pdf->AddPage();
-				$pdf->Text(15, 4, 'Category');
+				$pdf->Text(15, 4, $entity['category']);
+
+				$count = 0;
+				$currentCat = $entity['category'];
 
 				$px = 15;
 				$py = 20;
@@ -424,7 +434,7 @@ class Item extends CI_Controller {
 
 
 		echo '<pre>';
-		print_r(array_diff($excelItems, $sourceItem));
+		print_r(count(array_diff($excelItems, $sourceItem)));
 		echo '</pre>';
 	}
 
