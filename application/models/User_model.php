@@ -8,7 +8,7 @@ class User_model extends CI_Model {
 
 		$this->load->database();
 
-		$this->intellexion = $this->load->database('intellexion', true);
+		// $this->intellexion = $this->load->database('intellexion', true);
 
 		$this->ipc_central = $this->load->database('ipc_central', true);
 	}
@@ -272,6 +272,13 @@ class User_model extends CI_Model {
 				);
 
 			$this->db->update('users_meal_allowance_tbl', $config, array('user_id' => $params['employee']['id']));
+
+
+			// Get the employee no of the current customer
+			$emp_no = $this->db->select('emp_no')->from('users_tbl')->where('id', $params['employee']['id'])->get()->row_array()['emp_no'];
+
+			// Update the value of the other table
+			$this->db->update('canteen.employees', $config, array('emp_id' => $emp_no));
 		}
 	}
 
@@ -402,13 +409,14 @@ class User_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	/*
 	public function fetchBalances()
 	{
 		$query = $this->intellexion->get_where('employees', array('last_meal_credit >' => 0));
 
 		return $query->result_array();
 	}
-
+	*/
 	public function transferBalances($params)
 	{
 		$this->db->truncate('users_meal_allowance_tbl');
