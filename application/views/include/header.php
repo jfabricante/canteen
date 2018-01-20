@@ -41,7 +41,7 @@
 				
 						<!-- Menu Footer-->
 						<li class="user-footer">
-							<div class="pull-left">
+							<div class="pull-left hidden">
 								<a href="#" data-toggle="control-sidebar" class="btn btn-default btn-flat">Profile</a>
 							</div>
 							<div class="pull-right">
