@@ -338,7 +338,9 @@ class User extends CI_Controller {
 				{
 					$config[] = array(
 							'user_id'               => $activeEntity['id'],
-							'meal_allowance'        => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							// 'meal_allowance'        => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							'meal_allowance'        => $userEntity['meal_allowance'],
+							// 'meal_allowance' => 0,
 							'datetime'              => $userEntity['lastUpdate'],
 							'last_meal_credit'      => $userEntity['last_meal_credit'],
 							'last_meal_credit_date' => $userEntity['last_credit_date']
@@ -349,7 +351,9 @@ class User extends CI_Controller {
 							'payroll_date' => $userEntity['lastUpdate'],
 							'adj_code'     => 'Balance migrated from old system',
 							'reference'    => 'Manual',
-							'adj_amount'   => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							// 'adj_amount'   => $userEntity['meal_allowance'] - $userEntity['excess_credit'],
+							'adj_amount'   => $userEntity['meal_allowance'],
+							// 'adj_amount' => 0,
 							'last_update'  => date('Y-m-d H:i:s')
 						); 
 				}
