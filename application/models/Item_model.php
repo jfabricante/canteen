@@ -86,7 +86,7 @@ class Item_model extends CI_Model {
 		$config = array_map('trim', $this->input->post());
 
 		$id          = $config['id'];
-		$name        = ucfirst(strtolower($config['name']));
+		$name        = ucwords(strtolower($config['name']));
 		$price       = $config['price'];
 		$barcode     = $config['barcode'];
 		$category_id = $config['category_id'];
