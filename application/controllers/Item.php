@@ -362,7 +362,23 @@ class Item extends CI_Controller {
 
 		foreach ($params as $entity)
 		{
-			if (($count % 12 == 0) || ($currentCat != $entity['category']))
+			if ($count % 13 == 0 || $currentCat != $entity['category'])
+			{
+				$pdf->AddPage();
+				$pdf->Text(15, 4, $entity['category']);
+
+				$currentCat = $entity['category'];
+
+				$count = 1;
+
+				$px = 15;
+				$py = 20;
+
+				$bx = 15;
+				$by = 30;
+			}
+
+			if ($count > 0 && $count % 2 == 0)
 			{
 				$pdf->AddPage();
 
