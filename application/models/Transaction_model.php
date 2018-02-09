@@ -197,4 +197,40 @@ class Transaction_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function fetchTransactionItems($params)
+	{
+		$fields = array(
+				't.id',
+				't.credit_used',
+				't.cash',
+				't.change',
+				't.total_purchase',
+				't.user_id',
+				't.cashier_id',
+				'it.name',
+				'ti.price',
+				'ti.quantity',
+				'ti.total'
+			);
+
+		$query = $this->db->select($fields)
+				->from('transaction_tbl AS t')
+				->join('transaction_item_tbl AS ti', 't.id = ti.trans_id', 'INNER')
+				->join('items_tbl AS it', 'ti.item_id = it.id', 'INNER')
+				->where('t.id', $params['trans_id'])
+				->get();
+
+		return $query->result_array();
+	}
+
+	public function readTransaction($params)
+	{
+		$query = $this->db->get_where('transaction_tbl', array('id' => $params['trans_id']));
+
+		$this->db->update('transaction_tbl', array('revoke' => 1), array('id' => $params['trans_id']));
+
+		return $query->row_array();
+	}
+
 }

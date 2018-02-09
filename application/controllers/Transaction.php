@@ -499,7 +499,38 @@ class Transaction extends CI_Controller {
 			);
 
 		$this->load->view('include/template', $data);
-	}	
+	}
+
+	public function revoke()
+	{
+		$config = array_map('trim', $this->input->post());
+
+		$data = array(
+			'title'   => 'Revoke Transaction',
+			'content' => 'transaction/revoke_view',
+			'params'  => count($config) ? $config : '',
+			'items'   => count($config) ? $this->_transactionItems($config) : ''
+		);
+
+		$this->load->view('include/template', $data);
+	}
+
+	protected function _transactionItems($params)
+	{
+		$data = $this->transaction->fetchTransactionItems($params);
+
+		return  count($data) ? $data : '';
+	}
+
+	public function handle_revoke()
+	{
+		$data = $this->transaction->readTransaction($this->input->post());
+
+		/*echo '<pre>';
+		print_r($data);
+		print_r($this->user->returnDeductedAllowance($data));
+		echo '</pre>';die;*/
+	}
 
 	protected function _handleInvoiceItems($params)
 	{
