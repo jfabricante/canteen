@@ -282,6 +282,17 @@ class User_model extends CI_Model {
 		}
 	}
 
+	public function returnDeductedAllowance($params)
+	{
+		$user = $this->db->get_where('users_meal_allowance_tbl', array('user_id' => $params['user_id']))->row_array();
+		
+		$total_allowance = $params['credit_used'] + $user['meal_allowance'];
+
+		$config = array('meal_allowance' => $total_allowance);
+
+		$this->db->update('users_meal_allowance_tbl', $config, array('user_id' => $user['user_id']));
+	}
+
 	public function fetch_balances($type = 'object')
 	{
 		$fields = array(
