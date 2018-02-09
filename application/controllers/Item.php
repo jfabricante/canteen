@@ -276,10 +276,6 @@ class Item extends CI_Controller {
 	{
 		$entities = $this->item->fetchCreatedBarcode();
 
-		/*echo '<pre>';
-		print_r($entities);
-		echo '</pre>';*/
-
 		$this->_createPdf($entities);		
 	}
 
