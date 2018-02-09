@@ -362,7 +362,23 @@ class Item extends CI_Controller {
 
 		foreach ($params as $entity)
 		{
-			if ($count > 0 && $count % 2 == 0)
+			if (($count % 12 == 0) || ($currentCat != $entity['category']))
+			{
+				$pdf->AddPage();
+
+				$currentCat = $entity['category'];
+				$pdf->Text(15, 4, $entity['category']);
+
+				$count = 1;
+
+				$px = 15;
+				$py = 20;
+
+				$bx = 15;
+				$by = 30;
+			}
+
+			if ($count % 2 == 0)
 			{
 				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
 
@@ -377,22 +393,6 @@ class Item extends CI_Controller {
 				$pdf->Rect($px, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
 				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . ucwords(strtolower(substr($entity['name'], 0, 15))) . '</span>', 0, 0, false, true, 'B',false);
 				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx, $by, 80, 20, 0.4, $style, 'M');
-			}
-
-
-			if ($count % 12 == 0 || $currentCat != $entity['category'])
-			{
-				$pdf->AddPage();
-				$pdf->Text(15, 4, $entity['category']);
-
-				$count = 0;
-				$currentCat = $entity['category'];
-
-				$px = 15;
-				$py = 20;
-
-				$bx = 15;
-				$by = 30;
 			}
 
 			$count++;
