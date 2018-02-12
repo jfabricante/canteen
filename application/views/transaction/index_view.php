@@ -241,11 +241,11 @@
 						<!-- Danger box -->
 						<div class="box box-danger category-menu">
 							
-							<div class="box-header">
+							<!-- <div class="box-header">
 								<div class="box-header with-border">
 									<h3 class="box-title">Menu</h3>
 								</div>
-							</div>
+							</div> -->
 
 							<!-- Box body -->
 							<div class="box-body">
