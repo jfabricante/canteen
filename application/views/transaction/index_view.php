@@ -322,7 +322,7 @@
 													<legend>Transaction Details</legend>
 													<!-- row -->
 													<div class="row">
-														<div class="col-sm-10">
+														<div class="col-sm-9">
 															<div>
 																<label class="col-sm-5 control-label" for="total_amount">Total Amount</label>
 																<div class="col-sm-7">
@@ -355,12 +355,10 @@
 																	<input type="text" name="remaining_credit" id="remaining_credit" class="form-control" readonly v-model="remaining_credit">
 																</div>
 															</div>
+														</div>
 
-															<div>
-																<div class="col-sm-12">
-																	<button class="btn btn-flat btn-danger pull-right">Transact</button>
-																</div>
-															</div>
+														<div class="col-sm-3">
+															<button class="btn btn-flat btn-danger btn-block">Transact</button>
 														</div>
 													</div>
 													<!-- /row -->
