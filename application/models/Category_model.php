@@ -21,12 +21,12 @@ class Category_model extends CI_Model {
 
 	public function featured_categories()
 	{
-		$query = $this->db->distinct('a.id')
-				->select('a.*')
+		$query = $this->db->select('a.*')
 				->from('category_tbl AS a')
 				->join('item_category_tbl AS b', 'a.id = b.category_id', 'INNER')
 				->join('featured_items_tbl AS c', 'b.item_id = c.item_id', 'INNER')
-				->order_by('a.id')
+				->join('items_tbl AS d', 'd.id = b.item_id', 'INNER')
+				->group_by('b.category_id')
 				->get();
 
 		return $query->result_array();
