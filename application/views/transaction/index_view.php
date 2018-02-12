@@ -284,11 +284,11 @@
 													<!-- Row -->
 													<div class="row">
 														<!-- TM details -->
-														<div class="col-md-9">
+														<div class="col-sm-9">
 															<div class="form-group">
 																<label class="col-sm-5 control-label" for="employee_no">Employee No.</label>
 																<div class="col-sm-7">
-																	<input type="password" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)" ref="employee_no">
+																	<input type="text" name="employee_no" id="employee_no" class="form-control" v-validate="'max:6'" v-model="employee.no" v-on:click="manageState(employee)" ref="employee_no">
 																	<i v-show="errors.has('employee_no')" class="fa fa-warning text-danger"></i>
 																	<span v-show="errors.has('employee_no')" class="text-danger">{{ errors.first('employee_no') }}</span>
 																</div>
