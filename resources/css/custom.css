@@ -192,7 +192,7 @@ div.dropdown-menu.open{
 
 .list-group-item {
 	cursor: pointer;
-	height: 180px;
+	height: 150px;
 }
 
 .list-group-item p {
@@ -266,6 +266,7 @@ div.dropdown-menu.open{
 .transaction .page-thumbnail .img-responsive {
 	margin-top: -25px;
 	margin-bottom: 5px;
+	width: 75%;
 }
 
 /**
