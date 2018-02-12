@@ -198,7 +198,7 @@
 									</thead>
 									<tbody>
 										<tr v-for="(item, index) in cart">
-											<td>{{ item.name }}</td>
+											<td>{{ _.toUpper(item.name) }}</td>
 											<td>{{ item.price }}</td>
 											<td>{{ item.quantity }}</td>
 											<td>{{ item.total }}</td>
@@ -266,7 +266,7 @@
 													<li  v-for="item in category_items" class="col-md-2 list-group-item" v-on:click="addItem(item)">
 														<img v-bind:src="imgUrl + item.thumbnail" v-if="item.thumbnail !== null" class="img-responsive">
 														<img v-bind:src="imgUrl + 'no-image.png'" v-else class="img-responsive">
-														<p class="text-center">{{ item.name }}</p>
+														<p class="text-center">{{ _.toUpper(item.name) }}</p>
 														<p class="text-center">&#8369; {{ Number(item.price).toFixed(2) }}</p>
 													</li>
 												</ul>
