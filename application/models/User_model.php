@@ -8,7 +8,7 @@ class User_model extends CI_Model {
 
 		$this->load->database();
 
-		// $this->intellexion = $this->load->database('intellexion', true);
+		$this->intellexion = $this->load->database('intellexion', true);
 
 		$this->ipc_central = $this->load->database('ipc_central', true);
 	}
@@ -420,14 +420,14 @@ class User_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	/*
+	
 	public function fetchBalances()
 	{
 		$query = $this->intellexion->get_where('employees', array('last_meal_credit >' => 0));
 
 		return $query->result_array();
 	}
-	*/
+	
 	public function transferBalances($params)
 	{
 		$this->db->truncate('users_meal_allowance_tbl');
