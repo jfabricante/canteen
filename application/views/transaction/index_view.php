@@ -309,7 +309,7 @@
 														<!-- /TM details -->
 
 														<!-- TM thumbnail -->
-														<div class="col-md-3">
+														<div class="col-sm-3">
 															<img v-if="employee.hasThumbnail" v-bind:src="tmUrl + employee.no + '.JPG'" class="img-responsive thumbnail">
 															<img v-else :src="imgUrl + 'no-image.png'" class="img-responsive thumbnail">
 														</div>
@@ -322,7 +322,7 @@
 													<legend>Transaction Details</legend>
 													<!-- row -->
 													<div class="row">
-														<div class="col-md-10">
+														<div class="col-sm-10">
 															<div>
 																<label class="col-sm-5 control-label" for="total_amount">Total Amount</label>
 																<div class="col-sm-7">
