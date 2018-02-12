@@ -86,7 +86,7 @@ class Category_model extends CI_Model {
 				->join('items_tbl AS b', 'a.item_id = b.id', 'INNER')
 				->join('item_category_tbl AS c', 'b.id = c.item_id', 'INNER')
 				->where('c.category_id', $category->id)
-				->order_by('b.name')
+				->order_by('a.id')
 				->get();
 
 			if ($query->num_rows())
