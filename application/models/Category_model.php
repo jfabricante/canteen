@@ -26,6 +26,7 @@ class Category_model extends CI_Model {
 				->from('category_tbl AS a')
 				->join('item_category_tbl AS b', 'a.id = b.category_id', 'INNER')
 				->join('featured_items_tbl AS c', 'b.item_id = c.item_id', 'INNER')
+				->order_by('a.id')
 				->get();
 
 		return $query->result_array();
