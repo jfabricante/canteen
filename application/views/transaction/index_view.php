@@ -180,7 +180,7 @@
 							<!-- Content -->
 							<div class="box-header with-border">
 								<h3 class="box-title">Items</h3>
-								<button class="btn btn-flat btn-danger pull-right" v-on:click="clearItems">Clear Items</button>
+								<button class="btn btn-flat btn-danger pull-right btn-lg" v-on:click="clearItems">Clear Items</button>
 							</div>
 
 							<div class="box-body">
@@ -358,7 +358,7 @@
 														</div>
 
 														<div class="col-sm-3">
-															<button class="btn btn-flat btn-danger btn-block">Transact</button>
+															<button class="btn btn-flat btn-danger btn-block btn-lg">Transact</button>
 														</div>
 													</div>
 													<!-- /row -->
@@ -464,8 +464,8 @@
 					<!-- ./modal-body -->
 
 					<div class="modal-footer">
-						<button class="btn btn-info btn-flat pull-left" data-dismiss="modal">Close</button>
-						<button class="btn btn-danger btn-flat" @click="printTransaction">Print</button>
+						<button class="btn btn-info btn-flat pull-left btn-lg" data-dismiss="modal">Close</button>
+						<button class="btn btn-danger btn-flat btn-lg" @click="printTransaction">Print</button>
 					</div>
 				</div>
 			</div>
