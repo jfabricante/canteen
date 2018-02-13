@@ -299,14 +299,14 @@ class User_model extends CI_Model {
 				'a.id',
 				'a.meal_allowance',
 				'emt.employee_no AS emp_no',
-				"CONCAT(emt.first_name,' ', emt.last_name) AS fullname",
+				"CONCAT(pit.first_name,' ', pit.last_name) AS fullname",
 			);
 
 		$query = $this->db->select($fields)
 				->from('users_meal_allowance_tbl AS a')
 				->join('ipc_central.employee_masterfile_tab AS emt', 'a.user_id = emt.id', 'INNER')
 				->join('ipc_central.personal_information_tab AS pit', 'pit.employee_id = emt.id', 'INNER')
-				->order_by('b.emp_no')
+				->order_by('emp_no')
 				->get();
 
 		if ($type == 'array')
