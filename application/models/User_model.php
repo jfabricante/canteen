@@ -273,9 +273,11 @@ class User_model extends CI_Model {
 
 			$this->db->update('users_meal_allowance_tbl', $config, array('user_id' => $params['employee']['id']));
 
-
-			// Get the employee no of the current customer
-			$emp_no = $this->db->select('emp_no')->from('users_tbl')->where('id', $params['employee']['id'])->get()->row_array()['emp_no'];
+			$emp_no = $this->db->select('emt.employee_no')
+					->from('ipc_central.employee_masterfile_tab as emt')
+					->join('ipc_central.personal_information_tab as pit', 'emt.id = pit.employee_id', 'INNER')
+					->where('emt.id', $params['employee']['id'])
+					->get()->row_array()['employee_no'];
 
 			// Update the value of the other table
 			$this->db->update('canteen.employees', $config, array('emp_id' => $emp_no));
