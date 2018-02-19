@@ -192,7 +192,8 @@ class Transaction extends CI_Controller {
 		{
 			$entities = $this->transaction->billing_report($config);
 
-			$this->_billing_to_pdf($entities);
+			// $this->_billing_to_pdf($entities);
+			$this->_billing_to_pdf2($entities);
 		}
 		else if ($this->input->post('excel_report') !== null)
 		{
@@ -314,6 +315,112 @@ class Transaction extends CI_Controller {
 
 			redirect($this->agent->referrer());
 		}
+	}
+
+	protected function _billing_to_pdf2($entities)
+	{
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', 7200);
+
+		$this->load->library('mypdf');
+
+		$config = array_map('trim', $this->input->post());
+
+		$content = '';
+
+		foreach($entities as $entity)
+		{
+			$content .= '<tr style="font-size: 7px; font-weight: normal;">';
+				$content .= '<td style="width: 50px;">' . $entity['id'] . '</td>';
+				$content .= '<td>' . $entity['employee'] . '</td>';
+				$content .= '<td>' . number_format($entity['credit_used'], 2) . '</td>';
+				$content .= '<td>' . number_format($entity['cash'], 2) . '</td>';
+				$content .= '<td>' . date('m/d/Y h:i A', strtotime($entity['datetime'])) . '</td>';
+				$content .= '<td>' . $entity['cashier'] . '</td>';
+			$content .= '</tr>';
+		}
+
+		$html = '<table border="0" style="padding: 4px 2px;">';
+			$html .= '<thead>';
+				$html .= '<tr style="font-size: 7px; font-weight: normal; font-weight: bold">';
+					$html .= '<th border="1" style="width: 50px;">Trans ID</th>';
+					$html .= '<th border="1">Employee</th>';
+					$html .= '<th border="1">Credit Used</th>';
+					$html .= '<th border="1">Cash Used</th>';
+					$html .= '<th border="1">Date</th>';
+					$html .= '<th border="1">Cashier</th>';
+				$html .= '</tr>';
+			$html .= '</thead>';
+			$html .= '<tbody>';
+					$html .= $content;
+			$html .= '</tbody>';
+		$html .= '</table>';
+
+
+		// Create TCPDF instance
+		$pdf = new Mypdf;
+
+		$text = 'From ' . date('M d, Y', strtotime($config['from'])) . ' to ' . date('M d, Y', strtotime($config['to']));
+
+		$pdf->setCoveredDAte($text);
+
+		$pdf->setPrintedBy(ucwords(strtolower($this->session->userdata('fullname'))));
+
+		// set header and footer fonts
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+		// set default monospaced font
+		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+		// set margins
+		$pdf->SetMargins(10, 20, 10);
+		// $pdf->SetMargins(0.5, 0.5, 0.5);
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+		// set auto page breaks
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+		// set image scale factor
+		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+		// set some language-dependent strings (optional)
+		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+		    require_once(dirname(__FILE__).'/lang/eng.php');
+		    $pdf->setLanguageArray($l);
+		}
+
+		// set font
+		$pdf->SetFont('helvetica', '', 8);
+
+		// add a page
+		$pdf->AddPage('P', 'A4');
+
+		$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+
+		$pdf->Ln(6);
+
+		$total_bill = array_sum(array_column($entities, 'credit_used'));
+
+		$pdf->SetFont('helvetica', 'B', 12);
+
+		$pdf->writeHTMLCell(0, 0, '', '', 'Total Bill Amount: ' . number_format($total_bill, 2), 0, 1, 0, true, '', true);
+
+		$pdf->Ln(10);
+
+		$pdf->SetFont('helvetica', '', 10);
+		// set color for background
+		$pdf->SetFillColor(255, 255, 255);
+
+		$pdf->MultiCell(80, 0, 'Prepared by:', 0, 'L', 1, 0, '', '', true, 0, false, true, 0);
+		$pdf->MultiCell(80, 0, 'Checked by:', 0, 'L', 1, 0, '', '', true, 0, false, true, 0);
+
+		$pdf->Ln(10);
+		$pdf->MultiCell(80, 0, '________________________', 0, 'L', 1, 0, '', '', true, 0, false, true, 0);
+		$pdf->MultiCell(80, 0, '________________________', 0, 'L', 1, 0, '', '', true, 0, false, true, 0);
+
+		$pdf->Output("Billing_Report-" . date('m-d-Y') . ".pdf",'I');
 	}
 
 	// Create billing report on excel file
