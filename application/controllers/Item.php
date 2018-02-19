@@ -364,7 +364,7 @@ class Item extends CI_Controller {
 
 		foreach ($params as $entity)
 		{
-			if ($count % 13 == 0 || $currentCat != $entity['category'])
+			if (($count % 13 == 0) || ($currentCat != $entity['category']))
 			{
 				$pdf->AddPage();
 				$pdf->Text(15, 4, $entity['category']);
@@ -379,23 +379,7 @@ class Item extends CI_Controller {
 				$bx = 15;
 				$by = 30;
 			}
-
-			if ($count > 0 && $count % 2 == 0)
-			{
-				$pdf->AddPage();
-
-				$currentCat = $entity['category'];
-				$pdf->Text(15, 4, $entity['category']);
-
-				$count = 1;
-
-				$px = 15;
-				$py = 20;
-
-				$bx = 15;
-				$by = 30;
-			}
-
+			
 			if ($count % 2 == 0)
 			{
 				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
