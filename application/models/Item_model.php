@@ -27,6 +27,7 @@ class Item_model extends CI_Model {
 				->from('items_tbl AS a')
 				->join('item_category_tbl AS b', 'a.id = b.item_id', 'INNER')
 				->join('category_tbl AS c', 'b.category_id = c.id', 'INNER')
+				->order_by('a.name')
 				->get();
 
 		if ($params['type'] == 'object')
