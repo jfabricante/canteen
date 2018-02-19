@@ -379,7 +379,7 @@ class Item extends CI_Controller {
 				$bx = 15;
 				$by = 30;
 			}
-			
+
 			if ($count % 2 == 0)
 			{
 				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
@@ -434,6 +434,107 @@ class Item extends CI_Controller {
 		echo '<pre>';
 		print_r(count(array_diff($excelItems, $sourceItem)));
 		echo '</pre>';
+	}
+
+	// Create billing report on excel file
+	public function pdf_item_list()
+	{
+		// Fetch data
+		$entities = $this->item->browse(array('type' => 'array'));
+
+		// Verify if there is something to generate
+		if (count($entities) > 0)
+		{
+			// Create php excel instance
+			$excelObj          = new PHPExcel();
+			$excelActiveSheet  = $excelObj->getActiveSheet();
+			$excelDefaultStyle = $excelObj->getDefaultStyle();
+
+			// Set text alignment to left
+			$excelDefaultStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+			// Set default fontsize to 8
+			$excelDefaultStyle->getFont()->setSize(8);
+
+
+			// Set the Active sheet
+			$excelObj->setActiveSheetIndex(0);
+
+			// Merge the cell for the billing title
+			$excelActiveSheet->mergeCells('A1:D1');
+
+			// Set the size to show it as a lead
+			$excelActiveSheet->getStyle('A1:D1')->getFont()->setSize(11);
+
+			$excelActiveSheet->getHeaderFooter()->setOddHeader('&R Page &P of &N');
+			$excelActiveSheet->getHeaderFooter()->setEvenHeader('&R Page &P of &N');
+
+			// Add header to the excel
+			$excelActiveSheet->setCellValue('A1', 'Item Masterlist')
+					->setCellValue('A2', 'Item ID')
+					->setCellValue('B2', 'Item Name')
+					->setCellValue('C2', 'Price')
+					->setCellValue('D2', 'Thumbnail')
+					->setCellValue('E2', 'Date')
+					->setCellValue('F2', 'Barcode')
+					->setCellValue('G2', 'Cat. ID')
+					->setCellValue('H2', 'Category');
+
+
+			// Set the header to bold
+			$excelActiveSheet->getStyle('A2:F2')->getFont()->setBold(true);
+
+			// Set the with of the cell to autosize
+			$excelActiveSheet->getColumnDimension('B')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('C')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('D')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('E')->setAutoSize(true);
+			$excelActiveSheet->getColumnDimension('F')->setAutoSize(true);
+
+			// Write the formatted data
+			// $excelActiveSheet->fromArray($dataArray, NULL, 'A3');
+			$excelActiveSheet->fromArray($entities, NULL, 'A3');
+
+
+			// Apply background color on cell
+			$excelActiveSheet->getStyle('A2:H2')
+				->getFill()
+				->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+				->getStartColor()
+				->setARGB('FF808080');
+
+			// Paper Size
+			$excelActiveSheet->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+
+			// Set margins
+			$excelActiveSheet->getPageMargins()->setTop(0.25);
+			$excelActiveSheet->getPageMargins()->setRight(0.25);
+			$excelActiveSheet->getPageMargins()->setLeft(0.25);
+			$excelActiveSheet->getPageMargins()->setBottom(0.25);
+
+			// Change the text color to white
+			$excelActiveSheet->getStyle('A2:H2')->getFont()->getColor()->setRGB('FFFFFF');
+
+			// Excel filename
+			$filename = 'item_masterlist.xls';
+
+			// Content header information
+			header('Content-Type: application/vnd.ms-excel'); //mine type
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Cached-Control: max-age=0');
+
+			// Generate excel version using Excel 2017
+			$objWriter = PHPExcel_IOFactory::createWriter($excelObj, 'Excel5');
+
+			$objWriter->save('php://output');
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-warning">There is no result on that date range!</div>');
+
+			redirect($this->agent->referrer());
+		}
+		
 	}
 
 	protected function _redirectUnauthorized()
