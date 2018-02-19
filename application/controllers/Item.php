@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once APPPATH . '/third_party/TCPDF/tcpdf.php';
 
+require_once APPPATH . '/third_party/PHPExcel/Classes/PHPExcel.php';
+
 class Item extends CI_Controller {
 
 	public function __construct()
