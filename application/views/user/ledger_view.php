@@ -157,10 +157,6 @@
 	$(document).ready(function() {
 		$('.datepicker').datepicker();
 
-		$('#from').on('change', function() {
-			$('#to').val($(this).val());
-		});
-
 		$('.table').DataTable({
 			// Define disabled column
 			"columnDefs": [{
