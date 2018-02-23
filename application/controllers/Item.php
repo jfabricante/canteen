@@ -318,7 +318,6 @@ class Item extends CI_Controller {
 		$pdf->AddPage();
 
 		// -----------------------------------------------------------------------------
-
 		$style = array(
 		    'position'     => '',
 		    'align'        => 'L',
@@ -330,9 +329,9 @@ class Item extends CI_Controller {
 		    'vpadding'     => 'auto',
 		    'fgcolor'      => array(0,0,0),
 		    'bgcolor'      => false,
-		    'text'         => true,
+		    'text'         => false,
 		    'font'         => 'helveticaB',  //array(255,255,255),
-		    'stretchtext'  => 4
+		    'stretchtext'  => 4,
 		);
 
 		$style['fontsize'] = 12;
