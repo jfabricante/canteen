@@ -366,6 +366,7 @@ class Item extends CI_Controller {
 			if (($count % 13 == 0) || ($currentCat != $entity['category']))
 			{
 				$pdf->AddPage();
+				$pdf->SetFont('helvetica', '', 25);
 				$pdf->Text(15, 4, $entity['category']);
 
 				$currentCat = $entity['category'];
