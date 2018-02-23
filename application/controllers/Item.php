@@ -383,9 +383,19 @@ class Item extends CI_Controller {
 			if ($count % 2 == 0)
 			{
 				$pdf->Rect($px + 100, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
+				// Label font
+				$pdf->SetFont('helvetica', '', 18);
+				$pdf->writeHTMLCell(0, 0, $px + 100, $py, '<span>' . ucwords(strtolower($entity['name'])) . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->writeHTMLCell(0, 0, $px + 158, $py, '<span>' . number_format($entity['price'], 2) . '</span>', 0, 0, false, true, 'B',false);
 
-				$pdf->writeHTMLCell(0, 0, $px + 100, $py, '<span>' . ucwords(strtolower(substr($entity['name'], 0, 15))) . '</span>', 0, 0, false, true, 'B',false);
-				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx + 100, $by, '', 20, 0.4, $style, 'M');
+				// Label font
+				$pdf->SetFont('helvetica', '', 25);
+				$pdf->Line($px + 100, $py + 9, $px + 180, $py + 9, $style);
+				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx + 100, $by, '', 15, 0.4, $style, 'M');
+
+				$pdf->Line($px + 100, $py + 25, $px + 180, $py + 25, $style);
+				$pdf->SetFont('helvetica', '', 14);
+				$pdf->writeHTMLCell(0, 0, $px + 110, $py + 26, '<span style="letter-spacing: 7px" >' . $entity['barcode'] . '</span>', 0, 0, false, true, 'B',true);
 
 				$py = $py + 40;
 				$by = $by + 40;
@@ -393,8 +403,19 @@ class Item extends CI_Controller {
 			else
 			{
 				$pdf->Rect($px, $py - 5, 80, 40, $style7, array(255,255,255), array(255,255,255));
-				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . ucwords(strtolower(substr($entity['name'], 0, 15))) . '</span>', 0, 0, false, true, 'B',false);
-				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx, $by, 80, 20, 0.4, $style, 'M');
+				// Label font
+				$pdf->SetFont('helvetica', '', 18);
+				$pdf->writeHTMLCell(0, 0, $px, $py, '<span>' . ucwords(strtolower($entity['name'])) . '</span>', 0, 0, false, true, 'B',false);
+				$pdf->writeHTMLCell(0, 0, $px + 58, $py, '<span>'. number_format($entity['price'], 2) . '</span>', 0, 0, false, true, 'B',false);
+
+				// Label font
+				$pdf->SetFont('helvetica', '', 25);
+				$pdf->Line($px, $py + 9, $px + 80, $py + 9, $style);
+				$pdf->write1DBarcode($entity['barcode'], 'C39', $bx, $by, 80, 15, 0.4, $style, 'M');
+				
+				$pdf->Line($px, $py + 25, $px + 80, $py + 25, $style);
+				$pdf->SetFont('helvetica', '', 14);
+				$pdf->writeHTMLCell(0, 0, $px + 10, $py + 26, '<span style="letter-spacing: 7px" >' . $entity['barcode'] . '</span>', 0, 0, false, true, 'B',true);
 			}
 
 			$count++;
