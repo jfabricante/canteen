@@ -52,15 +52,18 @@ class Transaction extends CI_Controller {
 		else
 		{
 			// Validate that the allowance is always updated before commit transaction
-			$employee = (array)$this->user->read(array('employee_no' => $data['employee']['no']));
-
-			// Path meal allowance
-			if ($data['employee']['allowance'] != $employee['meal_allowance'])
+			if (is_array($data['employee']))
 			{
-				$data['employee']['allowance'] = $employee['meal_allowance'];
-				$data['remaining_credit'] = $data['employee']['allowance'] - $data['totalPurchase'];
-			}
+				$employee = (array)$this->user->read(array('employee_no' => $data['employee']['no']));
 
+				// Path meal allowance
+				if ($data['employee']['allowance'] != $employee['meal_allowance'])
+				{
+					$data['employee']['allowance'] = $employee['meal_allowance'];
+					$data['remaining_credit'] = $data['employee']['allowance'] - $data['totalPurchase'];
+				}
+			}
+			
 			$trans_id = $this->transaction->store($data);
 
 			$data['trans_id'] = $trans_id;
