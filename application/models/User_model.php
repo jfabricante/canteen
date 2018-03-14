@@ -210,7 +210,8 @@ class User_model extends CI_Model {
 				'c.meal_allowance',
 				'c.load_by',
 				'c.last_meal_credit',
-				'c.last_meal_credit_date'
+				'c.last_meal_credit_date',
+				'b.birthdate'
 			);
 
 		$clause = array(
