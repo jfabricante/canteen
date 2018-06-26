@@ -56,6 +56,7 @@ class User_model extends CI_Model {
 				->join('ipc_central.personal_information_tab AS b', 'a.id = b.employee_id')
 				->join('users_role_tbl AS c', 'a.id = c.user_id', 'INNER')
 				->where('c.role_id = 2')
+				->where('c.is_active', 1)
 				->get();
 
 		return $query->result_array();
@@ -78,6 +79,7 @@ class User_model extends CI_Model {
 				->join('items_tbl AS c', 'c.id = b.item_id')
 				->where('cashier_id', $params['user_id'])
 				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+				->where('a.is_void = 0')
 				->get();
 
 		return $query->result_array();
@@ -223,6 +225,7 @@ class User_model extends CI_Model {
 				->join('personal_information_tab AS b', 'a.id = b.employee_id', 'INNER')
 				->join('canteenv2.users_meal_allowance_tbl AS c', 'a.id = c.user_id', 'INNER')
 				->where($clause)
+				->where('c.is_lock', 0)
 				->get();
 
 		return $query->row();
@@ -300,6 +303,7 @@ class User_model extends CI_Model {
 	{
 		$fields = array(
 				'a.id',
+				'a.user_id',
 				'a.meal_allowance',
 				'emt.employee_no AS emp_no',
 				"CONCAT(pit.first_name,' ', pit.last_name) AS fullname",
@@ -372,6 +376,7 @@ class User_model extends CI_Model {
 					->join('ipc_central.employee_masterfile_tab AS f', 'c.employee_id = f.id', 'INNER')
 					->where($clause)
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->where('a.is_void = 0')
 					->get();
 		}
 		else if ($this->session->userdata('user_type') == 'employee')
@@ -385,6 +390,7 @@ class User_model extends CI_Model {
 					->join('ipc_central.employee_masterfile_tab AS f', 'c.employee_id = f.id', 'INNER')
 					->where($clause)
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->where('a.is_void = 0')
 					->get();
 		}
 		else
@@ -396,6 +402,8 @@ class User_model extends CI_Model {
 					->join('ipc_central.personal_information_tab AS c', 'a.user_id = c.employee_id', 'INNER')
 					->join('ipc_central.personal_information_tab AS e', 'a.cashier_id = e.employee_id', 'INNER')
 					->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
+					->where('a.user_id > 0')
+					->where('a.is_void = 0')
 					->get();
 		}
 
