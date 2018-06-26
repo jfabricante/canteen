@@ -71,6 +71,8 @@ class Transaction_model extends CI_Model {
 				->join('invoice_tbl AS d', 'a.invoice_id = d.id', 'LEFT')
 				->where("DATE(a.datetime) BETWEEN '" . $params['from'] . "' AND '" . $params['to'] . "'")
 				->where('a.credit_used > 0')
+				->where('a.user_id > 0')
+				->where('a.is_void = 0')
 				->get();
 
 
