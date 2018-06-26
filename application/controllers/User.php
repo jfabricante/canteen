@@ -364,6 +364,22 @@ class User extends CI_Controller {
 		$this->user->mealHistoryBatch($config2);
 	}
 
+	public function check_calculated_balance()
+	{
+		$params = $this->input->post('date_time') ? $this->input->post('date_time') : $this->user->getRecentMealUploadDate();
+
+		$entities = $this->user->checkCalculatedBalance($params);
+
+		$data = array(
+				'title'    => 'Check Current Balance and Calculated Balance',
+				'content'  => 'user/check_balance_view',
+				'entities' => $entities,
+				'params'   => $params
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
 	protected function _redirectUnauthorized()
 	{
 		if (count($this->session->userdata()) < 3)
