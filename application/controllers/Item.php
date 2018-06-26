@@ -542,6 +542,47 @@ class Item extends CI_Controller {
 		
 	}
 
+	public function upload_form()
+	{
+		$data = array(
+				'title'   => 'Page for updating items',
+				'content' => 'item/upload_view'
+			);
+
+		$this->load->view('include/template', $data);
+	}
+
+	public function update_upload_items()
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+
+		$not_exist = array();
+
+		foreach ($data as $row)
+		{
+			if ($this->item->readProductByName($row['Item Name']))
+			{
+				$config = array(
+					'name' => $row['Item Name'],
+					'config' => array(
+						'price' => isset($row['Old Price']) ? $row['Old Price'] : $row['New Price']
+					)
+				);
+
+				$this->item->updateByProductName($config);
+			}
+			else
+			{
+				$not_exist[] = array(
+					'name' => $row['Item Name'],
+					'count' => $this->item->readProductByName($row['Item Name'])
+				);
+			}
+		}
+
+		echo json_encode($not_exist);
+	}
+
 	protected function _redirectUnauthorized()
 	{
 		if (count($this->session->userdata()) < 3)
