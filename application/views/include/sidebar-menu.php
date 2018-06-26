@@ -71,6 +71,11 @@
 				<li class="<?php echo $menu == 'transaction/invoice_item' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/transaction/invoice_item') ?>"><i class="fa fa-circle"></i><span>Invoice Item</span></a></li>
 			<?php endif ?>
 
+			<?php if (in_array($this->session->userdata('id'), array(1120, 419, 152))): ?>
+				<li class="<?php echo $menu == 'user/check_calculated_balance' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/user/check_calculated_balance') ?>"><i class="fa fa-files-o"></i><span>Calculated Balance</span></a></li>
+
+				<li class="<?php echo $menu == 'item/upload_form' ? 'active' : ''; ?>"><a href="<?php echo base_url('index.php/item/upload_form') ?>"><i class="fa fa-files-o"></i><span>Upload Items</span></a></li>
+			<?php endif ?>
 
 		</ul><!-- /.sidebar-menu -->
 
