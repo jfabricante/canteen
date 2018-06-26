@@ -333,7 +333,7 @@ class Transaction extends CI_Controller {
 	protected function _billing_to_pdf2($entities)
 	{
 		ini_set('memory_limit', '-1');
-		ini_set('max_execution_time', 7200);
+		ini_set('max_execution_time', 0);
 
 		$this->load->library('mypdf');
 
