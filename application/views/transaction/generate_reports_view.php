@@ -87,6 +87,16 @@
 									<th>Status</th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+							</tfoot>
 							<tbody>
 								<?php $counter = 1; ?>
 								<?php foreach($entities as $entity) : ?>
@@ -117,7 +127,28 @@
 <script type="text/javascript">
 	$('.datepicker').datepicker();
 
-	$('.table').DataTable();
+	$('.table').DataTable({
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"footerCallback": function(row, data, start, end, display) {
+			var api = this.api(), data;
+
+			// Calculate over all result based on the result
+			var grandTotal = api.column(3)
+					.data()
+					.reduce((a, b) => {
+						// Convert to string and remove the comma
+						a = a.toString().replace(/\,/g,'')
+						b = b.toString().replace(/\,/g,'')
+
+						return Number(a) + Number(b)
+							
+					}, 0);
+		
+			grandTotal = grandTotal.toLocaleString().indexOf('.') > -1 ? grandTotal.toLocaleString() :  grandTotal.toLocaleString() + '.00';
+
+			$(api.column(3).footer()).html(grandTotal);
+		}
+	});
 
 	$('#from').on('change', function() {
 		$('#to').val($(this).val());
