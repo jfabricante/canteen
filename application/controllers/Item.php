@@ -440,11 +440,6 @@ class Item extends CI_Controller {
 		$sourceItem = array_column($sourceItem, 'name');
 
 		$sourceItem = array_map('strtoupper', $sourceItem);
-
-
-		echo '<pre>';
-		print_r(count(array_diff($excelItems, $sourceItem)));
-		echo '</pre>';
 	}
 
 	// Create billing report on excel file
@@ -503,7 +498,6 @@ class Item extends CI_Controller {
 			$excelActiveSheet->getColumnDimension('F')->setAutoSize(true);
 
 			// Write the formatted data
-			// $excelActiveSheet->fromArray($dataArray, NULL, 'A3');
 			$excelActiveSheet->fromArray($entities, NULL, 'A3');
 
 
