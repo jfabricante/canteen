@@ -329,7 +329,7 @@ class Item extends CI_Controller {
 		    'vpadding'     => 'auto',
 		    'fgcolor'      => array(0,0,0),
 		    'bgcolor'      => false,
-		    'text'         => false,
+		    'text'         => true,
 		    'font'         => 'helveticaB',  //array(255,255,255),
 		    'stretchtext'  => 4,
 		);
