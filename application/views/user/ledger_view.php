@@ -133,8 +133,8 @@
 									<tr>
 										<td><?php echo $entity['trans_date']; ?></td>
 										<td><?php echo $entity['trans_id']; ?></td>
-										<td><?php echo $entity['debit'] ?></td>
 										<td><?php echo $entity['credit'] ?></td>
+										<td><?php echo $entity['debit'] ?></td>
 										<td><?php echo $entity['remarks'] ?></td>
 									</tr>
 								<?php endforeach; ?>
