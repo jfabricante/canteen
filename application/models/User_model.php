@@ -452,4 +452,36 @@ class User_model extends CI_Model {
 		$this->db->insert_batch('users_meal_history_tbl', $params);
 	}
 
+	public function checkCalculatedBalance($params)
+	{
+		$str = sprintf("SELECT employees.`user_id`, employees.`employee_no`, employees.`name`, umpt.`meal_allowance` AS old_balance, umalt.`last_meal_credit`,(CASE WHEN sub.`total_purchases` IS NULL THEN 0 ELSE sub.`total_purchases` END) AS total_purchases, ROUND(umalt.`meal_allowance`,2) AS current_meal_allowance, ROUND(umpt.`meal_allowance` + umalt.`last_meal_credit` - (CASE WHEN sub.`total_purchases` IS NULL THEN 0 ELSE sub.`total_purchases` END), 2) AS calculated_balance
+			FROM users_meal_allowance_tbl AS umalt
+			LEFT JOIN users_meal_processing_tbl AS umpt ON umalt.`user_id` = umpt.`user_id`
+			LEFT JOIN (SELECT       
+				(CASE  WHEN SUM(total_purchase) IS NULL  THEN 0
+				ELSE SUM(total_purchase)
+				END)
+				AS total_purchases,
+			       tt.`user_id` 
+			    FROM
+			      transaction_tbl AS tt 
+			    WHERE tt.`datetime` >= '%s' 
+			      AND tt.`is_void` = 0 
+			    GROUP BY tt.`user_id`) AS sub 
+			ON sub.`user_id` = umpt.`user_id`
+			INNER JOIN employees ON umalt.`user_id` = employees.`user_id`
+			WHERE employees.`status_id` <= 4 AND employees.`status_id` > 0;", $params);
+
+		$query = $this->db->query($str);
+
+		return $query->result_array();
+	}
+
+	public function getRecentMealUploadDate()
+	{
+		$query = $this->db->query('SELECT last_meal_credit_date FROM users_meal_allowance_tbl ORDER BY last_meal_credit_date DESC LIMIT 1;')->row();
+
+		return $query->last_meal_credit_date;
+	}
+
 }
