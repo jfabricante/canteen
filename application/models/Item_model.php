@@ -317,4 +317,17 @@ class Item_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function readProductByName($name)
+	{
+		$query = $this->db->from('items_tbl')->where('upper(name)', strtoupper($name))->get();
+
+		return $query->num_rows();
+	}
+
+	public function updateByProductName(array $params)
+	{
+		$this->db->where('upper(name)', strtoupper($params['name']));
+		$this->db->update('items_tbl', $params['config']);
+	}
 }
