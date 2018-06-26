@@ -18,10 +18,9 @@
 								<th>Excess Credit</th>
 							</tr>
 						</thead>
-
 						<tbody>
 							<?php foreach($entities as $entity): ?>
-								<tr>
+								<tr data-id="<?php echo $entity->user_id ?>">
 									<td><?php echo $entity->emp_no; ?></td>
 									<td><?php echo ucwords(strtolower($entity->fullname)); ?></td>
 									<td><?php echo $entity->meal_allowance >= 0 ? number_format($entity->meal_allowance, 2) : '' ?></td>
