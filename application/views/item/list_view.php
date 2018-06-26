@@ -27,7 +27,7 @@
 								<th>Barcode</th>
 								<th>Date Time</th>
 								<th>Edit</th>
-								<th>Delete</th>
+								<!-- <th>Delete</th> -->
 							</tr>
 						</thead>
 
@@ -48,11 +48,11 @@
 											<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
 										</a>
 									</td>
-									<td>
+									<!-- <td>
 										<a href="<?php echo base_url('index.php/item/notice/' . $item->id); ?>" data-toggle="modal" data-target=".bs-example-modal-sm">
 											<i class="fa fa-trash fa-lg" aria-hidden="true"></i>
 										</a>
-									</td>
+									</td> -->
 								</tr>
 								<?php $count++; ?>
 							<?php endforeach; ?>
