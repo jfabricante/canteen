@@ -470,7 +470,7 @@ class User_model extends CI_Model {
 			    GROUP BY tt.`user_id`) AS sub 
 			ON sub.`user_id` = umpt.`user_id`
 			INNER JOIN employees ON umalt.`user_id` = employees.`user_id`
-			WHERE employees.`status_id` <= 4 AND employees.`status_id` > 0;", $params);
+			WHERE employees.`status_id` <= 4 AND employees.`status_id` > 0 AND umalt.`is_lock` = 0;", $params);
 
 		$query = $this->db->query($str);
 
