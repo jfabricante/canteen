@@ -117,6 +117,7 @@
 									<th>Debit</th>
 									<th>Credit</th>
 									<th>Remarks</th>
+									<th>Cashier</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -136,6 +137,7 @@
 										<td><?php echo $entity['credit'] ?></td>
 										<td><?php echo $entity['debit'] ?></td>
 										<td><?php echo $entity['remarks'] ?></td>
+										<td><?php echo isset($entity['cashier']) ? $entity['cashier'] : '' ?></td>
 									</tr>
 								<?php endforeach; ?>
 							</tbody>
