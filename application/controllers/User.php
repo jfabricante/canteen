@@ -176,7 +176,7 @@ class User extends CI_Controller {
 			foreach ($mealHistory as $entity)
 			{
 				$data[] = array(
-						'trans_date' => date('m/d/Y', strtotime($entity['payroll_date'])),
+						'trans_date' => date('m/d/Y H:i:s', strtotime($entity['payroll_date'])),
 						'trans_id'   => '',
 						'debit'      => $entity['adj_amount'] >= 0 ? number_format($entity['adj_amount'], 2) : '',
 						'credit'     => $entity['adj_amount'] < 0 ? number_format(abs($entity['adj_amount']), 2) : '',
