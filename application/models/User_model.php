@@ -484,4 +484,23 @@ class User_model extends CI_Model {
 		return $query->last_meal_credit_date;
 	}
 
+	public function getDifference()
+	{
+		$query = $this->db->query('SELECT emt.`id` FROM ipc_central.`employee_masterfile_tab` AS emt WHERE id NOT IN(SELECT user_id FROM canteenv2.`users_meal_allowance_tbl`);');
+
+		return $query->result_array();
+	}
+
+	public function updateUsersMealAllowance($params)
+	{
+		$this->db->insert_batch('users_meal_allowance_tbl', $params);
+
+		$this->db->insert_batch('users_meal_processing_tbl', $params);
+	}
+
+	public function appendMealHistory($params)
+	{
+		$this->db->insert_batch('users_meal_history_tbl', $params);
+	}
+
 }
