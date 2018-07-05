@@ -66,6 +66,48 @@ class Login extends CI_Controller {
 		redirect('login/index');
 	}
 
+	public function update_users_meal_allowance_tbl()
+	{
+		$new_users = $this->user->getDifference();
+
+		$users_meal_allowance = array();
+
+		$users_meal_history = array();
+
+		if (count($new_users))
+		{
+			foreach ($new_users as $user)
+			{
+				$users_meal_allowance[] = array(
+					'user_id'               => $user['id'],
+					'meal_allowance'        => 0,
+					'datetime'              => date("Y-m-d H:i:s"),
+					'last_meal_credit'      => 0,
+					'last_meal_credit_date' => date('Y-m-d H:i:s'),
+				);
+
+				$users_meal_history[] = array(
+					'user_id'      => $user['id'],
+					'payroll_date' => date('Y-m-d H:i:s'),
+					'adj_code'     => 'New Entry',
+					'reference'    => 'Auto',
+					'adj_amount'   => 0,
+					'last_update'  => date('Y-m-d H:i:s')
+				);
+			}
+
+			$this->user->updateUsersMealAllowance($users_meal_allowance);
+
+			$this->user->appendMealHistory($users_meal_history);
+
+			echo 'Updated';
+		}
+		else
+		{
+			echo 'No new TM';
+		}
+	}
+
 	protected function _validate_input()
 	{
 		$this->load->library('form_validation');
