@@ -187,11 +187,12 @@ class User extends CI_Controller {
 			foreach ($purchasedItems as $entity)
 			{
 				$data[] = array(
-						'trans_date' => date('m/d/Y', strtotime($entity['datetime'])),
+						'trans_date' => date('m/d/Y H:i:s', strtotime($entity['datetime'])),
 						'trans_id'   => $entity['id'],
 						'debit'      => $entity['total'] <= 0 ? number_format($entity['total'], 2) : '',
 						'credit'     => $entity['total'] > 0 ? number_format(abs($entity['total']), 2) : '',
-						'remarks'    => $entity['name']
+						'remarks'    => $entity['name'],
+						'cashier'    => $entity['cashier']
 					);
 			}
 
